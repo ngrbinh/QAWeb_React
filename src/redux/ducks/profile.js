@@ -7,7 +7,7 @@ export const Types = {
 
 const initState = {
   token: null,
-  userName: "fd"
+  userName: ""
 }
 
 export default function reducer(state = initState, action) {

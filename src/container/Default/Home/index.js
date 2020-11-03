@@ -19,6 +19,7 @@ class Home extends Component {
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
+          id: 1
         },
         createdDate: '2020-10-08T14:59:00.000+00:00',
         body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
@@ -41,6 +42,7 @@ class Home extends Component {
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
+          id: 2
         },
         createdDate: '2020-10-08T14:59:00.000+00:00',
         body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
@@ -63,6 +65,7 @@ class Home extends Component {
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
+          id: 3
         },
         createdDate: '2020-10-08T14:59:00.000+00:00',
         body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
@@ -85,6 +88,7 @@ class Home extends Component {
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
+          id: 4
         },
         createdDate: '2020-10-08T14:59:00.000+00:00',
         body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
@@ -107,6 +111,7 @@ class Home extends Component {
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
+          id: 5
         },
         createdDate: '2020-10-08T14:59:00.000+00:00',
         body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
@@ -154,7 +159,7 @@ class Home extends Component {
           <h2 class="screen-reader-text">Questions</h2>
           <div className="post-articles question-articles">
             {questions.map(item => {
-              return <Question question = {item}/>
+              return <Question question = {item} shorten={true}/>
             })}
           </div>
           <div className='clearfix'></div>

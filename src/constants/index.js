@@ -2,6 +2,7 @@ import Home from "../container/Default/Home"
 import BadgePage from "../container/Default/BadgePage"
 import UserPage from "../container/Default/UserPage"
 import QuestionDetailPage from "../container/Default/QuestionDetailPage"
+import UserDetailPage from "../container/Default/UserDetailPage"
 export const ADMIN_ROUTES = [
   // {
   //   name: 'Admin Home',
@@ -25,7 +26,7 @@ export const DEFAULT_ROUTES = [
     component: BadgePage
   },
   {
-    name: 'Badge',
+    name: 'User',
     path: '/user',
     exact: true,
     component: UserPage
@@ -35,5 +36,11 @@ export const DEFAULT_ROUTES = [
     path: '/question/:id',
     exact: true,
     component: QuestionDetailPage
+  },
+  {
+    name: 'UserDetail',
+    path: '/user/:id',
+    exact: false,
+    component: UserDetailPage
   }
 ]

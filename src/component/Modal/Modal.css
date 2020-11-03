@@ -12,8 +12,7 @@
 }
 
 .panel-pop.show {
-  transform: translateY(10%);
-
+  transform: translateY(10vh);
 }
 
 .panel-pop.hide {
@@ -42,6 +41,7 @@
 .fg-password-panel {
   background-image: url(https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2019/01/signup.png);
 }
+
 .panel-pop-image .panel-image-content {
   width: 380px;
   position: absolute;
@@ -96,4 +96,8 @@
 
 .panel-pop-content, .panel-image-inner {
   padding: 60px;
+}
+
+#wpqa-question.panel-pop-content, #wpqa-question-user .panel-pop-content, #wpqa-post .panel-pop-content, #wpqa-message .panel-pop-content, .question-panel-pop .panel-pop-content {
+  padding: 30px;
 }

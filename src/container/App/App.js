@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../../constants';
-import AdminRoute from '../../common/routes/AdminRoute';
-import DefaultRoute from '../../common/routes/DefaultRoute';
+import AdminRoute from '../../routes/AdminRoute';
+import DefaultRoute from '../../routes/DefaultRoute';
 import ModalHandler from '../../component/Modal/ModalHandler';
 function renderAdminRoutes() {
   let xhtml = null

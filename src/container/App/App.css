@@ -20,7 +20,7 @@
   background: #2d6ff7;
 }
 
-a:hover, .nav_menu>div>ul li a:hover, .stats-text, .user-area .user-content>.user-inner h4>a, .nav_menu ul li.current_page_item>a, .post-author, .post-meta a,.user-login-click > ul li a:hover{
+a:hover, .nav_menu>div>ul li a:hover, .stats-text, .user-area .user-content>.user-inner h4>a, .nav_menu ul li.current_page_item>a, .post-author, .post-meta a, .user-login-click>ul li a:hover, .answers-tabs-inner li a:hover, .commentlist li .comment-text a, .user-questions>div>i {
   color: #2d6ff7;
 }
 
@@ -39,7 +39,7 @@ a.sidenav-active {
   border-bottom: none;
 }
 
-body, input[type="search"], .wpqa_form label, input[type="text"], input[type="password"], .wpqa_form .lost-password, input[type="email"], .widget .widget-wrap .stats-inner li .stats-text, .widget .user-notifications>div>ul li a, .widget .user-notifications>div>ul li a, .users-widget .user-section-small .user-data ul li, .badge-span, .post-meta, .article-question .post-meta, .article-question .footer-meta li,.user-notifications > div > ul li span.notifications-date {
+body, input[type="search"], .wpqa_form label, input[type="text"], input[type="password"], .wpqa_form .lost-password, input[type="email"], .widget .widget-wrap .stats-inner li .stats-text, .widget .user-notifications>div>ul li a, .widget .user-notifications>div>ul li a, .users-widget .user-section-small .user-data ul li, .badge-span, .post-meta, .article-question .post-meta, .article-question .footer-meta li, .user-notifications>div>ul li span.notifications-date, .breadcrumbs, .points-section ul li p, .badges-section ul li p {
   font-family: "Open Sans", sans-serif;
 }
 
@@ -47,42 +47,56 @@ body, .queswer-content, .main-content {
   background-color: #f2f2f2;
 }
 
-.nav_menu>div>ul li a, .widget-title, .widget-title-tabs .tabs li.current a, .menu-tabs>ul>li.active-tab>a, .menu-tabs>ul>li>a:hover,.user-login-click > ul li a {
+.nav_menu>div>ul li a, .widget-title, .widget-title-tabs .tabs li.current a, .menu-tabs>ul>li.active-tab>a, .menu-tabs>ul>li>a:hover, .user-login-click>ul li a, .breadcrumbs, .answers-tabs-inner li.active-tab a, .post-title-3, .user-follower>ul>li h4 {
   color: #26333b;
 }
 
-.menu-tabs>ul>li.active-tab>a:before, .menu-tabs>ul>li>a:hover:before {
+.menu-tabs>ul>li.active-tab>a:before, .menu-tabs>ul>li>a:hover:before, .user-follower>ul>li h4 i {
   background-color: #26333b;
 }
 
-.background-cover, .header, .panel-pop>i, .panel-image-opacity, .panel-pop-content, .wpqa_error, .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not(.ed_button):not(.wpqa_captcha), .wpqa_form input[type="submit"], .widget_ask .button-default, .user-notifications.user-profile-area>div, .user-notifications.user-profile-area>div, .col12, .menu-tabs>ul>li>a:before, .question-footer,.notifications-click,.user-click {
+.background-cover, .header, .panel-pop>i, .panel-image-opacity, .panel-pop-content, .wpqa_error, .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not(.ed_button):not(.wpqa_captcha), .wpqa_form input[type="submit"], .widget_ask .button-default, .user-notifications.user-profile-area>div, .user-notifications.user-profile-area>div, .col12, .menu-tabs>ul>li>a:before, .question-footer, .notifications-click, .user-click, .fakefile, .fakefile button, #submit.button-default, #wpqa-question.panel-pop-content, .styled-select, .styled-select select, .search-input-form input[type="search"], .cover-opacity, .user-stats>ul>li>div, .user-stats>ul>li>div>a, .user-stats>ul>li>div>div span, .user-follower>ul>li>div>a, .user_follow_2, .user-follow-profile a {
   width: 100%;
 }
 
-input[type="text"], input[type="password"], input[type="email"], .question-vote li a, .vote_result, .footer-meta li i,.user-notifications > div > ul li i {
+input[type="text"], input[type="password"], input[type="email"], .question-vote li a, .vote_result, .footer-meta li i, .user-notifications>div>ul li i, ul.question-vote.answer-vote li a, .vote_result, .fakefile button, .styled-select select, input[type="search"], .user-columns-data a i {
   color: #677075;
 }
 
-.header, .panel-image-content .button-default,a.meta-answer,.go-up:hover {
+.header, .panel-image-content .button-default, a.meta-answer, .go-up:hover, .fileinputs span, .pagination .page-numbers:hover, .wpqa-cover-background, .cover-opacity {
   background-color: #272930;
 }
 
-.stats-value, .user-notifications>div>ul li span, .widget-posts .user-notifications>div>ul li div h3 a {
+.question-adv-comments {
+  border-top: 1px solid #e4e6e6;
+}
+
+.widget-post-meta li, .wpqa-cover-content .user-head-area, .wpqa-cover-content .user-area .user-content>.user-inner h4, .wpqa-cover-content .user-area .user-content>.user-inner .badge-span {
+  float: left;
+}
+
+.stats-value, .user-notifications>div>ul li span, .widget-posts .user-notifications>div>ul li div h3 a, .answers-tabs h3, .comment-respond>h3.section-title, .point-div span, .user-stats>ul>li>div>div span, .user-follower>ul>li>div span span {
   color: #272930;
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"], input[type="password"], input[type="email"], .fakefile button, input[type="search"] {
   height: 40px;
   font-size: 13px;
   padding: 11px;
   margin-bottom: 20px;
 }
 
+.wpqa-cover-inner, .referral-cover-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
 .wrap-pop {
   background: rgba(39, 41, 48, .95);
 }
 
-.sidebar .widget.widget-no-divider, .widget.tabs-wrap.widget-tabs {
+.sidebar .widget.widget-no-divider, .widget.tabs-wrap.widget-tabs, .answers-tabs, .answers-tabs-inner li a, .user-follower>ul>li>div {
   background-color: #f9f9f9;
 }
 
@@ -119,11 +133,15 @@ h3 {
   display: block;
 }
 
+.fileinputs input[type="file"] {
+  opacity: 0;
+}
+
 .wpqa_form label {
   font-size: 12px;
 }
 
-.wpqa_form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not(.ed_button) {
+.wpqa_form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not(.ed_button), .wpqa_form .styled-select select {
   padding-left: 30px;
 }
 
@@ -131,23 +149,30 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   background-color: #1a1c21;
 }
 
-.button-default, .button-default-2, input[type="search"], nav.nav ul li a, .pop-border-radius, .pop-border-radius .panel-pop-content, .wpqa_error, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .user-not-normal .user-area, .load-more a, .question-footer, .footer-meta li,a.meta-answer,.go-up,.user-login-click > i {
+.button-default, .button-default-2, input[type="search"], nav.nav ul li a, .pop-border-radius, .pop-border-radius .panel-pop-content, .wpqa_error, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .user-not-normal .user-area, .load-more a, .question-footer, .footer-meta li, a.meta-answer, .go-up, .user-login-click>i, .fakefile button, .fileinputs span, .styled-select, .styled-select .arrow_down, input[type="search"], div.search-results, .pagination .page-numbers.current, .points-section ul .point-section, .badges-section ul li, .cover-opacity, .wpqa-cover-buttons, .user-stats>ul>li>div, .user-follower>ul>li>div, .user-follower>ul>li h4 i, .user-columns-data, .user-follow-profile a {
   border-radius: 2px;
 }
 
-.button-default, .button-default-2:hover, .panel-image-opacity, .panel-image-content .button-default:hover, .stats-inner li:before, .load-more a:hover,a.meta-answer:hover,.go-up {
+.button-default, .button-default-2:hover, .panel-image-opacity, .panel-image-content .button-default:hover, .stats-inner li:before, .load-more a:hover, a.meta-answer:hover, .go-up, .fileinputs:hover span, .pagination .page-numbers.current, .user-follow-profile a {
   background-color: #2d6ff7;
 }
 
 .user-login span {
   color: #707885;
 }
-.widget-title-tabs .tabs li, .widget-posts .user-notifications.user-profile-area>div>ul>li:last-child, .users-widget .user-section-small .user-data ul li, .widget li:last-child {
+
+.question-articles .article-post, #comments, #respond, .page-template-template-users .article-post, .user-area, .page-section {
+  margin: 0 -30px 30px;
+  padding: 0 30px 30px;
+  border-bottom: 1px solid #e4e6e6;
+}
+
+.widget-title-tabs .tabs li, .widget-posts .user-notifications.user-profile-area>div>ul>li:last-child, .users-widget .user-section-small .user-data ul li, .widget li:last-child, .page-template-template-users .article-post, .post-section.user-area.user-advanced {
   padding-bottom: 0;
   border-bottom: none;
 }
 
-.loader_2, .author-image-span {
+.loader_2, .author-image-span, .pagination .page-numbers.current {
   border-color: #2d6ff7 !important;
 }
 
@@ -159,19 +184,27 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   margin-top: 7px;
 }
 
-.pagination-wrap.pagination-question {
+.post-img.post-img-0, article.post.post-style-2 .post-img.post-img-0 {
+  margin: 0;
+}
+
+.pagination-wrap.pagination-question, .header-no-meta .post-img, .user-stats>ul, .user-follower>ul {
   margin-top: 0;
 }
 
-.button-default:hover, .button-default-2, .load-more a,.user-login-click > i {
+.button-default:hover, .button-default-2, .load-more a, .user-login-click>i, .styled-select .arrow_down, .user-follow-profile a:hover {
   background-color: #7c7f85;
 }
 
-.header-search input, .wpqa_form label, .widget-posts .user-notifications>div>ul li a, .widget-posts .user-notifications>div>ul li a, .user-data ul li, .user-data ul li a, .menu-tabs>ul>li>a, .post-meta, .footer-meta li, .footer-meta li a,.user-notifications > i,.user-notifications > div > ul li span.notifications-date {
+.points-section ul li p, .badges-section ul li p {
+  color: #464e5b;
+}
+
+.header-search input, .wpqa_form label, .widget-posts .user-notifications>div>ul li a, .widget-posts .user-notifications>div>ul li a, .user-data ul li, .user-data ul li a, .menu-tabs>ul>li>a, .post-meta, .footer-meta li, .footer-meta li a, .user-notifications>i, .user-notifications>div>ul li span.notifications-date, .breadcrumbs .current, .answers-tabs-inner li a, .commentlist li.comment .comment-body .comment-text .author .comment-date, .search-form .icon-search, .pagination .page-numbers.current, .point-div, .wpqa-cover-buttons, .user-stats>ul>li>div>div, .user-columns-data a {
   color: #7c7f85;
 }
 
-.header-search input, .wpqa_form p input, .wpqa_form .form-submit, .widget-title-tabs .tabs li, .user-notifications>div>ul li:last-child, .widget li:last-child, .widget-posts .user-notifications.user-profile-area>div>ul>li:last-child, .user-section-small .user-data ul li:last-child,.user-notifications > div > ul li:last-child,.user-login-click > ul li:last-child{
+.header-search input, .wpqa_form p input, .wpqa_form .form-submit, .widget-title-tabs .tabs li, .user-notifications>div>ul li:last-child, .widget li:last-child, .widget-posts .user-notifications.user-profile-area>div>ul>li:last-child, .user-section-small .user-data ul li:last-child, .user-notifications>div>ul li:last-child, .user-login-click>ul li:last-child, .fakefile button, #respond .form-submit, .breadcrumb-right .search-form input.search-input, .page-template-template-users .article-post, .points-section ul, .points-section:not(.buy-points-section) ul li p, .badges-section ul, .badges-section ul li p, .wpqa-profile .post-section.user-area.user-advanced, .wpqa-cover-content .user-head-area, .user-head-area .author-image, .wpqa-cover-content .user-area .user-content>.user-inner .badge-span, .user-stats>ul, .user-stats>ul>li>div>div h4, .user-follower>ul, .user-columns-data ul li:last-child {
   margin-bottom: 0;
 }
 
@@ -179,31 +212,31 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   margin-bottom: 0 !important;
 }
 
-.button-default, .button-default-2, nav.nav ul li a, .author-image-span, .menu-tabs>ul>li.active-tab>a:before, .load-more a,a.meta-answer {
+.button-default, .button-default-2, nav.nav ul li a, .author-image-span, .menu-tabs>ul>li.active-tab>a:before, .load-more a, a.meta-answer, .fileinputs span, .styled-select, .styled-select select, .user-follow-profile a {
   transition: border .20s linear, color .20s linear, background-color .20s linear;
 }
 
-.button-default, .button-default-2, .header-search button i, nav.nav ul li a, nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, .panel-pop>i, .panel-image-inner h3, .panel-image-inner p, .badge-span, .load-more a,a.meta-answer,.go-up,.user-login div,.user-login-click > i {
+.button-default, .button-default-2, .header-search button i, nav.nav ul li a, nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, .panel-pop>i, .panel-image-inner h3, .panel-image-inner p, .badge-span, .load-more a, a.meta-answer, .go-up, .user-login div, .user-login-click>i, .fileinputs span, .styled-select .arrow_down, .pagination .page-numbers.current, .pagination .page-numbers:hover, .wpqa-cover-content .user-area .user-content>.user-inner h4>a, .user-follower>ul>li h4 i, .user-follow-profile a {
   color: #FFF !important;
 }
 
-.panel-pop-content, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .queswer-main-inner, .hide-main-inner, .inner-sidebar, .widget-no-divider .stats-inner li, .widget-title-tabs .tabs li.current:before, .widget-title-tabs .tabs li.current a, .widget.tabs-wrap.widget-tabs .widget-wrap, .footer-meta li,.user-notifications > div,.user-login-click > ul {
+.panel-pop-content, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .queswer-main-inner, .hide-main-inner, .inner-sidebar, .widget-no-divider .stats-inner li, .widget-title-tabs .tabs li.current:before, .widget-title-tabs .tabs li.current a, .widget.tabs-wrap.widget-tabs .widget-wrap, .footer-meta li, .user-notifications>div, .user-login-click>ul, .answers-tabs-inner li.active-tab:before, .answers-tabs-inner li.active-tab a, .fakefile button, .styled-select, input[type="search"], .search_loader, div.search-results, .search-form .button-search, .pagination .page-numbers, .wpqa-cover-buttons, .user-stats>ul>li>div {
   background-color: #FFF;
 }
 
-.button-default, .button-default-2, .search-click, .header-search button, .panel-pop>i, .wpqa_form label, .wpqa_form .rememberme, .wpqa_checkbox input[type="checkbox"],.go-up,.notifications-click,.user-click {
+.button-default, .button-default-2, .search-click, .header-search button, .panel-pop>i, .wpqa_form label, .wpqa_form .rememberme, .wpqa_checkbox input[type="checkbox"], .go-up, .notifications-click, .user-click, a:hover, .fileinputs input[type="file"], .fakefile button, .styled-select select, .search-form .button-search {
   cursor: pointer;
 }
 
-input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .widget-title-tabs .tabs li a,.user-login-click > ul {
+input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .widget-title-tabs .tabs li a, .user-login-click>ul, .answers-tabs-inner li a, .fakefile button, .styled-select, input[type="search"], div.search-results, .user-not-normal .user-area, .points-section ul .point-section, .badges-section ul .badge-section, .user-stats>ul>li>div, .user-follower>ul>li>div {
   border: 1px solid #e1e3e3;
 }
 
-h1, h2, h3, h4, h5, .button-default, .button-default-2, nav.nav ul li, .panel-image-inner p, .nav_menu>div>ul li a, .widget li, .stats-value, .widget-title, .widget-posts .user-notifications>div>ul li div h3 a, .menu-tabs>ul>li>a, .load-more a, .post-author, .vote_result, .question-content-text,a.meta-answer {
+h1, h2, h3, h4, h5, .button-default, .button-default-2, nav.nav ul li, .panel-image-inner p, .nav_menu>div>ul li a, .widget li, .stats-value, .widget-title, .widget-posts .user-notifications>div>ul li div h3 a, .menu-tabs>ul>li>a, .load-more a, .post-author, .vote_result, .question-content-text, a.meta-answer, .answers-tabs .section-title, .answers-tabs-inner li, .vote_result, .comment-respond>.section-title, .fileinputs span, .post-content-text, .point-div span, .user-area .bio_editor, .user-stats>ul>li>div>div span, .user-follow-profile {
   font-family: "Roboto", Arial, sans-serif;
 }
 
-.user-notifications>div>ul li .span-icon, .author-image-span, .author-image img,.user-image img {
+.user-notifications>div>ul li .span-icon, .author-image-span, .author-image img, .user-image img, .loader_2, .loader_3, .user-follower>ul>li>div img {
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -349,7 +382,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.8px;
 }
 
-.button-default, .button-default-2, .button-default-3, .button-default-4, input[type=search], input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"] {
+.button-default, .button-default-2, .button-default-3, .button-default-4, input[type=search], input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .styled-select select {
   appearance: none;
 }
 
@@ -369,11 +402,11 @@ a, .ask-box-question {
   max-width: 170px;
 }
 
-.wpqa_form p i {
+.wpqa_form p i, .wpqa_form .fileinputs i, .wpqa_form .wpqa_category i {
   color: #999;
 }
 
-.wpqa_form p i {
+.wpqa_form p i, .wpqa_form .fileinputs i, .wpqa_form .wpqa_category i {
   position: absolute;
   left: 10px;
   top: 36px;
@@ -489,7 +522,7 @@ nav.nav ul li a {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99999;
+  z-index: 999;
   overflow: hidden;
 }
 
@@ -679,7 +712,7 @@ aside.sidebar {
   overflow: hidden;
 }
 
-.stats-inner, .user-notifications > div > ul li div {
+.stats-inner, .user-notifications>div>ul li div {
   overflow: hidden;
 }
 
@@ -769,8 +802,16 @@ aside.sidebar {
   border-left: 1px solid #e1e3e3 !important;
 }
 
-.widget-title-tabs, .widget-posts .user-notifications.user-profile-area>div>ul>li, .profile-area>div>ul>li,.user-notifications > div {
+.badge-div {
+  border-right: 1px solid #e1e3e3
+}
+
+.widget-title-tabs, .widget-posts .user-notifications.user-profile-area>div>ul>li, .profile-area>div>ul>li, .user-notifications>div, .answers-tabs, .user-stats, .user-follower {
   border-bottom: 1px solid #e1e3e3;
+}
+
+.answers-tabs {
+  border-top: 1px solid #e1e3e3;
 }
 
 .widget-title-tabs .tabs li a, .answers-tabs-inner li a {
@@ -894,7 +935,7 @@ aside.sidebar {
   padding: 0 30px 20px;
 }
 
-.user-notifications>div>a, .user-notifications>div>ul li, .user-follower>ul>li>div span, .user-notifications>div>ul li,.user-notifications > div > ul li {
+.user-notifications>div>a, .user-notifications>div>ul li, .user-follower>ul>li>div span, .user-notifications>div>ul li, .user-notifications>div>ul li, .user-follower>ul>li>div span {
   color: #656c77;
 }
 
@@ -955,14 +996,10 @@ img {
   text-align: left;
 }
 
-.widget-post-meta li {
+.widget-post-meta li, .question-articles .question-adv-comments>#respond-all #respond {
   padding-bottom: 0 !important;
   border-bottom: none !important;
   margin-bottom: 0 !important;
-}
-
-.widget-post-meta li {
-  float: left;
 }
 
 .widget-post-meta li:after {
@@ -1002,12 +1039,6 @@ img {
 .col {
   padding-left: 15px;
   padding-right: 15px;
-}
-
-.user-not-normal .user-area {
-  padding: 20px;
-  margin: 0 0 30px;
-  overflow: hidden;
 }
 
 .widget.users-widget .post-section.user-area {
@@ -1211,12 +1242,6 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   padding: 9px;
 }
 
-.question-articles .article-post {
-  margin: 0 -30px 30px;
-  padding: 0 30px 30px;
-  border-bottom: 1px solid #e4e6e6;
-}
-
 .article-post, .post-comments {
   margin-bottom: 30px;
   padding-bottom: 30px;
@@ -1335,8 +1360,12 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   line-height: 24px;
 }
 
-.article-post footer {
+.article-post footer, ul.question-vote.answer-vote li i {
   line-height: 15px;
+}
+
+ul.question-vote.answer-vote li.li_loader, .question-simple.question-meta-vote .question-footer ul.question-vote li.li_loader {
+  height: 15px;
 }
 
 .question-footer {
@@ -1377,6 +1406,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   display: flex;
   align-items: flex-start;
 }
+
 a.meta-answer {
   float: right;
   font-size: 14px;
@@ -1384,6 +1414,7 @@ a.meta-answer {
   padding: 9px 13px;
   letter-spacing: 0.8px;
 }
+
 .go-up, .ask-button {
   position: fixed;
   width: 40px;
@@ -1394,14 +1425,17 @@ a.meta-answer {
   z-index: 9999;
   transition: 0.1s ease-in-out 0s;
 }
+
 .go-up i, .ask-button {
   line-height: 40px;
   font-size: 15px;
   font-weight: 700;
 }
+
 .go-up:hover, .ask-button:hover {
   bottom: 25px;
 }
+
 .user-notifications {
   line-height: normal;
   margin-top: 32px;
@@ -1409,10 +1443,12 @@ a.meta-answer {
   padding-left: 18px;
   border-left: 1px solid #33353c;
 }
+
 .notifications-click {
   padding: 20px;
   margin-top: -10px;
 }
+
 .user-click, .notifications-click {
   position: absolute;
   background: transparent;
@@ -1421,9 +1457,11 @@ a.meta-answer {
   left: 0;
   z-index: 1;
 }
+
 .user-notifications>i {
   font-size: 20px;
 }
+
 .user-notifications>div {
   left: inherit;
   right: -26px;
@@ -1431,66 +1469,79 @@ a.meta-answer {
   margin-top: 31px;
   padding: 0;
 }
+
 .user-notifications>div>ul {
   margin: 0;
   padding: 20px;
   padding-right: 15px;
 }
-.user-notifications > div > ul li {
+
+.user-notifications>div>ul li {
   list-style: none;
   margin-bottom: 20px;
   font-size: 12px;
   line-height: 21px;
   text-align: left;
 }
-.user-notifications > div > ul li i, .user-notifications > div > ul li .span-icon {
+
+.user-notifications>div>ul li i, .user-notifications>div>ul li .span-icon {
   float: left;
   font-size: 20px;
   margin-right: 15px;
   width: 20px;
 }
-.user-notifications > div > ul li div {
+
+.user-notifications>div>ul li div {
   line-height: 18px;
 }
-.user-notifications > div > ul li span.notifications-date {
+
+.user-notifications>div>ul li span.notifications-date {
   display: block;
   font-size: 11px;
   margin-top: 5px;
 }
+
 .user-login-click {
   display: flex;
   align-items: center;
 }
+
 .user-image {
   margin-right: 10px;
   overflow: hidden;
   width: 29px;
   position: relative;
 }
+
 .user-login {
   width: 120px;
   line-height: 20px;
   overflow: hidden;
 }
+
 .user-login span {
   font-size: 11px;
   font-weight: 600;
 }
+
 .user-login div {
   font-size: 14px;
   font-weight: 700;
   white-space: pre-line;
 }
+
 .user-login-click>i {
   width: 14px;
   height: 14px;
   font-size: 14px;
   font-weight: 700;
 }
+
 .user-login-click>ul {
   left: 5px;
 }
-.user-login-click > ul:before {
+
+.user-login-click>ul:before {
   position: absolute;
   top: -8px;
   right: 25px;
@@ -1503,17 +1554,731 @@ a.meta-answer {
   border-color: transparent transparent #FFF transparent;
   z-index: 2;
 }
-.user-login-click > ul li {
+
+.user-login-click>ul li {
   list-style: none;
   line-height: 22px;
   margin-bottom: 15px;
   text-align: left;
   position: relative;
 }
-.user-login-click > ul li a {
+
+.user-login-click>ul li a {
   font-size: 13px;
   font-weight: 700;
 }
-.user-login-click > ul li a i {
+
+.user-login-click>ul li a i {
   margin-right: 10px;
+}
+
+ul.question-vote.answer-vote li.vote_result, .question-meta-vote .question-footer ul.question-vote li.vote_result {
+  font-size: 17px;
+  line-height: 15px;
+}
+
+ul.question-vote.answer-vote li, .question-meta-vote .question-footer ul.question-vote li {
+  list-style: none;
+  float: left;
+  margin: 0 10px 0 0;
+  line-height: 0;
+  padding: 0;
+}
+
+.section-title {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 30px;
+}
+
+.fileinputs {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.fileinputs input[type="file"] {
+  position: relative;
+  padding: 11px;
+  z-index: 2;
+}
+
+.fakefile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.fakefile button {
+  position: relative;
+  text-align: left;
+  padding-left: 35px;
+}
+
+.fileinputs span {
+  padding: 2px 10px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  letter-spacing: 0.8px;
+}
+
+.wpqa_form .fileinputs i {
+  top: 10px;
+  z-index: 2;
+  font-size: 18px;
+}
+
+.tox-statusbar__branding {
+  display: none;
+}
+
+#submit.button-default, .show-answer-form, .question-panel-pop .button-default {
+  height: 40px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.wpqa_category {
+  margin-bottom: 20px;
+}
+
+.styled-select {
+  position: relative;
+  float: none;
+  clear: right;
+  margin-top: 0 !important;
+  overflow: hidden;
+  display: block;
+}
+
+.styled-select select {
+  background: transparent !important;
+}
+
+.styled-select select, .widget select {
+  border: 0;
+  padding: 11px 25px 11px 11px;
+  height: 38px;
+  outline: none;
+  font-size: 13px;
+  border: none;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.styled-select .arrow_down {
+  text-align: center;
+  line-height: normal;
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.tox {
+  z-index: 99999 !important;
+}
+
+.breadcrumb-right, .question-stats {
+  float: right;
+}
+
+.search-form {
+  position: relative;
+}
+
+.search-filter-form select {
+  padding-right: 30px;
+}
+
+.breadcrumb-right .search-input-form {
+  position: relative;
+}
+
+.search-input-form {
+  width: 150px;
+  float: right;
+  margin-left: 10px;
+}
+
+.breadcrumb-right div.search-results {
+  top: 50px;
+  left: initial;
+  right: -5px;
+  width: 280px;
+}
+
+.search-filter-form {
+  float: left;
+}
+
+.search_loader {
+  display: none;
+  position: absolute;
+  top: 19px;
+  right: 20px;
+  margin: 0;
+}
+
+div.search-results {
+  position: absolute;
+  -webkit-box-shadow: 0 0 5px -1px #d0d2d3;
+  -moz-box-shadow: 0 0 5px -1px #d0d2d3;
+  box-shadow: 0 0 5px -1px #d0d2d3;
+  top: 70px;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  display: none;
+}
+
+.breadcrumb-right .search-form .button-search {
+  top: 3px;
+  right: 2px;
+}
+
+.search-form .button-search {
+  position: absolute;
+  top: -6px;
+  right: 1px;
+  background: transparent;
+  border: none;
+  padding: 8px 5px 6px;
+}
+
+.search-form .icon-search {
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.article-post header, .post-meta, .article-post footer {
+  text-align: center;
+}
+
+.post-img {
+  margin: 30px 0;
+  position: relative;
+}
+
+.page-template-template-users .article-post .main-pagination, .page-template-template-categories .article-post .main-pagination, .page-template-template-tags .article-post .main-pagination {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.pagination {
+  text-align: right;
+}
+
+.pagination .page-numbers, .post-pagination>* {
+  height: 39px;
+  line-height: 37px;
+  font-weight: bold;
+  text-align: center;
+  margin-right: 6px;
+  display: inline-block;
+  font-size: 14px;
+  border: 1px solid #e4e6e6;
+  overflow: hidden;
+  padding: 0 14px;
+}
+
+.pagination .page-numbers:last-child, .post-pagination>*:last-child {
+  margin-right: 0;
+}
+
+.pagination .page-numbers.next {
+  margin-left: 5px;
+}
+
+.pagination .page-numbers.prev {
+  margin-right: 11px;
+}
+
+.col4 {
+  width: 33.33333333%;
+}
+
+.user-section .user-area {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom-width: 1px;
+}
+
+.user-not-normal .user-area {
+  padding: 20px;
+  margin: 0 0 30px;
+  overflow: hidden;
+}
+
+.user-not-normal.user-section-small_grid .author-image, .user-not-normal.user-section-small_grid .user-area .user-content>.user-inner h4 {
+  margin-bottom: 10px;
+}
+
+.user-section-small_grid .small_loader.loader_2 {
+  margin: 7px 0;
+}
+
+.small_loader.loader_2 {
+  margin-top: 0;
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+  vertical-align: middle;
+  display: none;
+}
+
+.page-template-template-badges .page-section {
+  padding-bottom: 30px;
+}
+
+.page-section {
+  padding-bottom: 10px;
+}
+
+.post-title-2, .post-title-3 {
+  text-align: left;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.post-title-2 i, .post-title-3 i {
+  margin-right: 15px;
+  font-size: 14px;
+}
+
+.post-content-text {
+  line-height: 24px;
+  font-size: 14px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.points-section ul, .badges-section ul, .tags-sections {
+  margin-top: -30px;
+}
+
+.points-section ul, .badges-section ul {
+  padding: 0;
+  list-style: none;
+}
+
+.points-section ul li, .badges-section ul li {
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.points-section ul .point-section, .tag-sections, .cat-sections {
+  padding: 15px;
+}
+
+.points-section .point-div {
+  margin-bottom: 10px;
+}
+
+.point-div {
+  font-size: 12px;
+}
+
+.point-div i {
+  font-size: 14px;
+  margin-right: 7px;
+  color: #ff6935;
+}
+
+.point-div span {
+  font-size: 17px;
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.badge-div {
+  float: left;
+  margin-right: 20px;
+  padding-right: 20px;
+  width: 25%;
+  padding: 15px;
+}
+
+.badges-section ul li p {
+  overflow: hidden;
+}
+
+.badge-section p {
+  padding: 15px;
+}
+
+.badge-div .badge-span {
+  margin-bottom: 10px;
+}
+
+.wpqa-profile-cover, .referral-cover {
+  position: relative;
+  z-index: 2;
+}
+
+.wpqa-cover-background, .referral-cover-background {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 4;
+  height: 330px;
+  position: relative;
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #373940), color-stop(0.5, #494B52));
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#373940', endColorstr='#494B52', GradientType=0);
+  background-image: linear-gradient(top, #373940 0%, #494B52 50%);
+}
+
+.cover-opacity, .panel-image-opacity {
+  position: absolute;
+  z-index: 1;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: alpha(opacity=60);
+  -moz-opacity: 0.6;
+  -khtml-opacity: 0.6;
+  opacity: 0.6;
+}
+
+.background-cover, .login-page-cover, .login-opacity, .cover-opacity, .panel-image-opacity {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: fixed;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+.wpqa-cover-content {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+}
+
+.wpqa-profile .wpqa-cover-content .user-area.user-advanced, .wpqa-cover-content .cat-cover-left {
+  left: 0;
+  padding-bottom: 25px;
+  width: 50%;
+}
+
+.wpqa-cover-content .user-cover .post-inner {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.wpqa-cover-content .user-head-area {
+  margin-right: 15px;
+}
+
+.user-advanced .author-image, .follow_email, .send_message_icon, .user_follow {
+  display: inline-block;
+}
+
+.wpqa-cover-content .user-cover .user-head-area .author-image, .wpqa-cover-content .user-cover .user-head-area .author-image-span {
+  display: block;
+}
+
+.wpqa-cover-content .user-content {
+  text-align: left;
+  overflow: hidden;
+}
+
+.user-area .user-content>.user-inner h4 {
+  margin-bottom: 5px;
+}
+
+h4 {
+  font-size: 22px;
+  line-height: 33px;
+}
+
+.wpqa-cover-content .user-area .user-content>.user-inner .badge-span {
+  margin-top: 8px;
+  margin-left: 10px;
+}
+
+.badge-span {
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+}
+
+.wpqa-cover-content .user-area.user-advanced, .wpqa-cover-content .cat-cover-left, .wpqa-cover-right {
+  position: absolute;
+  bottom: 0;
+}
+
+.wpqa-cover-right {
+  right: 0;
+  padding-bottom: 30px;
+}
+
+.wpqa-cover-right>div {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+.wpqa-cover-right>div {
+  float: right;
+}
+
+.wpqa-cover-right>div .button-default {
+  padding: 7px 8px 6px;
+}
+
+.wpqa-cover-buttons i, .wpqa-cover-buttons span {
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.wpqa-cover-buttons {
+  padding: 4px 8px;
+}
+
+.wpqa-cover-right>div:last-child {
+  margin-left: 0;
+}
+
+a.wpqa-cover-buttons {
+  display: block;
+}
+
+.user-area-head .user-content {
+  margin-bottom: 20px;
+}
+
+.user-area .user-content>.user-inner p, .user-area .bio_editor, .category-description>p {
+  margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.wpqa-profile .post-section.user-area.user-advanced .user-data {
+  margin-bottom: 25px;
+}
+
+.user-stats, .user-follower {
+  overflow: hidden;
+  margin: 0 -30px 30px;
+  padding: 0 30px 30px;
+}
+
+.user-stats>ul, .user-follower>ul, .referral-stats>ul {
+  list-style: none;
+  padding: 0;
+}
+
+.col3 {
+  width: 25%;
+}
+
+.user-stats>ul>li>div, .referral-stats>ul>li>div {
+  padding: 10px;
+  position: relative;
+}
+
+.user-follower>ul>li>div>a, .user-stats>ul>li>div>a {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.user-stats>ul>li>div>i, .referral-stats>ul>li>div>i {
+  float: left;
+  font-size: 18px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.user-stats>ul>li>div>div, .referral-stats>ul>li>div>div {
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.user-stats>ul>li>div>div span, .referral-stats>ul>li>div>div span {
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.user-stats>ul>li>div>div h4, .referral-stats>ul>li>div>div>h4 {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 22px;
+}
+
+.user-answers>div>i, .referral-sent>div>i {
+  color: #f05555;
+}
+
+.user-points>div>i, .referral-pending>div>i {
+  color: #ff6935;
+}
+
+.col6 {
+  width: 50%;
+}
+
+.user-follower>ul>li>div {
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.user-follower>ul>li h4 {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.user-follower>ul>li h4 i {
+  font-size: 15px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  margin-right: 10px;
+}
+
+.user-follower>ul>li>div div {
+  line-height: 29px;
+}
+
+.user-follower>ul>li>div img {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  height: 29px;
+  width: 29px;
+}
+
+.user-follower>ul>li>div span {
+  font-size: 12px;
+}
+
+.go-to-question_btn {
+  transition: border .20s linear, color .20s linear, background-color .20s linear;
+  color: #FFF !important;
+  background-color: #272930;
+  border-radius: 2px;
+  font-family: "Roboto", Arial, sans-serif;
+  float: right;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 6px;
+  letter-spacing: 0.8px;
+}
+
+.go-to-question_btn:hover {
+  background-color: #2d6ff7;
+}
+
+.user-section-columns .author-image, .author-image-pop-2 .author-image {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.user-section-columns .author-image-span, .author-image-pop-2 .author-image-span {
+  height: 68px;
+  width: 68px;
+}
+
+.userdetail-active-tab {
+  color: #26333b !important;
+}
+
+.userdetail-active-tab::before {
+  background-color: #26333b !important;
+}
+
+.user-section-columns .user-area .user-content>.user-inner .user-data-columns, .author-image-pop-2 .user-area .user-content>.user-inner .user-data-columns {
+  margin-bottom: 10px;
+}
+
+.user-area .user-content>.user-inner .user-data-columns .badge-span {
+  margin-bottom: 10px;
+  margin-left: 0;
+}
+
+.user-columns-data {
+  background-color: #f5f5f5;
+  padding: 15px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.user-columns-data ul {
+  padding: 0;
+  margin: 0;
+}
+
+.user-columns-data ul li {
+  margin-bottom: 5px;
+  list-style: none;
+}
+
+.user-columns-data a i {
+  margin-right: 10px;
+}
+
+.user-follow-profile {
+  font-size: 14px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.user_follow_2 {
+  margin-bottom: 2px;
+}
+
+.user_follow_2, .user-follow-profile a {
+  display: block;
+  float: left;
+  letter-spacing: 0.8px;
+}
+
+.user_follow_loader.small_loader.loader_2 {
+  text-align: center;
+  height: 30px;
+  width: 30px;
+  border-width: 3px;
+  margin: 4px;
+}
+
+.user-follow-profile a:last-child {
+  float: right;
+}
+
+.user-follow-profile a {
+  padding: 8px 5px;
+}
+
+.user_follow_2, .user-follow-profile a {
+  display: block;
+  float: left;
+  letter-spacing: 0.8px;
 }

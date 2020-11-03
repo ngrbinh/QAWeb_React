@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom'
 import { truncateWithEllipsis } from '../../common/functions'
 
 export default function Question(props) {
-  const { user, createdDate, body, voteCount, subject, grade, answerCount, viewCount,id } = props.question
-  const shortBody = truncateWithEllipsis(body,250);
+  const { shorten, scrollToRef, question } = props
+  const { user, createdDate, body, voteCount, subject, grade, answerCount, viewCount, id } = question
+  const shortBody = shorten ? truncateWithEllipsis(body, 250) : body;
   const formatDate = new Date(createdDate)
   const dateString = formatDate.getDate() + '-' + (formatDate.getMonth() + 1) + '-' + formatDate.getFullYear()
+  const parse = require('html-react-parser')
   return (
     <article className='question-articles article-post clearfix question-answer-before'>
       <div className='single-inner-content'>
@@ -16,17 +18,17 @@ export default function Question(props) {
           <div className='question-top-bar'>
             <div className='question-image-vote'>
               <div className='author-image mgb0'>
-                <a href="#">
+                <Link to={`/user/${user.id}`}>
                   <span className='author-image-span'>
                     <img className='avatar' width='42px' height='42px' src={user.avatarUrl} />
                   </span>
-                </a>
+                </Link>
               </div>
             </div>
             <div className='question-content question-content-first'>
               <header className='article-header'>
                 <div className='question-header'>
-                  <a className='post-author'>{user.name}</a>
+                  <Link className='post-author' to={`/user/${user.id}`}>{user.name}</Link>
                   <span className="badge-span" style={{ backgroundColor: '#ffbf00' }}>Pundit</span>
                   <div className='post-meta'>
                     <span className="post-date">Ngày đăng<span className="date-separator">: </span>
@@ -74,7 +76,12 @@ export default function Question(props) {
             <div className="post-wrap-content">
               <div className="question-content-text">
                 <div className="all_not_signle_post_content">
-                  <p className="excerpt-question">{shortBody}</p>
+                  {shorten ?
+                    <p className="excerpt-question">{shortBody}</p>
+                    : <div className='content-text'>
+                      {parse(shortBody)}
+                    </div>
+                  }
                 </div>
               </div>
             </div>
@@ -91,7 +98,12 @@ export default function Question(props) {
                   <span className="question-span"> {viewCount} lượt xem</span>
                 </li>
               </ul>
-              <Link className="meta-answer meta-answer-a" to={`/question/${id}`} >Chi tiết</Link>
+              {
+                shorten ?
+                  <Link className="meta-answer meta-answer-a" to={`/question/${id}`} >Chi tiết</Link>
+                  :
+                  <a className='meta-answer meta-answer-a' onClick={scrollToRef}>Trả lời</a>
+              }
             </footer>
           </div>
           <div className='clearfix'></div>

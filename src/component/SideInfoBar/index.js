@@ -1,8 +1,10 @@
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
-
-export default class SideInfoBar extends Component {
+import { connect } from 'react-redux'
+import {changeModal, toggleModal} from '../../redux/ducks/modal'
+import AskPanel from '../Modal/AskPanel'
+class SideInfoBar extends Component {
   state = {
     tabIndex: 1
   }
@@ -14,6 +16,11 @@ export default class SideInfoBar extends Component {
       }
     })
   }
+  showAskModal = () => {
+    const { changeModal, toggleModal} = this.props
+    changeModal(AskPanel)
+    toggleModal()
+  }
   render() {
     //window.onscroll = function () { stickyEffect() }
     const tabIndex = this.state.tabIndex
@@ -24,7 +31,7 @@ export default class SideInfoBar extends Component {
           <h3 className="screen-reader-text">Sidebar</h3>
           <div className='inner-sidebar'  id='infoBarContent'>
             <div className="widget widget_ask">
-              <a target="_self" className="button-default wpqa-question">Đặt câu hỏi</a>
+              <a target="_self" className="button-default wpqa-question" onClick={this.showAskModal}>Đặt câu hỏi</a>
             </div>
             <section id="stats-widget-2" className="widget-no-divider widget stats-widget">
               <h3 className="screen-reader-text">Số liệu</h3>
@@ -73,7 +80,7 @@ export default class SideInfoBar extends Component {
                         <li className="widget-posts-text widget-no-img">
                           <span className="span-icon">
                             <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" srcset="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg 1x, https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-40x40.jpg 2x" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
+                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20"  src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
                             </a>
                           </span>
                           <div>
@@ -92,7 +99,7 @@ export default class SideInfoBar extends Component {
                         <li className="widget-posts-text widget-no-img">
                           <span className="span-icon">
                             <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" srcset="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg 1x, https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-40x40.jpg 2x" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
+                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20"  src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
                             </a>
                           </span>
                           <div>
@@ -111,7 +118,7 @@ export default class SideInfoBar extends Component {
                         <li className="widget-posts-text widget-no-img">
                           <span className="span-icon">
                             <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" srcset="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg 1x, https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-40x40.jpg 2x" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
+                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
                             </a>
                           </span>
                           <div>
@@ -147,7 +154,7 @@ export default class SideInfoBar extends Component {
                         <div className="author-image">
                           <a href="">
                             <span className="author-image-span">
-                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" srcset="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg 1x, https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-84x84.jpg 2x" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
+                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
                             </span>
                           </a>
                         </div>
@@ -173,7 +180,7 @@ export default class SideInfoBar extends Component {
                         <div className="author-image">
                           <a href="">
                             <span className="author-image-span">
-                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" srcset="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg 1x, https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-84x84.jpg 2x" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
+                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
                             </span>
                           </a>
                         </div>
@@ -199,7 +206,7 @@ export default class SideInfoBar extends Component {
                         <div className="author-image">
                           <a href="">
                             <span className="author-image-span">
-                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" srcset="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg 1x, https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-84x84.jpg 2x" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
+                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
                             </span>
                           </a>
                         </div>
@@ -252,3 +259,14 @@ export default class SideInfoBar extends Component {
 //     //empty.setAttribute("style","height:0px;")
 //   }
 // }
+
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = {
+  changeModal,
+  toggleModal
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SideInfoBar)

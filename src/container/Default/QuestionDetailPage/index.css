@@ -1,0 +1,179 @@
+.breadcrumbs {
+  border-bottom: 2px solid #e1e3e3;
+  margin: 0 -30px 30px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 30px 27px;
+}
+
+.breadcrumbs-wrap {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.crumbs {
+  height: 22px;
+  display: inline-block;
+}
+
+.crumbs-span {
+  margin: 0 5px;
+}
+
+.breadcrumbs i {
+  margin-right: 5px;
+}
+
+.question-content-text .content-text p:last-child {
+  margin-bottom: 10px;
+}
+
+.question-adv-comments {
+  margin: 30px -30px 0;
+  padding: 30px 30px 0;
+  position: relative;
+  z-index: 1;
+}
+
+#comments {
+  position: relative;
+  z-index: 2;
+}
+
+.answers-tabs {
+  margin: -30px -30px 30px;
+  padding: 30px 30px 0;
+}
+
+.answers-tabs .section-title {
+  float: left;
+  margin: -5px 0 0;
+  font-size: 14px;
+}
+
+.answers-tabs-inner {
+  float: right;
+}
+
+.answers-tabs-inner ul {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  bottom: -1px;
+}
+
+.answers-tabs-inner li {
+  list-style: none;
+}
+
+.commentlist, .commentlist ul.children {
+  margin: 0;
+  padding: 0;
+}
+
+.commentlist>li.comment {
+  padding: 0 30px 30px;
+  margin: 0 -30px 30px;
+}
+
+.commentlist li.comment {
+  list-style: none;
+  border-bottom: 1px solid #e4e6e6;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.commentlist li.comment .comment-body .author-image {
+  float: left;
+  margin-right: 10px;
+  width: 46px;
+}
+
+.commentlist li.comment .comment-body .comment-text .author, .commentlist li.comment .comment-body .comment-text .text {
+  padding-left: 10px;
+  float: right;
+  width: calc(100% - 56px);
+}
+
+.commentlist li.comment .comment-body .comment-text .author {
+  margin-bottom: 15px;
+}
+
+.comment-meta {
+  overflow: hidden;
+}
+
+.commentlist li.comment .comment-body .comment-text .comment-author {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.commentlist li.comment .comment-body .comment-text .author .badge-span {
+  margin-left: 15px;
+  font-weight: 300;
+}
+
+.commentlist li.comment .comment-body .comment-text .author .comment-date {
+  font-size: 11px;
+}
+
+.commentlist li.comment .comment-body p, .commentlist li.comment .comment-body em {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+ul.question-vote.answer-vote {
+  float: left;
+  margin: 10px 15px 0 0;
+  padding: 0;
+  list-style: none;
+  border-right: 1px solid #e4e6e6;
+  display: flex;
+  align-items: center;
+}
+
+ul.question-vote.answer-vote.answer-vote-dislike {
+  margin-top: 9px;
+}
+
+.question-vote {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  position: relative;
+}
+
+ul.question-vote.answer-vote li, .question-meta-vote .question-footer ul.question-vote li {
+  list-style: none;
+  float: left;
+  margin: 0 10px 0 0;
+  line-height: 0;
+  padding: 0;
+}
+
+#respond {
+  position: relative;
+  z-index: 1;
+}
+
+#respond.comment-respond .section-title {
+  margin-bottom: 15px;
+}
+
+.cancel-comment-reply a {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: block;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+#submit.button-default {
+  margin-top: 20px;
+}

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { toggleModal, changeModal } from '../../redux/ducks/modal'
-import HeaderBar from '../../component/HeaderBar'
-import SideNavBar from '../../component/SideNavBar'
-import SideInfoBar from '../../component/SideInfoBar'
+import { toggleModal, changeModal } from '../redux/ducks/modal'
+import HeaderBar from '../component/HeaderBar'
+import SideNavBar from '../component/SideNavBar'
+import SideInfoBar from '../component/SideInfoBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import ProfileTopBar from '../component/ProfileTopBar'
 class DefaultRoute extends Component {
   state = {
     showUpButton: false,
@@ -43,11 +44,12 @@ class DefaultRoute extends Component {
         render={routeProps => {
           return (<div>
             <div className="background-cover"></div>
-            <div class="go-up" style={showUpButton?{right:'20px'}:{}} onClick={this.scrollToTop}>
-              <i class="icon-up-open-big"><FontAwesomeIcon icon={faChevronUp}/></i>
+            <div className="go-up" style={showUpButton?{right:'20px'}:{}} onClick={this.scrollToTop}>
+              <i className="icon-up-open-big"><FontAwesomeIcon icon={faChevronUp}/></i>
             </div>
             <div id='wrap' className=''>
               <HeaderBar actions={actions} />
+              {remainProps.name =='UserDetail'?<ProfileTopBar {...routeProps}/>:null}
               <div className='queswer-content main-content'>
                 <div className='queswer-inner-content menu-sidebar'>
                   <div className='queswer-container the-main-container'>
@@ -56,8 +58,8 @@ class DefaultRoute extends Component {
                         <div className='queswer-main-inner float_l'>
                           <MyComponent {...routeProps}/>
                         </div>
-                        <div class="hide-main-inner"></div>
-                        <div class="hide-sidebar sidebar-width"><div class="hide-sidebar-inner"></div></div>
+                        <div className="hide-main-inner"></div>
+                        <div className="hide-sidebar sidebar-width"><div className="hide-sidebar-inner"></div></div>
                         <SideInfoBar />
                       </div>
                     </main>
