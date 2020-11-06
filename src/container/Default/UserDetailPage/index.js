@@ -4,12 +4,26 @@ import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { About, Answers, Followers, Following, Questions } from './tabs'
 import { NavLink, Route, Switch } from 'react-router-dom'
+import { fetchUserDetails } from '../../../redux/ducks/user'
+import { fetchProfile } from '../../../redux/ducks/profile'
+
 class UserDetailPage extends Component {
   handleSwitchTab = (i) => () => this.setState(state => ({ ...state, tabIndex: i }))
+  componentDidMount() {
+    const { fetchUserDetails, fetchProfile, isProfile } = this.props
+    if (isProfile) {
+      fetchProfile()
+    } else {
+      const id = this.props.match.params.id
+      fetchUserDetails(id)
+    }
+  }
   render() {
-    const id = this.props.match.params.id
-    const {url,path} = this.props.match
-    const user = {
+    const { url, path } = this.props.match
+    const { userDetails, profile, isProfile } = this.props
+    console.log(isProfile)
+    const id = isProfile ? profile.id : this.props.match.params.id
+    const user1 = {
       name: 'Martin Hope',
       questionCount: 3,
       answerCount: 7,
@@ -18,6 +32,7 @@ class UserDetailPage extends Component {
       gender: 1,
       birthDate: '2012-02-12'
     }
+    const user = isProfile ? profile : userDetails
     return (
       <React.Fragment>
         <div className="breadcrumbs breadcrumbs_1">
@@ -30,10 +45,10 @@ class UserDetailPage extends Component {
                     <a href="#" title="Home">
                       <span ><i className="icon-home">
                         <FontAwesomeIcon icon={faHome} />
-                      </i>Home</span>
+                      </i>Trang chủ</span>
                     </a>
                   </span>
-                  <span className="crumbs-span">/</span><span >{user.name}</span>
+                  <span className="crumbs-span">/</span><span >{isProfile ? "Thông tin cá nhân" : user.displayName}</span>
                 </span>
               </span>
             </div>
@@ -54,7 +69,7 @@ class UserDetailPage extends Component {
         <React.Fragment>
           <Switch>
             <Route path={path} exact><About user={user} /></Route>
-            <Route path={`${path}/questions`} exact><Questions id={id}/></Route>
+            <Route path={`${path}/questions`} exact><Questions id={id} /></Route>
             <Route path={`${path}/answers`} exact><Answers id={id} /></Route>
             <Route path={`${path}/followers`} exact><Followers id={id} /></Route>
             <Route path={`${path}/following`} exact><Following id={id} /></Route>
@@ -66,11 +81,13 @@ class UserDetailPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-
+  userDetails: state.user.userDetails,
+  profile: state.profile
 })
 
 const mapDispatchToProps = {
-
+  fetchUserDetails,
+  fetchProfile
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetailPage)

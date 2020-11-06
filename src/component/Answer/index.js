@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import { formatAMPM } from '../../common/functions'
 export default function Answer(props) {
   const { showQuestionLink } = props
-  const { id, user, createdDate, body, voteCount } = props.answer
-  const formatDate = new Date(createdDate)
+  const { id, user, creationDate, body, voteCount } = props.answer
+  const formatDate = new Date(creationDate)
   const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
   const parse = require('html-react-parser')
   return (
@@ -25,13 +25,13 @@ export default function Answer(props) {
               <div class="comment-author">
                 <span itemprop="author">
                   <Link itemprop="url" to={`/user/${user.id}`}>
-                    <span itemprop="name">{user.name}</span>
+                    <span itemprop="name">{user.displayName}</span>
                   </Link>
                 </span>
                 <span class="badge-span" style={{ backgroundColor: '#6b3de4' }}>Professional</span>
               </div>
               <a href="#" class="comment-date" itemprop="url">
-                <span class="queswer_hide" datetime={createdDate}>{createdDate}</span>
+                <span class="queswer_hide" dateTime={creationDate}>{creationDate}</span>
                 Đã trả lời ngày {dateString + " "} vào lúc {formatAMPM(formatDate)}
               </a>
             </div>

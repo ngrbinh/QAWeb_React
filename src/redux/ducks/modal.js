@@ -1,6 +1,7 @@
-export const Types = {
+export const modalTypes = {
   TOGGLE_MODAL: "modal/TOGGLE",
-  CHANGE_MODAL: "modal/CHANGE"
+  CHANGE_MODAL: "modal/CHANGE",
+  SET_MODAL: "modal/SET"
 }
 
 const initState = {
@@ -10,17 +11,23 @@ const initState = {
 
 export default function reducer(state = initState, action) {
   switch (action.type) {
-    case Types.TOGGLE_MODAL:
+    case modalTypes.TOGGLE_MODAL:
       return {
         ...state,
         showModal: !state.showModal,
         //component: state.showModal?null:state.component
       }
-    case Types.CHANGE_MODAL:
+    case modalTypes.CHANGE_MODAL:
       const {component} = action.payload
       return {
         ...state,
         component
+      }
+    case modalTypes.SET_MODAL:
+      const {showModal} = action.payload
+      return {
+        ...state,
+        showModal: showModal
       }
     default:
       return state
@@ -28,12 +35,19 @@ export default function reducer(state = initState, action) {
 }
 
 export const toggleModal = () => ({
-  type: Types.TOGGLE_MODAL
+  type: modalTypes.TOGGLE_MODAL
 })
 
 export const changeModal = component => ({
-  type: Types.CHANGE_MODAL,
+  type: modalTypes.CHANGE_MODAL,
   payload: {
     component
+  }
+})
+
+export const setModal = showModal => ({
+  type: modalTypes.SET_MODAL,
+  payload: {
+    showModal
   }
 })

@@ -1,21 +1,60 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import Question from '../../../component/Question';
+import { fetchQuestions, resetQuestions } from '../../../redux/ducks/post'
 class Home extends Component {
   state = {
     tabIndex: 1,
+    limit: 5,
+    page: 1,
+    sortBy: "-date"
   }
   switchTab = (index) => () => {
+    var newSortBy = null
+    switch (index) {
+      case 1:
+        newSortBy = "-date"
+        break
+      case 2:
+        newSortBy = "-answer"
+        break
+      case 3:
+        newSortBy = "-view"
+        break
+      case 4:
+        newSortBy = "-vote"
+        break
+    }
     this.setState(state => ({
       ...state,
-      tabIndex: index
+      tabIndex: index,
+      sortBy: newSortBy,
+      page: 1
     }))
+    const { fetchQuestions,resetQuestions } = this.props
+    resetQuestions()
+    const { limit} = this.state
+    fetchQuestions(1, limit, newSortBy);
+  }
+  loadMore = () => {
+    this.setState(state => ({
+      ...state,
+      page: state.page + 1
+    }))
+    const { fetchQuestions } = this.props
+    const { page, limit, sortBy } = this.state
+    fetchQuestions(page + 1, limit, sortBy);
+  }
+  componentDidMount() {
+    const { fetchQuestions } = this.props
+    const { page, limit, sortBy } = this.state
+    fetchQuestions(page, limit, sortBy);
   }
   render() {
-    const tabIndex = this.state.tabIndex
-    const questions = [
+    const { tabIndex, page } = this.state
+    const questions1 = [
       {
-        id : 2,
+        id: 2,
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
@@ -38,7 +77,7 @@ class Home extends Component {
         viewCount: "152"
       },
       {
-        id : 3,
+        id: 3,
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
@@ -61,7 +100,7 @@ class Home extends Component {
         viewCount: "152"
       },
       {
-        id : 4,
+        id: 4,
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
@@ -84,7 +123,7 @@ class Home extends Component {
         viewCount: "152"
       },
       {
-        id : 5,
+        id: 5,
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
@@ -107,7 +146,7 @@ class Home extends Component {
         viewCount: "152"
       },
       {
-        id : 6,
+        id: 6,
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
@@ -130,6 +169,7 @@ class Home extends Component {
         viewCount: "152"
       }
     ]
+    const { questions, loadingQuestions } = this.props
     return (
       <React.Fragment>
         <div className='clefix'></div>
@@ -145,7 +185,7 @@ class Home extends Component {
                     <a href='#' onClick={this.switchTab(2)}>Trả lời nhiều</a>
                   </li>
                   <li className={tabIndex == 3 ? 'active-tab' : ''}>
-                    <a href='#' onClick={this.switchTab(3)}>Chưa được trả lời</a>
+                    <a href='#' onClick={this.switchTab(3)}>Được xem nhiều</a>
                   </li>
                   <li className={tabIndex == 4 ? 'active-tab' : ''}>
                     <a href='#' onClick={this.switchTab(4)}>Được bình chọn nhiều</a>
@@ -156,18 +196,20 @@ class Home extends Component {
           </div>
         </div>
         <section>
-          <h2 class="screen-reader-text">Questions</h2>
+          <h2 className="screen-reader-text">Questions</h2>
           <div className="post-articles question-articles">
             {questions.map(item => {
-              return <Question question = {item} shorten={true}/>
+              return <Question question={item} shorten={true} key={item.id} />
             })}
           </div>
           <div className='clearfix'></div>
-          <div class="pagination-wrap pagination-question">
-            <div class="pagination-nav posts-load-more">
-              <span class="load_span"><span class="loader_2"></span></span>
-              <div class="load-more">
-                <a href="#">Xem thêm</a>
+          <div className="pagination-wrap pagination-question">
+            <div className="pagination-nav posts-load-more">
+              <span className="load_span" style={loadingQuestions ? { display: "inline-block" } : { display: "none" }}>
+                <span className="loader_2"></span>
+              </span>
+              <div className="load-more" style={loadingQuestions ? { display: "none" } : { display: "block" }}>
+                <a onClick={this.loadMore}>Xem thêm</a>
               </div>
             </div>
           </div>
@@ -181,13 +223,16 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     userProfile: state.profile,
+    questions: state.post.questions,
+    loadingQuestions: state.post.loadingQuestions,
+    modal: state.modal,
+    token: state.account.token
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-  }
+const mapDispatchToProps = {
+  fetchQuestions,
+  resetQuestions
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

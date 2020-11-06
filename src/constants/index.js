@@ -3,6 +3,9 @@ import BadgePage from "../container/Default/BadgePage"
 import UserPage from "../container/Default/UserPage"
 import QuestionDetailPage from "../container/Default/QuestionDetailPage"
 import UserDetailPage from "../container/Default/UserDetailPage"
+
+export const API_URL = "https://queswer.herokuapp.com/"
+
 export const ADMIN_ROUTES = [
   // {
   //   name: 'Admin Home',
@@ -17,30 +20,51 @@ export const DEFAULT_ROUTES = [
     name: 'Home',
     path: '/',
     exact: true,
-    component: Home
+    component: Home,
+    attachProps: {},
+    privateRoute: false,
   },
   {
     name: 'Badge',
     path: '/badge',
     exact: true,
-    component: BadgePage
+    component: BadgePage,
+    attachProps: {},
+    privateRoute: false,
   },
   {
     name: 'User',
     path: '/user',
     exact: true,
-    component: UserPage
+    component: UserPage,
+    attachProps: {},
+    privateRoute: false,
   },
   {
     name: 'QuestionDetail',
     path: '/question/:id',
     exact: true,
-    component: QuestionDetailPage
+    component: QuestionDetailPage,
+    attachProps: {},
+    privateRoute: false,
   },
   {
     name: 'UserDetail',
     path: '/user/:id',
     exact: false,
-    component: UserDetailPage
+    component: UserDetailPage,
+    attachProps: {},
+    privateRoute: false,
+  },
+  {
+    name: "Profile",
+    path: "/profile",
+    exact: false,
+    component: UserDetailPage,
+    attachProps: {
+      isProfile: true
+    },
+    privateRoute: true
   }
 ]
+

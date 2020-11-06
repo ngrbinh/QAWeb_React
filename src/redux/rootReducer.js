@@ -1,9 +1,17 @@
 import {combineReducers} from 'redux';
-import profile from './ducks/profile'
+import account from './ducks/account'
 import modal from './ducks/modal'
-const rootReduxer = combineReducers({
+import profile from './ducks/profile'
+import post from './ducks/post'
+import user from './ducks/user'
+import globalLoading from './ducks/globalLoading'
+const rootReducer = combineReducers({
+  account,
+  modal,
   profile,
-  modal
+  post,
+  user,
+  globalLoading
 })
 
-export default rootReduxer;
+export default rootReducer;

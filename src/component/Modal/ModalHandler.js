@@ -6,7 +6,7 @@ import { toggleModal} from '../../redux/ducks/modal'
 import './Modal.css'
 function ModalHandler(props) {
   const {modal, toggleModal} = props;
-  console.log(modal)
+  //console.log(modal)
   const {component: MyPanel} = modal;
   const modalClass = modal.showModal?"panel-pop panel-pop-image show":"panel-pop panel-pop-image hide";
   return (

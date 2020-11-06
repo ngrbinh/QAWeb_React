@@ -20,7 +20,7 @@
   background: #2d6ff7;
 }
 
-a:hover, .nav_menu>div>ul li a:hover, .stats-text, .user-area .user-content>.user-inner h4>a, .nav_menu ul li.current_page_item>a, .post-author, .post-meta a, .user-login-click>ul li a:hover, .answers-tabs-inner li a:hover, .commentlist li .comment-text a, .user-questions>div>i {
+a:hover, .nav_menu>div>ul li a:hover, .stats-text, .user-area .user-content>.user-inner h4>a, .nav_menu ul li.current_page_item>a, .post-author, .user-login-click>ul li a:hover, .answers-tabs-inner li a:hover, .commentlist li .comment-text a, .user-questions>div>i {
   color: #2d6ff7;
 }
 
@@ -55,7 +55,7 @@ body, .queswer-content, .main-content {
   background-color: #26333b;
 }
 
-.background-cover, .header, .panel-pop>i, .panel-image-opacity, .panel-pop-content, .wpqa_error, .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not(.ed_button):not(.wpqa_captcha), .wpqa_form input[type="submit"], .widget_ask .button-default, .user-notifications.user-profile-area>div, .user-notifications.user-profile-area>div, .col12, .menu-tabs>ul>li>a:before, .question-footer, .notifications-click, .user-click, .fakefile, .fakefile button, #submit.button-default, #wpqa-question.panel-pop-content, .styled-select, .styled-select select, .search-input-form input[type="search"], .cover-opacity, .user-stats>ul>li>div, .user-stats>ul>li>div>a, .user-stats>ul>li>div>div span, .user-follower>ul>li>div>a, .user_follow_2, .user-follow-profile a {
+.background-cover, .header, .panel-pop>i, .panel-image-opacity, .panel-pop-content, .wpqa_error, .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not(.ed_button):not(.wpqa_captcha), .wpqa_form input[type="submit"], .widget_ask .button-default, .user-notifications.user-profile-area>div, .user-notifications.user-profile-area>div, .col12, .menu-tabs>ul>li>a:before, .question-footer, .notifications-click, .user-click, .fakefile, .fakefile button, #submit.button-default, #wpqa-question.panel-pop-content, .styled-select, .styled-select select, .search-input-form input[type="search"], .cover-opacity, .user-stats>ul>li>div, .user-stats>ul>li>div>a, .user-stats>ul>li>div>div span, .user-follower>ul>li>div>a, .user_follow_2, .user-follow-profile a, .center-child {
   width: 100%;
 }
 
@@ -75,7 +75,7 @@ input[type="text"], input[type="password"], input[type="email"], .question-vote 
   float: left;
 }
 
-.stats-value, .user-notifications>div>ul li span, .widget-posts .user-notifications>div>ul li div h3 a, .answers-tabs h3, .comment-respond>h3.section-title, .point-div span, .user-stats>ul>li>div>div span, .user-follower>ul>li>div span span {
+.stats-value, .user-notifications>div>ul li span, .widget-posts .user-notifications>div>ul li div h3 a, .answers-tabs h3, .comment-respond>h3.section-title, .point-div span, .user-stats>ul>li>div>div span, .user-follower>ul>li>div span span, .post-meta a {
   color: #272930;
 }
 
@@ -92,7 +92,7 @@ input[type="text"], input[type="password"], input[type="email"], .fakefile butto
   width: 100%;
 }
 
-.wrap-pop {
+.wrap-pop, .global-loading {
   background: rgba(39, 41, 48, .95);
 }
 
@@ -1077,6 +1077,24 @@ img {
   border: 3px solid #FFF;
 }
 
+.author-image img.question {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+}
+
+.author-image-span img.user-tag, .author-image-span img.user-detail-avatar {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+}
+
+.user-image .header-avatar {
+  width: 29px;
+  height: 29px;
+  object-fit: cover;
+}
+
 .user-section-small .user-content, .user-section-simple_follow .user-content {
   overflow: hidden;
 }
@@ -1281,13 +1299,20 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 }
 
 .question-content .post-meta {
+  padding-top: 7px;
   margin-bottom: 5px;
   overflow: hidden;
+  width: 100%;
 }
 
 .post-meta {
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 400;
   margin-bottom: 10px;
+}
+
+.post-meta a {
+  font-weight: 600;
 }
 
 .question-content .post-meta>span {
@@ -2281,4 +2306,59 @@ a.wpqa-cover-buttons {
   display: block;
   float: left;
   letter-spacing: 0.8px;
+}
+
+.featured_image_question, .featured_image_answer {
+  margin-top: 20px;
+  position: relative;
+}
+
+.center-child {
+  display: flex;
+  justify-content: center;
+}
+
+.txt-transform-none {
+  text-transform: none !important;
+}
+
+.global-loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.global-loading .loader_span {
+  height: 80px;
+}
+
+.global-loading .loader_2 {
+  width: 30px;
+  height: 30px;
+  animation: fa-spin 1.5s infinite linear;
+  border-width: 3px;
+}
+
+.user-data ul li i {
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+ul.user-data-row li {
+  font-weight: 400;
+  color: #26333b;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+.question-detail .question-articles {
+  border-bottom: none;
 }

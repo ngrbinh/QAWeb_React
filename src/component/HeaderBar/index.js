@@ -5,8 +5,9 @@ import { faAngleDown, faBell, faEdit, faQuestionCircle, faSearch, faSignOutAlt, 
 import LoginPanel from '../Modal/LoginPanel'
 import SignupPanel from '../Modal/SignupPanel'
 import { connect } from 'react-redux'
-import { loginSuccess, login } from '../../redux/ducks/profile'
+import { loginSuccess, login } from '../../redux/ducks/account'
 import { Link } from 'react-router-dom'
+import defaultAvatar from '../../assets/image/user_avatar_default.png'
 function HeaderBar(props) {
   const [showUserActions, setShowUserActions] = useState(false)
   const { actions } = props
@@ -22,15 +23,15 @@ function HeaderBar(props) {
   const toggleUserActions = () => {
     setShowUserActions(!showUserActions)
   }
-  const { userProfile } = props
-  const loginClass = 'right-header float_r' + (userProfile.userName != null ? ' wrap-login' : ' wrap-not-login')
+  const { profile } = props
+  const loginClass = 'right-header float_r' + (profile.displayName ? ' wrap-login' : ' wrap-not-login')
   return (
     <div className='hidden-header header-dark mobile_bar_active'>
       <header className="header">
         <div className="queswer-container the-main-container">
           <div className={loginClass}>
             {
-              userProfile.userName == null ?
+              profile.displayName == null ?
                 <React.Fragment>
                   <a className='button-default button-sign-in' onClick={signInClick}>Đăng nhập</a>
                   <a className='button-default-2 button-sign-up' onClick={sigunUpClick}>Đăng ký</a>
@@ -53,11 +54,13 @@ function HeaderBar(props) {
                   <div className="user-login-click float_r">
                     <span className="user-click" onClick={toggleUserActions}></span>
                     <div className="user-image float_l">
-                      <img className="avatar avatar-29 photo" alt="binh123" title="binh123" width="29" height="29" src="https://secure.gravatar.com/avatar/76aa063f1270fa5823131063eb348fc6?s=96&d=mm&r=g" />
+                      <img className="avatar avatar-29 photo header-avatar" alt="binh123" title={profile.displayName}
+                        src={profile.avatarUrl?profile.avatarUrl:defaultAvatar} 
+                      />
                     </div>
                     <div className="user-login float_l">
-                      <span>Welcome</span><br />
-                      <div className="float_l">binh123</div>
+                      <span>Xin chào</span><br />
+                      <div className="float_l">{profile.displayName}</div>
                     </div>
                     <i className="icon-down-open-mini"
                       style={showUserActions ? { backgroundColor: '#1a1c21' } : {}}
@@ -66,9 +69,9 @@ function HeaderBar(props) {
                     </i>
                     <ul style={showUserActions ? { display: 'block' } : {}}>
                       <li>
-                        <a href="#">
+                        <Link to="/profile">
                           <i className="icon-user"><FontAwesomeIcon icon={faUser} /></i>Thông tin cá nhân
-                          </a>
+                          </Link>
                       </li>
                       <li>
                         <a href="#">
@@ -136,7 +139,7 @@ function HeaderBar(props) {
 
 const mapStateToProps = (state) => {
   return {
-    userProfile: state.profile,
+    profile: state.profile,
   };
 }
 

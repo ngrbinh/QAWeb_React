@@ -3,13 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { truncateWithEllipsis } from '../../common/functions'
-
+import defaultAvatar from '../../assets/image/user_avatar_default.png'
 export default function Question(props) {
-  const { shorten, scrollToRef, question } = props
-  const { user, createdDate, body, voteCount, subject, grade, answerCount, viewCount, id } = question
+  
+  const { shorten, scrollToRef } = props
+  var question = props.question
+  if (Object.keys(question).length === 0) {
+    question = {
+      user: {},
+      body: ""
+    }
+  }
+  const { user, creationDate, body, voteCount, subjectTypeName, gradeTypeName, answerCount, viewCount, id, imgUrl } = question
   const shortBody = shorten ? truncateWithEllipsis(body, 250) : body;
-  const formatDate = new Date(createdDate)
-  const dateString = formatDate.getDate() + '-' + (formatDate.getMonth() + 1) + '-' + formatDate.getFullYear()
+  const formatDate = new Date(creationDate)
+  const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
   const parse = require('html-react-parser')
   return (
     <article className='question-articles article-post clearfix question-answer-before'>
@@ -20,7 +28,7 @@ export default function Question(props) {
               <div className='author-image mgb0'>
                 <Link to={`/user/${user.id}`}>
                   <span className='author-image-span'>
-                    <img className='avatar' width='42px' height='42px' src={user.avatarUrl} />
+                    <img className='avatar' src={user.avatarUrl ? user.avatarUrl : defaultAvatar} className='question' />
                   </span>
                 </Link>
               </div>
@@ -28,22 +36,22 @@ export default function Question(props) {
             <div className='question-content question-content-first'>
               <header className='article-header'>
                 <div className='question-header'>
-                  <Link className='post-author' to={`/user/${user.id}`}>{user.name}</Link>
+                  <Link className='post-author' to={`/user/${user.id}`}>{user.displayName}</Link>
                   <span className="badge-span" style={{ backgroundColor: '#ffbf00' }}>Pundit</span>
                   <div className='post-meta'>
                     <span className="post-date">Ngày đăng<span className="date-separator">: </span>
-                      <a href="#" itemprop="url">
+                      <a href="#" itemProp="url">
                         <time className="entry-date published"> {dateString}</time>
                       </a>
                     </span>
                     <span >Môn học<span className="date-separator">: </span>
-                      <a href="#" itemprop="url">
-                        {subject}
+                      <a href="#" itemProp="url">
+                        {subjectTypeName}
                       </a>
                     </span>
                     <span>Cấp bậc<span className="date-separator">: </span>
-                      <a href="#" itemprop="url">
-                        {grade}
+                      <a href="#" itemProp="url">
+                        {gradeTypeName}
                       </a>
                     </span>
                   </div>
@@ -81,6 +89,18 @@ export default function Question(props) {
                     : <div className='content-text'>
                       {parse(shortBody)}
                     </div>
+                  }
+                  {
+                    imgUrl == null ?
+                      null
+                      : <React.Fragment>
+                        <div className="featured_image_question">
+                          <a href={imgUrl}>
+                            <img alt="" width="260" height="185" src={imgUrl} />
+                          </a>
+                        </div>
+                        <div className='clearfix'></div>
+                      </React.Fragment>
                   }
                 </div>
               </div>

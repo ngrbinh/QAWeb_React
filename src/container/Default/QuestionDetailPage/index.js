@@ -6,7 +6,8 @@ import Answer from '../../../component/Answer'
 import Question from '../../../component/Question'
 import './index.css'
 import { Editor } from '@tinymce/tinymce-react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { fetchQuestionDetails } from '../../../redux/ducks/post'
 class QuestionDetailPage extends Component {
   constructor(props) {
     super()
@@ -36,15 +37,18 @@ class QuestionDetailPage extends Component {
       path: newPath
     }))
   }
-  render() {
+  componentDidMount() {
     const id = this.props.match.params.id
-    const questionDetail = {
+    this.props.fetchQuestionDetails(id)
+  }
+  render() {
+    const questionDetail1 = {
       question: {
         id: 2,
         user: {
           avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
           name: 'Martin Hope',
-          id : 1
+          id: 1
         },
         createdDate: '2020-10-08T14:59:00.000+00:00',
         body: `<p>In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.</p><p>I saw him last night (correct)</p><p>I see him last night (incorrect)</p><p>But i think both has the same meaning and are understandable,</p><p>Isn’t it?</p>?`,
@@ -90,8 +94,10 @@ class QuestionDetailPage extends Component {
         }
       ]
     }
-    const { question, answers } = questionDetail
-    const { questionTab,path } = this.state
+    const { questionDetails, loading } = this.props
+    var { answers,...question  } = questionDetails
+    if (!answers) answers = []
+    const { questionTab, path } = this.state
     return (
       <React.Fragment>
         <div className='breadcrumbs breadcrumbs_1'>
@@ -100,34 +106,39 @@ class QuestionDetailPage extends Component {
               <span className="crumbs">
                 <span>
                   <span>
-                    <meta itemprop="position" content="1" />
+                    <meta content="1" />
                     <Link to='/' title="Home">
                       <span><i className="icon-home"><FontAwesomeIcon icon={faHome} /></i>Trang chủ</span>
                     </Link>
                   </span>
                   <span className="crumbs-span">/</span>
                   <span className="current">
-                    <meta itemprop="position" content="2" />
+                    <meta content="2" />
                     <a itemprop="item" href="#" title="Questions">
                       <span itemprop="name">Câu hỏi</span>
                     </a>
                   </span>
                   <span className="crumbs-span">/</span>
-                  <span className="current">Q {question.id}</span>
+                  <span className="current">Q {question ? question.id : null}</span>
                 </span>
               </span>
             </div>
           </div>
         </div>
         <div className='clearfix'></div>
-        <div className='post-articles question-articles'>
-          <Question question={question} shorten={false} scrollToRef={this.scrollToMyRef} />
+        <div className='center-child'>
+          <span className="load_span" style={loading ? { display: "inline-block" } : { display: "none" }}>
+            <span className="loader_2"></span>
+          </span>
+        </div>
+        <div className='post-articles question-articles question-detail' style={loading ? { display: "none" } : { display: "block" }}>
+          {question ? <Question question={question} shorten={false} scrollToRef={this.scrollToMyRef} /> : null}
           <div className='question-adv-comments question-has-comments clearfix'>
             <div id='comments' className='post-section comments-popup-share'>
               <div className='post-inner'>
                 <div className='answers-tabs'>
                   <h3 className='section-title'>
-                    <span>5 câu trả lời</span>
+                    <span>{answers.length} câu trả lời</span>
                   </h3>
                   <div className="answers-tabs-inner">
                     <ul>
@@ -139,7 +150,7 @@ class QuestionDetailPage extends Component {
                   <div className='clearfix'></div>
                 </div>
                 <ol className='commentlist clearfix'>
-                  {answers.map(item => <Answer answer={item} />)}
+                  {answers.map(item => <Answer answer={item} key={item.id}/>)}
                 </ol>
                 <div className='clearfix'></div>
               </div>
@@ -200,11 +211,12 @@ class QuestionDetailPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-
+  questionDetails: state.post.questionDetails,
+  loading: state.post.loadingQuestionDetails
 })
 
 const mapDispatchToProps = {
-
+  fetchQuestionDetails
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetailPage)

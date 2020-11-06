@@ -1,13 +1,14 @@
-import { faBook, faCommentAlt, faStar, faUserFriends} from '@fortawesome/free-solid-svg-icons'
+import { faBook, faCommentAlt, faGlobeAsia, faHeart, faMapMarkerAlt, faPhoneAlt, faStar, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import Answer from '../../../component/Answer'
 import Question from '../../../component/Question'
 import UserTagDetail from '../../../component/UserTagDetail'
+import defaultAvatar from '../../../assets/image/user_avatar_default.png'
 
 export function About(props) {
-  console.log(props)
-  const {name,gender,birthDate,phoneNumber,questionCount,answerCount,point} = props.user
+  //console.log(props)
+  const { displayName, gender, birthDate, phoneNumber, questionCount, answerCount, point, aboutMe, address } = props.user
   const date = new Date(birthDate)
   const now = new Date()
   const url = 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-7-29x29.jpg'
@@ -17,16 +18,25 @@ export function About(props) {
         <div className="post-inner">
           <div className="user-content">
             <div className="user-inner">
-              <div className="bio_editor">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-              has been the industry's standard dummy text when an unknown printer took a galley of type and scrambled it
-              to make a type specimen book.
-          </div>
+              <div className="bio_editor">{aboutMe}</div>
               <div className="user-data">
-                <ul>
-                  <li className="city-country"><i className="icon-location"></i>{name}</li>
-                  <li className="user-phone"><i className="icon-phone"></i>{phoneNumber}</li>
-                  <li className="user-gender"><i className="icon-heart"></i>{gender?'Nam':'Nữ'}</li>
-                  <li className="user-age"><i className="icon-globe"></i>{now.getFullYear() - date.getFullYear()} tuổi</li>
+                <ul className="user-data-row">
+                  <li className="city-country">
+                    <i className="icon-location"><FontAwesomeIcon icon={faMapMarkerAlt} /></i>
+                    {address ? address.city : null}
+                  </li>
+                  <li className="user-phone">
+                    <i className="icon-phone"><FontAwesomeIcon icon={faPhoneAlt} /></i>
+                    {phoneNumber}
+                  </li>
+                  <li className="user-gender">
+                    <i className="icon-heart"><FontAwesomeIcon icon={faHeart} /></i>
+                    {gender ? 'Nam' : 'Nữ'}
+                  </li>
+                  <li className="user-age">
+                    <i className="icon-globe"><FontAwesomeIcon icon={faGlobeAsia}/></i>
+                    {now.getFullYear() - date.getFullYear()} tuổi
+                  </li>
                 </ul>
               </div>
             </div>
@@ -37,30 +47,30 @@ export function About(props) {
       <div className="user-stats">
         <ul className="row">
           <li className="col col3 user-questions">
-            <div><a href="#"></a><i className="icon-book-open"><FontAwesomeIcon icon={faBook}/></i>
+            <div><a href="#"></a><i className="icon-book-open"><FontAwesomeIcon icon={faBook} /></i>
               <div><span>{questionCount}</span>
-                <h4>Questions</h4>
+                <h4>Câu hỏi</h4>
               </div>
             </div>
           </li>
           <li className="col col3 user-answers">
-            <div><a href="#"></a><i className="icon-comment"><FontAwesomeIcon icon={faCommentAlt}/></i>
+            <div><a href="#"></a><i className="icon-comment"><FontAwesomeIcon icon={faCommentAlt} /></i>
               <div><span>{answerCount}</span>
-                <h4>Answers</h4>
+                <h4>Câu trả lời</h4>
               </div>
             </div>
           </li>
           <li className="col col3 user-best-answers">
             <div><a href="#"></a><i className="icon-graduation-cap"></i>
               <div><span>0</span>
-                <h4>Best Answers</h4>
+                <h4>Bình chọn</h4>
               </div>
             </div>
           </li>
           <li className="col col3 user-points">
-            <div><a href="#"></a><i className="icon-bucket"><FontAwesomeIcon icon={faStar}/></i>
+            <div><a href="#"></a><i className="icon-bucket"><FontAwesomeIcon icon={faStar} /></i>
               <div><span>{point}</span>
-                <h4>Points</h4>
+                <h4>Điểm</h4>
               </div>
             </div>
           </li>
@@ -70,7 +80,7 @@ export function About(props) {
         <ul className="row">
           <li className="col col6 user-followers">
             <div><a href="#"></a>
-              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends}/></i>Followers</h4>
+              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends} /></i>Followers</h4>
               <div>
                 <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
                 <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
@@ -83,7 +93,7 @@ export function About(props) {
           <li className="col col6 user-following">
             <div>
               <a href="#"></a>
-              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends}/></i>Following</h4>
+              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends} /></i>Following</h4>
               <div>
                 <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
                 <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
@@ -242,7 +252,7 @@ export function Questions(props) {
 export function Answers(props) {
   const id = props.id
   console.log(id)
-  const answers= [
+  const answers = [
     {
       id: 3,
       user: {
@@ -282,7 +292,7 @@ export function Answers(props) {
       <div id='comments' className='post-section comments-popup-share'>
         <div className='post-inner'>
           <ol className='commentlist clearfix'>
-            {answers.map(item => <Answer answer={item} showQuestionLink={true}/>)}
+            {answers.map(item => <Answer answer={item} showQuestionLink={true} />)}
           </ol>
           <div className='clearfix'></div>
         </div>
@@ -347,7 +357,7 @@ export function Followers(props) {
   return (
     <div className='section-page-div user-section user-section-columns row user-not-normal'>
       {
-        users.map(item => <UserTagDetail user={item} key={item.id}/>)
+        users.map(item => <UserTagDetail user={item} key={item.id} />)
       }
     </div>
   )
