@@ -15,6 +15,7 @@ const UserDetailsTopBar = (props) => {
     followCount: 7
   }
   const user = isProfile ? profile : userDetails
+  //console.log(profile)
   const { displayName, avatarUrl, questionCount, followCount } = user
   return (
     <div className="wpqa-profile-cover wpqa-profile">
@@ -43,20 +44,20 @@ const UserDetailsTopBar = (props) => {
             </div>
             <div className="wpqa-cover-right">
               {isProfile
-                ? <div className="user_follow_4 user_follow_done">
-                  <div className="small_loader loader_2"></div>
-                  <a href="#" className="following_not button-default" data-rel="6" title="Unfollow">
-                    <span className="follow-value">Chỉnh sửa thông tin</span></a>
-                </div>
+                ? null
                 : <div className="user_follow_4 user_follow_done">
                   <div className="small_loader loader_2"></div>
                   <a href="#" className="following_not button-default" data-rel="6" title="Unfollow">
                     <span className="follow-value">Hủy theo dõi</span></a>
                 </div>
               }
-              <div className="ask-question">
-                <a href="" className="button-default ask-question-user">Hỏi {displayName}</a>
-              </div>
+              {
+                isProfile
+                  ? null
+                  : <div className="ask-question">
+                    <a href="" className="button-default ask-question-user">Hỏi {displayName}</a>
+                  </div>
+              }
               <div className="wpqa-cover-buttons wpqa-cover-followers">
                 <i className="icon-users"><FontAwesomeIcon icon={faUsers} /></i>
                 <span className="cover-count follow-cover-count">{followCount}</span>người theo dõi

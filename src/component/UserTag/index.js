@@ -21,7 +21,7 @@ function UserTag(props) {
             <div className="user-inner">
               <h4><Link to={`/user/${user.id}`}>{displayName}</Link></h4>
               <span className="badge-span" style={{ backgroundColor: '#0d0e11' }}>Begginer</span>
-              <div className="user_follow_4 follow-btn" style={displayName != null ? null : { display: 'none' }}>
+              <div className="user_follow_4 follow-btn" style={displayName ? null : { display: 'none' }}>
                 <div className="small_loader loader_2"></div>
                 <a href="#" className="following_you button-default" data-rel="7" title="Follow">
                   <span className="follow-value txt-transform-none">Theo dõi</span>

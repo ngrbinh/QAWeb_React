@@ -3,6 +3,7 @@ import axiosService from "../common/axiosService"
 const url = 'post'
 
 export const getQuestions = (page,limit,sortBy) =>  {
+  console.log("api")
   return axiosService.get(`${url}/question/all?page=${page}&limit=${limit}&sort_by=${sortBy}`)
 }
 

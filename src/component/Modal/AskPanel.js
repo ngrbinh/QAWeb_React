@@ -67,6 +67,7 @@ class AskPanel extends Component {
             init={{
               height: 400,
               menubar: false,
+              external_plugins: { tiny_mce_wiris: 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js' },
               plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
@@ -74,7 +75,7 @@ class AskPanel extends Component {
               ],
               toolbar: [
                 'undo redo | styleselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify',
-                'bullist numlist outdent indent | link | preview fullpage | forecolor backcolor emoticons'
+                'bullist numlist outdent indent | link | preview fullpage | forecolor backcolor emoticons | tiny_mce_wiris_formulaEditor'
               ]
             }}
             onEditorChange={this.handleEditorChange}

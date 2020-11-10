@@ -8,6 +8,7 @@ import './index.css'
 import { Editor } from '@tinymce/tinymce-react';
 import { Link } from 'react-router-dom'
 import { fetchQuestionDetails } from '../../../redux/ducks/post'
+
 class QuestionDetailPage extends Component {
   constructor(props) {
     super()
@@ -40,6 +41,35 @@ class QuestionDetailPage extends Component {
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.fetchQuestionDetails(id)
+  }
+  componentDidUpdate() {
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML";
+      var element = document.getElementsByClassName("content-text");
+      var config =
+        'MathJax.Hub.Config({' +
+        'messageStyle: "none",' +
+        'SVG: {' +
+        'scale: 120,' +
+        'linebreaks: {' +
+        'automatic: true' +
+        '}' +
+        '},' +
+        '"HTML-CSS": { linebreaks: { automatic: true } },' +
+        'CommonHTML: { linebreaks: { automatic: true } },' +
+        'tex2jax: {' +
+        `inlineMath: [['$', '$'], ["\\(", "\\)"]]` +
+        '},' +
+        '});' +
+        'MathJax.Hub.Startup.onload();';
+
+      if (window.opera) { script.innerHTML = config }
+      else { script.text = config }
+      script.onload = new Function("MathJax.Hub.Queue(['Typeset',MathJax.Hub]);")
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
   }
   render() {
     const questionDetail1 = {
@@ -95,7 +125,7 @@ class QuestionDetailPage extends Component {
       ]
     }
     const { questionDetails, loading } = this.props
-    var { answers,...question  } = questionDetails
+    var { answers, ...question } = questionDetails
     if (!answers) answers = []
     const { questionTab, path } = this.state
     return (
@@ -114,8 +144,8 @@ class QuestionDetailPage extends Component {
                   <span className="crumbs-span">/</span>
                   <span className="current">
                     <meta content="2" />
-                    <a itemprop="item" href="#" title="Questions">
-                      <span itemprop="name">Câu hỏi</span>
+                    <a itemProp="item" href="#" title="Questions">
+                      <span itemProp="name">Câu hỏi</span>
                     </a>
                   </span>
                   <span className="crumbs-span">/</span>
@@ -150,28 +180,28 @@ class QuestionDetailPage extends Component {
                   <div className='clearfix'></div>
                 </div>
                 <ol className='commentlist clearfix'>
-                  {answers.map(item => <Answer answer={item} key={item.id}/>)}
+                  {answers.map(item => <Answer answer={item} key={item.id} />)}
                 </ol>
                 <div className='clearfix'></div>
               </div>
             </div>
             <div className='respond-all' ref={this.myRef}>
               <div id='respond' className='comment-respond'>
-                <h3 class="section-title">Viết câu trả lời
-                  <div class="cancel-comment-reply">
+                <h3 className="section-title">Viết câu trả lời
+                  <div className="cancel-comment-reply">
                     <a rel="nofollow" id="cancel-comment-reply-link" href="#" style={{ display: 'none' }}>Cancel reply</a>
                   </div>
                 </h3>
                 <form noValidate method='post' >
-                  <div class="wpqa_form">
-                    <label for="featured_image">Featured image</label>
-                    <div class="fileinputs">
+                  <div className="wpqa_form">
+                    <label htmlFor="featured_image">Featured image</label>
+                    <div className="fileinputs">
                       <input type="file" name="featured_image" id="featured_image" accept='image/*' onChange={e => this.handleFileSelect(e)} />
-                      <div class="fakefile">
+                      <div className="fakefile">
                         <button type="button">{path}</button>
                         <span>Browse</span>
                       </div>
-                      <i class="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
+                      <i className="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
                     </div>
                   </div>
                   <div className='clearfix'> </div>
@@ -186,17 +216,18 @@ class QuestionDetailPage extends Component {
                         'searchreplace visualblocks code fullscreen',
                         'insertdatetime media table paste code help wordcount'
                       ],
+                      external_plugins: { tiny_mce_wiris: 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js' },
                       toolbar: [
                         'undo redo | styleselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify',
-                        'bullist numlist outdent indent | link | preview fullpage | forecolor backcolor emoticons | help'
+                        'bullist numlist outdent indent | link | preview fullpage | forecolor backcolor emoticons | tiny_mce_wiris_formulaEditor | help'
                       ]
                     }}
                     onEditorChange={this.handleEditorChange}
                   />
-                  <p class="form-submit" >
-                    <input name="submit" type="submit" id="submit" class="button-default button-hide-click" value="Submit" />
-                    <span class="clearfix"></span>
-                    <span class="load_span"><span class="loader_2"></span>
+                  <p className="form-submit" >
+                    <input name="submit" type="submit" id="submit" className="button-default button-hide-click" value="Submit" />
+                    <span className="clearfix"></span>
+                    <span className="load_span"><span className="loader_2"></span>
                     </span>
                   </p>
                 </form>

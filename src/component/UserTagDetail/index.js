@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 function UserTagDetail(props) {
-  const { name, avatarUrl, answerCount, questionCount, point, id } = props.user
+  const { name, avatarUrl, answerCount, questionCount, point, id, displayName } = props.user
   return (
     <div className="col col6">
       <div className="post-section user-area user-area-columns">
@@ -41,15 +41,17 @@ function UserTagDetail(props) {
               </li>
               <li className="user-columns-points">
                 <a href="#">
-                  <i className="icon-bucket"><FontAwesomeIcon icon={faStar}/></i>123 Points
+                  <i className="icon-bucket"><FontAwesomeIcon icon={faStar} /></i>123 Points
                 </a>
               </li>
             </ul>
           </div>
           <div className="user-follow-profile">
-            <div className="user_follow_2">
-              <div className="small_loader loader_2 user_follow_loader"></div><a href="#" className="following_you" data-rel="1"
-                title="Follow"><span className="follow-value">Follow</span></a>
+            <div className="user_follow_2" style={displayName ? null : { display: 'none' }}>
+              <div className="small_loader loader_2 user_follow_loader"></div>
+              <a href="#" className="following_you" data-rel="1" title="Follow" >
+                <span className="follow-value">Follow</span>
+              </a>
             </div>
             <Link to={`/user/${id}`}>View Profile</Link>
           </div>

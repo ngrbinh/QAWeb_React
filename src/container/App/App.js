@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { ADMIN_ROUTES, DEFAULT_ROUTES } from '../../constants';
 import AdminRoute from '../../routes/AdminRoute';
 import DefaultRoute from '../../routes/DefaultRoute';
 import ModalHandler from '../../component/Modal/ModalHandler';
 import GlobalLoading from '../../component/GlobalLoading';
-import { Helmet } from 'react-helmet'
+
 function renderAdminRoutes() {
   let xhtml = null
   xhtml = ADMIN_ROUTES.map(route => {
@@ -39,21 +39,14 @@ function renderDefaultRoutes() {
 
 function App(props) {
   return (
-    <div>
-      <Helmet>
-        <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-        <script src="ASCIIMathML.js"></script>
-      </Helmet>
-      <Router>
-        <ModalHandler />
-        <GlobalLoading />
-        <Switch>
-          {renderAdminRoutes()}
-          {renderDefaultRoutes()}
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <ModalHandler />
+      <GlobalLoading />
+      <Switch>
+        {renderAdminRoutes()}
+        {renderDefaultRoutes()}
+      </Switch>
+    </Router>
   );
 }
 

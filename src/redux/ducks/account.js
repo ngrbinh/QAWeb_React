@@ -9,7 +9,7 @@ export const accountTypes = {
   SIGNUP: "account/SIGNUP",
   SIGNUP_SUCCESS: "account/SIGNUP_SUCCESS",
   SIGNUP_FAIL: "account/SIGNUP_FAIL",
-  RESET_ERROR: "account/RESET_ERROR"
+  RESET_ERROR: "account/RESET_ERROR",
 }
 
 const initState = {
@@ -17,7 +17,9 @@ const initState = {
   loadingSignup: false,
   signupError: "",
   loadingLogin: false,
-  loginError: ""
+  loginError: "",
+  loadingPassword: false,
+  passwordError: ""
 }
 
 export default function reducer(state = initState, action) {
@@ -28,7 +30,7 @@ export default function reducer(state = initState, action) {
         loadingLogin: true
       }
     case accountTypes.LOGIN_SUCCESS:
-      const {token} = action.payload
+      const { token } = action.payload
       console.log(token)
       return {
         ...state,
@@ -36,7 +38,7 @@ export default function reducer(state = initState, action) {
         loadingLogin: false
       }
     case accountTypes.LOGIN_FAIL:
-      const {error} = action.payload
+      const { error } = action.payload
       return {
         ...state,
         loadingLogin: false,
@@ -44,7 +46,6 @@ export default function reducer(state = initState, action) {
         token: ""
       }
     case accountTypes.LOGOUT:
-      console.log("ff")
       return {
         ...initState
       }
@@ -59,16 +60,35 @@ export default function reducer(state = initState, action) {
         loadingSignup: false
       }
     case accountTypes.SIGNUP_FAIL:
-      const {error:signupError} = action.payload
+      const { error: signupError } = action.payload
       return {
         ...state,
         loadingSignup: false,
-        signupError : signupError
+        signupError: signupError
       }
     case accountTypes.RESET_ERROR:
       return {
         ...state,
-        signupError: ""
+        signupError: "",
+        loginError: "",
+        passwordError: ""
+      }
+    case accountTypes.CHANGE_PASSWORD:
+      return {
+        ...state,
+        loadingPassword: true
+      }
+    case accountTypes.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loadingPassword: false,
+      }
+    case accountTypes.CHANGE_PASSWORD_FAIL:
+      const { message } = action.payload
+      return {
+        ...state,
+        loadingPassword: false,
+        passwordError: message
       }
     default: return state
   }
@@ -88,17 +108,17 @@ export const logout = () => ({
 
 export const loginSuccess = (token) => ({
   type: accountTypes.LOGIN_SUCCESS,
-  payload: {token}
+  payload: { token }
 })
 
 export const loginFail = (error) => ({
   type: accountTypes.LOGIN_FAIL,
-  payload: {error}
+  payload: { error }
 })
 
 export const signup = (data) => ({
   type: accountTypes.SIGNUP,
-  payload: {data}
+  payload: { data }
 })
 
 export const signupSuccess = () => ({
@@ -107,9 +127,24 @@ export const signupSuccess = () => ({
 
 export const signupFail = (error) => ({
   type: accountTypes.SIGNUP_FAIL,
-  payload: {error}
+  payload: { error }
 })
 
 export const resetError = () => ({
   type: accountTypes.RESET_ERROR
+})
+
+export const changePassword = (data, history) => ({
+  type: accountTypes.CHANGE_PASSWORD,
+  payload: { data, history }
+})
+
+export const changePasswordSuccess = () => ({
+  type: accountTypes.CHANGE_PASSWORD_SUCCESS,
+  payload: {}
+})
+
+export const changePasswordFail = (message) => ({
+  type: accountTypes.CHANGE_PASSWORD_FAIL,
+  payload: { message }
 })

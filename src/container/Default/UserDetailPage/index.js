@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { About, Answers, Followers, Following, Questions } from './tabs'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { Link, NavLink, Route, Switch } from 'react-router-dom'
 import { fetchUserDetails } from '../../../redux/ducks/user'
 import { fetchProfile } from '../../../redux/ducks/profile'
 
@@ -21,7 +21,7 @@ class UserDetailPage extends Component {
   render() {
     const { url, path } = this.props.match
     const { userDetails, profile, isProfile } = this.props
-    console.log(isProfile)
+    //console.log(isProfile)
     const id = isProfile ? profile.id : this.props.match.params.id
     const user1 = {
       name: 'Martin Hope',
@@ -52,6 +52,17 @@ class UserDetailPage extends Component {
                 </span>
               </span>
             </div>
+            {isProfile
+              ? <div className="breadcrumb-right">
+                <div className="question-navigation edit-profile">
+                  <Link to='/edit'>
+                    <i className="icon-pencil"><FontAwesomeIcon icon={faPencilAlt} /></i>Chỉnh sửa thông tin
+                  </Link>
+                </div>
+                <div className="clearfix"></div>
+              </div>
+              : null
+            }
           </div>
         </div>
         <div className="clearfix"></div>

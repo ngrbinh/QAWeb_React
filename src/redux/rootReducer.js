@@ -5,12 +5,14 @@ import profile from './ducks/profile'
 import post from './ducks/post'
 import user from './ducks/user'
 import globalLoading from './ducks/globalLoading'
+import address from './ducks/address'
 const rootReducer = combineReducers({
   account,
   modal,
   profile,
   post,
   user,
+  address,
   globalLoading
 })
 

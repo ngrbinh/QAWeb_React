@@ -9,7 +9,6 @@ class AxiosService {
     instance.interceptors.request.use(
       (config) => {
         const state = store.getState()
-        console.log(state.account)
         const token = state.account.token
         config.headers.Authorization = token
         return config

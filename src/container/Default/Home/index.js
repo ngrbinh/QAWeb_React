@@ -46,11 +46,13 @@ class Home extends Component {
     fetchQuestions(page + 1, limit, sortBy);
   }
   componentDidMount() {
-    const { fetchQuestions } = this.props
+    const { fetchQuestions,resetQuestions } = this.props
     const { page, limit, sortBy } = this.state
+    resetQuestions()
     fetchQuestions(page, limit, sortBy);
   }
   render() {
+    console.log(this.props)
     const { tabIndex, page } = this.state
     const questions1 = [
       {

@@ -41,7 +41,7 @@ class DefaultRoute extends Component {
     }
   }
   render() {
-    const { component: MyComponent, privateRoute, attachProps, token, changeModal,toggleModal, ...remainProps } = this.props
+    const { component: MyComponent, privateRoute, attachProps, token, changeModal, toggleModal, ...remainProps } = this.props
     const actionGetter = ({ toggleModal, changeModal }) => ({ toggleModal, changeModal })
     const actions = actionGetter(this.props)
     const { showUpButton } = this.state
@@ -51,8 +51,8 @@ class DefaultRoute extends Component {
       changeModal(LoginPanel)
       toggleModal()
     }
-    return ( privateRoute && !token
-      ? <Redirect to="/"/>
+    return (privateRoute && !token
+      ? <Redirect to="/" />
       : <Route
         {...remainProps}
         render={routeProps => {
@@ -63,7 +63,8 @@ class DefaultRoute extends Component {
             </div>
             <div id='wrap' className=''>
               <HeaderBar actions={actions} />
-              {remainProps.name === 'UserDetail' || remainProps.name === 'Profile'? <UserDetailsTopBar {...routeProps} /> : null}
+              {remainProps.name === 'UserDetail' || remainProps.name === 'Profile' ?
+                <UserDetailsTopBar {...routeProps} {...attachProps} /> : null}
               <div className='queswer-content main-content'>
                 <div className='queswer-inner-content menu-sidebar'>
                   <div className='queswer-container the-main-container'>

@@ -21,3 +21,11 @@ export const getAuthToken = (data) => {
 export const getProflie = () => {
   return axiosService.get(`${url}/profile`)
 }
+
+export const updateProfile = (id,data) => {
+  return axiosService.post(`${url}/${id}`,data)
+}
+
+export const updatePassword = (data) => {
+  return axiosService.post(`${url}/password`,data)
+}

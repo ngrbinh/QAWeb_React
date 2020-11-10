@@ -31,7 +31,7 @@ function HeaderBar(props) {
         <div className="queswer-container the-main-container">
           <div className={loginClass}>
             {
-              profile.displayName == null ?
+              !profile.displayName ?
                 <React.Fragment>
                   <a className='button-default button-sign-in' onClick={signInClick}>Đăng nhập</a>
                   <a className='button-default-2 button-sign-up' onClick={sigunUpClick}>Đăng ký</a>
@@ -55,7 +55,7 @@ function HeaderBar(props) {
                     <span className="user-click" onClick={toggleUserActions}></span>
                     <div className="user-image float_l">
                       <img className="avatar avatar-29 photo header-avatar" alt="binh123" title={profile.displayName}
-                        src={profile.avatarUrl?profile.avatarUrl:defaultAvatar} 
+                        src={profile.avatarUrl ? profile.avatarUrl : defaultAvatar}
                       />
                     </div>
                     <div className="user-login float_l">
@@ -98,7 +98,7 @@ function HeaderBar(props) {
             <Link className="logo float_l logo-img" title="Queswer" to='/'>
               <img title="Queswer" className="default_screen" alt="Queswer logo"
                 src={logo}
-                style={{width:'90%'}} />
+                style={{ width: '90%' }} />
             </Link>
             <div className="mid-header float_l">
               <div className='header-search float_r'>

@@ -3,6 +3,7 @@ import BadgePage from "../container/Default/BadgePage"
 import UserPage from "../container/Default/UserPage"
 import QuestionDetailPage from "../container/Default/QuestionDetailPage"
 import UserDetailPage from "../container/Default/UserDetailPage"
+import EditProfilePage from "../container/Default/EditProfilePage"
 
 export const API_URL = "https://queswer.herokuapp.com/"
 
@@ -65,6 +66,13 @@ export const DEFAULT_ROUTES = [
       isProfile: true
     },
     privateRoute: true
+  },
+  {
+    name: "EditProfile",
+    path: "/edit",
+    exact: false,
+    component: EditProfilePage,
+    privateRoute: false
   }
 ]
 

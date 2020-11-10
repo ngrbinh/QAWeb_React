@@ -47,15 +47,15 @@ body, .queswer-content, .main-content {
   background-color: #f2f2f2;
 }
 
-.nav_menu>div>ul li a, .widget-title, .widget-title-tabs .tabs li.current a, .menu-tabs>ul>li.active-tab>a, .menu-tabs>ul>li>a:hover, .user-login-click>ul li a, .breadcrumbs, .answers-tabs-inner li.active-tab a, .post-title-3, .user-follower>ul>li h4 {
+.nav_menu>div>ul li a, .widget-title, .widget-title-tabs .tabs li.current a, .menu-tabs>ul>li.active-tab>a, .menu-tabs>ul>li>a:hover, .user-login-click>ul li a, .breadcrumbs, .answers-tabs-inner li.active-tab a, .post-title-3, .user-follower>ul>li h4, .post-title-2 {
   color: #26333b;
 }
 
-.menu-tabs>ul>li.active-tab>a:before, .menu-tabs>ul>li>a:hover:before, .user-follower>ul>li h4 i {
+.menu-tabs>ul>li.active-tab>a:before, .menu-tabs>ul>li>a:hover:before, .user-follower>ul>li h4 i, .page-section .post-title-2>i {
   background-color: #26333b;
 }
 
-.background-cover, .header, .panel-pop>i, .panel-image-opacity, .panel-pop-content, .wpqa_error, .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not(.ed_button):not(.wpqa_captcha), .wpqa_form input[type="submit"], .widget_ask .button-default, .user-notifications.user-profile-area>div, .user-notifications.user-profile-area>div, .col12, .menu-tabs>ul>li>a:before, .question-footer, .notifications-click, .user-click, .fakefile, .fakefile button, #submit.button-default, #wpqa-question.panel-pop-content, .styled-select, .styled-select select, .search-input-form input[type="search"], .cover-opacity, .user-stats>ul>li>div, .user-stats>ul>li>div>a, .user-stats>ul>li>div>div span, .user-follower>ul>li>div>a, .user_follow_2, .user-follow-profile a, .center-child {
+.background-cover, .header, .panel-pop>i, .panel-image-opacity, .panel-pop-content, .wpqa_error, .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not(.ed_button):not(.wpqa_captcha), .wpqa_form input[type="submit"], .widget_ask .button-default, .user-notifications.user-profile-area>div, .user-notifications.user-profile-area>div, .col12, .menu-tabs>ul>li>a:before, .question-footer, .notifications-click, .user-click, .fakefile, .fakefile button, #submit.button-default, #wpqa-question.panel-pop-content, .styled-select, .styled-select select, .search-input-form input[type="search"], .cover-opacity, .user-stats>ul>li>div, .user-stats>ul>li>div>a, .user-stats>ul>li>div>div span, .user-follower>ul>li>div>a, .user_follow_2, .user-follow-profile a, .center-child, .wpqa_form textarea {
   width: 100%;
 }
 
@@ -79,7 +79,7 @@ input[type="text"], input[type="password"], input[type="email"], .question-vote 
   color: #272930;
 }
 
-input[type="text"], input[type="password"], input[type="email"], .fakefile button, input[type="search"] {
+input[type="text"], input[type="password"], input[type="email"], .fakefile button, input[type="search"], input[type="date"] {
   height: 40px;
   font-size: 13px;
   padding: 11px;
@@ -125,7 +125,7 @@ h3 {
   margin-bottom: 20px;
 }
 
-.wpqa_form p, .wpqa_form .wpqa_category, .wpqa_textarea, .answers-form .form-input, .the-title-div {
+.wpqa_form p, .wpqa_form .wpqa_category, .wpqa_textarea, .answers-form .form-input, .the-title-div, .wpqa_form span {
   position: relative;
 }
 
@@ -142,18 +142,21 @@ h3 {
 }
 
 .wpqa_form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not(.ed_button), .wpqa_form .styled-select select {
-  padding-left: 30px;
+  padding-left: 35px;
 }
 
+.wpqa_form textarea {
+  padding-left: 15px;
+}
 nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul li a:hover, nav.nav ul li:hover>a {
   background-color: #1a1c21;
 }
 
-.button-default, .button-default-2, input[type="search"], nav.nav ul li a, .pop-border-radius, .pop-border-radius .panel-pop-content, .wpqa_error, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .user-not-normal .user-area, .load-more a, .question-footer, .footer-meta li, a.meta-answer, .go-up, .user-login-click>i, .fakefile button, .fileinputs span, .styled-select, .styled-select .arrow_down, input[type="search"], div.search-results, .pagination .page-numbers.current, .points-section ul .point-section, .badges-section ul li, .cover-opacity, .wpqa-cover-buttons, .user-stats>ul>li>div, .user-follower>ul>li>div, .user-follower>ul>li h4 i, .user-columns-data, .user-follow-profile a {
+.button-default, .button-default-2, input[type="search"], nav.nav ul li a, .pop-border-radius, .pop-border-radius .panel-pop-content, .wpqa_error, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .user-not-normal .user-area, .load-more a, .question-footer, .footer-meta li, a.meta-answer, .go-up, .user-login-click>i, .fakefile button, .fileinputs span, .styled-select, .styled-select .arrow_down, input[type="search"], div.search-results, .pagination .page-numbers.current, .points-section ul .point-section, .badges-section ul li, .cover-opacity, .wpqa-cover-buttons, .user-stats>ul>li>div, .user-follower>ul>li>div, .user-follower>ul>li h4 i, .user-columns-data, .user-follow-profile a, .question-navigation a, .page-section .post-title-2>i, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea {
   border-radius: 2px;
 }
 
-.button-default, .button-default-2:hover, .panel-image-opacity, .panel-image-content .button-default:hover, .stats-inner li:before, .load-more a:hover, a.meta-answer:hover, .go-up, .fileinputs:hover span, .pagination .page-numbers.current, .user-follow-profile a {
+.button-default, .button-default-2:hover, .panel-image-opacity, .panel-image-content .button-default:hover, .stats-inner li:before, .load-more a:hover, a.meta-answer:hover, .go-up, .fileinputs:hover span, .pagination .page-numbers.current, .user-follow-profile a, .question-navigation a:hover {
   background-color: #2d6ff7;
 }
 
@@ -172,7 +175,7 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   border-bottom: none;
 }
 
-.loader_2, .author-image-span, .pagination .page-numbers.current {
+.loader_2, .author-image-span, .pagination .page-numbers.current, .question-navigation a:hover {
   border-color: #2d6ff7 !important;
 }
 
@@ -200,7 +203,7 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   color: #464e5b;
 }
 
-.header-search input, .wpqa_form label, .widget-posts .user-notifications>div>ul li a, .widget-posts .user-notifications>div>ul li a, .user-data ul li, .user-data ul li a, .menu-tabs>ul>li>a, .post-meta, .footer-meta li, .footer-meta li a, .user-notifications>i, .user-notifications>div>ul li span.notifications-date, .breadcrumbs .current, .answers-tabs-inner li a, .commentlist li.comment .comment-body .comment-text .author .comment-date, .search-form .icon-search, .pagination .page-numbers.current, .point-div, .wpqa-cover-buttons, .user-stats>ul>li>div>div, .user-columns-data a {
+.header-search input, .wpqa_form label, .widget-posts .user-notifications>div>ul li a, .widget-posts .user-notifications>div>ul li a, .user-data ul li, .user-data ul li a, .menu-tabs>ul>li>a, .post-meta, .footer-meta li, .footer-meta li a, .user-notifications>i, .user-notifications>div>ul li span.notifications-date, .breadcrumbs .current, .answers-tabs-inner li a, .commentlist li.comment .comment-body .comment-text .author .comment-date, .search-form .icon-search, .pagination .page-numbers.current, .point-div, .wpqa-cover-buttons, .user-stats>ul>li>div>div, .user-columns-data a, .question-navigation a {
   color: #7c7f85;
 }
 
@@ -216,23 +219,23 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   transition: border .20s linear, color .20s linear, background-color .20s linear;
 }
 
-.button-default, .button-default-2, .header-search button i, nav.nav ul li a, nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, .panel-pop>i, .panel-image-inner h3, .panel-image-inner p, .badge-span, .load-more a, a.meta-answer, .go-up, .user-login div, .user-login-click>i, .fileinputs span, .styled-select .arrow_down, .pagination .page-numbers.current, .pagination .page-numbers:hover, .wpqa-cover-content .user-area .user-content>.user-inner h4>a, .user-follower>ul>li h4 i, .user-follow-profile a {
+.button-default, .button-default-2, .header-search button i, nav.nav ul li a, nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, .panel-pop>i, .panel-image-inner h3, .panel-image-inner p, .badge-span, .load-more a, a.meta-answer, .go-up, .user-login div, .user-login-click>i, .fileinputs span, .styled-select .arrow_down, .pagination .page-numbers.current, .pagination .page-numbers:hover, .wpqa-cover-content .user-area .user-content>.user-inner h4>a, .user-follower>ul>li h4 i, .user-follow-profile a, .question-navigation a:hover, .page-section .post-title-2>i {
   color: #FFF !important;
 }
 
-.panel-pop-content, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .queswer-main-inner, .hide-main-inner, .inner-sidebar, .widget-no-divider .stats-inner li, .widget-title-tabs .tabs li.current:before, .widget-title-tabs .tabs li.current a, .widget.tabs-wrap.widget-tabs .widget-wrap, .footer-meta li, .user-notifications>div, .user-login-click>ul, .answers-tabs-inner li.active-tab:before, .answers-tabs-inner li.active-tab a, .fakefile button, .styled-select, input[type="search"], .search_loader, div.search-results, .search-form .button-search, .pagination .page-numbers, .wpqa-cover-buttons, .user-stats>ul>li>div {
+.panel-pop-content, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .queswer-main-inner, .hide-main-inner, .inner-sidebar, .widget-no-divider .stats-inner li, .widget-title-tabs .tabs li.current:before, .widget-title-tabs .tabs li.current a, .widget.tabs-wrap.widget-tabs .widget-wrap, .footer-meta li, .user-notifications>div, .user-login-click>ul, .answers-tabs-inner li.active-tab:before, .answers-tabs-inner li.active-tab a, .fakefile button, .styled-select, input[type="search"], .search_loader, div.search-results, .search-form .button-search, .pagination .page-numbers, .wpqa-cover-buttons, .user-stats>ul>li>div, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea {
   background-color: #FFF;
 }
 
-.button-default, .button-default-2, .search-click, .header-search button, .panel-pop>i, .wpqa_form label, .wpqa_form .rememberme, .wpqa_checkbox input[type="checkbox"], .go-up, .notifications-click, .user-click, a:hover, .fileinputs input[type="file"], .fakefile button, .styled-select select, .search-form .button-search {
+.button-default, .button-default-2, .search-click, .header-search button, .panel-pop>i, .wpqa_form label, .wpqa_form .rememberme, .wpqa_checkbox input[type="checkbox"], .go-up, .notifications-click, .user-click, a:hover, .fileinputs input[type="file"], .fakefile button, .styled-select select, .search-form .button-search, .wpqa_radio input[type="radio"] {
   cursor: pointer;
 }
 
-input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .widget-title-tabs .tabs li a, .user-login-click>ul, .answers-tabs-inner li a, .fakefile button, .styled-select, input[type="search"], div.search-results, .user-not-normal .user-area, .points-section ul .point-section, .badges-section ul .badge-section, .user-stats>ul>li>div, .user-follower>ul>li>div {
+input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .widget-title-tabs .tabs li a, .user-login-click>ul, .answers-tabs-inner li a, .fakefile button, .styled-select, input[type="search"], div.search-results, .user-not-normal .user-area, .points-section ul .point-section, .badges-section ul .badge-section, .user-stats>ul>li>div, .user-follower>ul>li>div, .question-navigation a, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea {
   border: 1px solid #e1e3e3;
 }
 
-h1, h2, h3, h4, h5, .button-default, .button-default-2, nav.nav ul li, .panel-image-inner p, .nav_menu>div>ul li a, .widget li, .stats-value, .widget-title, .widget-posts .user-notifications>div>ul li div h3 a, .menu-tabs>ul>li>a, .load-more a, .post-author, .vote_result, .question-content-text, a.meta-answer, .answers-tabs .section-title, .answers-tabs-inner li, .vote_result, .comment-respond>.section-title, .fileinputs span, .post-content-text, .point-div span, .user-area .bio_editor, .user-stats>ul>li>div>div span, .user-follow-profile {
+h1, h2, h3, h4, h5, .button-default, .button-default-2, nav.nav ul li, .panel-image-inner p, .nav_menu>div>ul li a, .widget li, .stats-value, .widget-title, .widget-posts .user-notifications>div>ul li div h3 a, .menu-tabs>ul>li>a, .load-more a, .post-author, .vote_result, .question-content-text, a.meta-answer, .answers-tabs .section-title, .answers-tabs-inner li, .vote_result, .comment-respond>.section-title, .fileinputs span, .post-content-text, .point-div span, .user-area .bio_editor, .user-stats>ul>li>div>div span, .user-follow-profile, .post-title-2 {
   font-family: "Roboto", Arial, sans-serif;
 }
 
@@ -382,7 +385,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.8px;
 }
 
-.button-default, .button-default-2, .button-default-3, .button-default-4, input[type=search], input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .styled-select select {
+.button-default, .button-default-2, .button-default-3, .button-default-4, input[type=search], input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .styled-select select, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea {
   appearance: none;
 }
 
@@ -402,14 +405,14 @@ a, .ask-box-question {
   max-width: 170px;
 }
 
-.wpqa_form p i, .wpqa_form .fileinputs i, .wpqa_form .wpqa_category i {
+.wpqa_form p i, .wpqa_form .fileinputs i, .wpqa_form .wpqa_category i, .wpqa_form span i {
   color: #999;
 }
 
-.wpqa_form p i, .wpqa_form .fileinputs i, .wpqa_form .wpqa_category i {
+.wpqa_form p i, .wpqa_form .fileinputs i, .wpqa_form .wpqa_category i, .wpqa_form span i {
   position: absolute;
   left: 10px;
-  top: 36px;
+  top: 34px;
   font-size: 15px;
 }
 
@@ -1089,6 +1092,12 @@ img {
   object-fit: cover;
 }
 
+.author-image-span img.edit-profile-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 .user-image .header-avatar {
   width: 29px;
   height: 29px;
@@ -1169,7 +1178,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 
 .nav_menu>div>ul li a i {
   margin-right: 10px;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: normal;
   float: left;
 }
@@ -1878,9 +1887,14 @@ div.search-results {
   margin-bottom: 10px;
 }
 
-.post-title-2 i, .post-title-3 i {
+.post-title-3 i {
   margin-right: 15px;
   font-size: 14px;
+}
+
+.post-title-2 i {
+  margin-right: 15px;
+  font-size: 17px;
 }
 
 .post-content-text {
@@ -2361,4 +2375,73 @@ strong, b {
 
 .question-detail .question-articles {
   border-bottom: none;
+}
+
+.question-navigation {
+  margin-left: 10px;
+}
+
+.question-bottom .post-share, .question-navigation {
+  float: right;
+}
+
+.question-navigation a {
+  float: right;
+  padding: 7px 15px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.edit-profile.question-navigation i {
+  margin-right: 10px;
+}
+
+.wpqa-edit-profile .post-title-2 {
+  margin-bottom: 15px;
+}
+
+.page-section .post-title-2>i {
+  text-align: center;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  font-weight: normal;
+}
+
+.wpqa_form .required {
+  margin-left: 5px;
+}
+
+.profile-image.author-image {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.wpqa_radio_p {
+  margin-bottom: 5px;
+}
+
+.wpqa_radio_div>p {
+  margin-bottom: 10px;
+  float: left;
+  margin-right: 25px;
+}
+
+.react-datepicker-wrapper {
+  margin-top: 3px;
+  display: block;
+  width: 100%;
+}
+
+.react-datepicker-popper {
+  z-index: 3!important;
+}
+
+.react-datepicker__triangle {
+  left: 150px!important;
+}
+
+textarea {
+  padding-top: 20px;
+  resize: none;
 }

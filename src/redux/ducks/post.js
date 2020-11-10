@@ -5,7 +5,10 @@ export const postTypes = {
   RESET_QUESTIONS: "post/RESET_QUESTIONS",
   FETCH_QUESTION_DETAILS: "post/FETCH_QUESTION_DETAILS",
   FETCH_QUESTION_DETAILS_SUCCESS: "post/FETCH_QUESTION_DETAILS_SUCCESS",
-  FETCH_QUESTION_DETAILS_FAIL: "post/FETCH_QUESTION_DETAILS_FAIL"
+  FETCH_QUESTION_DETAILS_FAIL: "post/FETCH_QUESTION_DETAILS_FAIL",
+  ADD_QUESTION: "post/ADD_QUESTION",
+  ADD_QUESTION_SUCCESS: "post/ADD_QUESTION_SUCCESS",
+  ADD_QUESTION_FAIL: "post/ADD_QUESTION_FAIL"
 }
 
 const initState = {
@@ -95,4 +98,19 @@ export const fetchQuestionDetailsSuccess = (data) => ({
 export const fetchQuestionDetailsFail = (message) => ({
   type: postTypes.FETCH_QUESTION_DETAILS_FAIL,
   payload: {message}
+})
+
+export const addQuestion = (data) => ({
+  type: postTypes.ADD_QUESTION,
+  payload: {data}
+})
+
+export const addQuestionSuccess = () => ({
+  type: postTypes.ADD_QUESTION_SUCCESS,
+  payload: {}
+})
+
+export const addQuestionFail = () => ({
+  type: postTypes.ADD_QUESTION_FAIL,
+  payload: {}
 })

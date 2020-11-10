@@ -1,11 +1,19 @@
 import { faCaretDown, faCaretUp, faCommentAlt, faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { truncateWithEllipsis } from '../../common/functions'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
 export default function Question(props) {
-  
+  // useEffect(() => {
+  //   var element = document.getElementsByClassName("content-text");
+  //   console.log(element[0].textContent)
+  //   let mathJaxScript = document.createElement('script')
+  //   mathJaxScript.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"
+  //   mathJaxScript.async = true
+  //   document.body.appendChild(mathJaxScript)
+  //   return () => document.body.removeChild(mathJaxScript)
+  // }, [])
   const { shorten, scrollToRef } = props
   var question = props.question
   if (Object.keys(question).length === 0) {
