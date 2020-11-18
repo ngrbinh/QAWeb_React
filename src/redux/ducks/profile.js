@@ -1,3 +1,5 @@
+import { accountTypes } from './account'
+import { userTypes } from './user'
 export const profileTypes = {
   FETCH_PROFILE: "profile/FETCH",
   FETCH_PROFILE_SUCCESS: "profile/FETCH_SUCCESS",
@@ -14,6 +16,8 @@ export const profileTypes = {
 
 const initState = {
   displayName: "",
+  followingUsers: [],
+  followedByUsers: [],
   loadingFetch: false,
   fetchError: "",
   loadingEdit: false,
@@ -22,6 +26,22 @@ const initState = {
 
 export default function reducer(state = initState, action) {
   switch (action.type) {
+    case accountTypes.LOGOUT:
+      return {
+        ...initState
+      }
+    case userTypes.FOLLOW_SUCCESS:
+      const { id: newFollowId } = action.payload
+      return {
+        ...state,
+        followingUsers: [...state.followingUsers, { id: newFollowId }]
+      }
+    case userTypes.UN_FOLLOW_SUCCESS:
+      const { id: unfollowId } = action.payload
+      return {
+        ...state,
+        followingUsers: state.followingUsers.filter(item => item.id !== unfollowId)
+      }
     case profileTypes.FETCH_PROFILE:
       return {
         ...state,
@@ -60,7 +80,7 @@ export default function reducer(state = initState, action) {
         loadingEdit: false,
         editError: message
       }
-    case profileTypes.resetError:
+    case profileTypes.RESET_ERROR:
       return {
         ...state,
         fetchError: "",

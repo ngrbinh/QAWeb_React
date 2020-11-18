@@ -7,16 +7,19 @@ import Question from '../../../component/Question'
 import './index.css'
 import { Editor } from '@tinymce/tinymce-react';
 import { Link } from 'react-router-dom'
-import { fetchQuestionDetails } from '../../../redux/ducks/post'
+import { fetchQuestionDetails, addAnswer } from '../../../redux/ducks/post'
 
 class QuestionDetailPage extends Component {
   constructor(props) {
     super()
     this.myRef = React.createRef()
   }
+  errorRef = React.createRef()
   state = {
     questionTab: 1,
-    path: ''
+    imgUrl: '',
+    body: '',
+    localError: ''
   }
   setQuestionTab = (i) => () => {
     this.setState(state => ({
@@ -25,18 +28,42 @@ class QuestionDetailPage extends Component {
     }))
   }
   handleEditorChange = (content, editor) => {
-    console.log('Content was updated:', content);
+    this.setState(state => ({
+      ...state,
+      body: content,
+      localError: ''
+    }))
   }
   scrollToMyRef = () => {
-    console.log(this.myRef.current.offsetTop)
     window.scrollTo(0, this.myRef.current.offsetTop + this.myRef.current.offsetHeight - 100)
   }
   handleFileSelect = (e) => {
-    const newPath = e.target.value
+    const newUrl = e.target.value
     this.setState(state => ({
       ...state,
-      path: newPath
+      imgUrl: newUrl
     }))
+  }
+  checkInput = () => {
+    if (!this.state.body) {
+      return "Bạn chưa nhập câu hỏi"
+    }
+    return null
+  }
+  handleSubmit = e => {
+    e.preventDefault()
+    const { history } = this.props
+    const error = this.checkInput()
+    if (error) {
+      this.setState(state => ({
+        ...state,
+        localError: error
+      }))
+    } else {
+      const parentId = this.props.match.params.id
+      const { body, imgUrl } = this.state
+      this.props.addAnswer({ body, imgUrl, parentId }, history)
+    }
   }
   componentDidMount() {
     const id = this.props.match.params.id
@@ -70,64 +97,30 @@ class QuestionDetailPage extends Component {
       script.onload = new Function("MathJax.Hub.Queue(['Typeset',MathJax.Hub]);")
       document.getElementsByTagName("head")[0].appendChild(script);
     })();
+    if (this.state.localError || this.props.apiError) {
+      //window.scrollTo(0, this.errorRef.current.scrollIntoView(true))
+      this.errorRef.current.scrollIntoView()
+    }
+  }
+  canModifyQuestion = () => {
+    const { profileId, questionDetails } = this.props
+    const { user } = questionDetails
+    if (!profileId) {
+      return false
+    }
+    if (!user) {
+      return false
+    }
+    if (user.id !== profileId) {
+      return false
+    }
+    return true
   }
   render() {
-    const questionDetail1 = {
-      question: {
-        id: 2,
-        user: {
-          avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
-          name: 'Martin Hope',
-          id: 1
-        },
-        createdDate: '2020-10-08T14:59:00.000+00:00',
-        body: `<p>In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.</p><p>I saw him last night (correct)</p><p>I see him last night (incorrect)</p><p>But i think both has the same meaning and are understandable,</p><p>Isn’t it?</p>?`,
-        voteCount: 33,
-        subject: "Vật lý",
-        grade: "Lớp 10",
-        answerCount: "7",
-        viewCount: "152"
-      },
-      answers: [
-        {
-          id: 3,
-          user: {
-            avatarUrl: "https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-42x42.jpg",
-            name: "Marko Smith",
-            id: 7
-          },
-          voteCount: 8,
-          body: `<div> <p>You are correct that both are understandable.</p><p>The only other possible everyday meaning I could think of would be ‘I see him [in my mind’s eye] last night’; that is, I am, at this very moment, imagining him last night. But it should almost always be clear from context which one is intended.</p><p>‘Correct’ doesn’t mean ‘understandable’, though. If I say ‘Me want have fooding’ it’s pretty clear what to understand from that, but it’s not anywhere near correct Standard English grammar. If you lived somewhere where you spoke a dialect of English in which this was acceptable grammar, however, then it would be correct for that dialect.</p> </div>`,
-          createdDate: '2020-10-08T14:59:00.000+00:00'
-        },
-        {
-          id: 3,
-          user: {
-            avatarUrl: "https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-42x42.jpg",
-            name: "Marko Smith",
-            id: 8
-          },
-          voteCount: 8,
-          body: `<div> <p>You are correct that both are understandable.</p><p>The only other possible everyday meaning I could think of would be ‘I see him [in my mind’s eye] last night’; that is, I am, at this very moment, imagining him last night. But it should almost always be clear from context which one is intended.</p><p>‘Correct’ doesn’t mean ‘understandable’, though. If I say ‘Me want have fooding’ it’s pretty clear what to understand from that, but it’s not anywhere near correct Standard English grammar. If you lived somewhere where you spoke a dialect of English in which this was acceptable grammar, however, then it would be correct for that dialect.</p> </div>`,
-          createdDate: '2020-10-08T14:59:00.000+00:00'
-        },
-        {
-          id: 3,
-          user: {
-            avatarUrl: "https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-42x42.jpg",
-            name: "Marko Smith",
-            id: 9
-          },
-          voteCount: 8,
-          body: `<div> <p>You are correct that both are understandable.</p><p>The only other possible everyday meaning I could think of would be ‘I see him [in my mind’s eye] last night’; that is, I am, at this very moment, imagining him last night. But it should almost always be clear from context which one is intended.</p><p>‘Correct’ doesn’t mean ‘understandable’, though. If I say ‘Me want have fooding’ it’s pretty clear what to understand from that, but it’s not anywhere near correct Standard English grammar. If you lived somewhere where you spoke a dialect of English in which this was acceptable grammar, however, then it would be correct for that dialect.</p> </div>`,
-          createdDate: '2020-10-08T14:59:00.000+00:00'
-        }
-      ]
-    }
-    const { questionDetails, loading } = this.props
+    const { questionDetails, loading, apiError, loadingAddAns } = this.props
     var { answers, ...question } = questionDetails
     if (!answers) answers = []
-    const { questionTab, path } = this.state
+    const { questionTab, imgUrl, localError, body } = this.state
     return (
       <React.Fragment>
         <div className='breadcrumbs breadcrumbs_1'>
@@ -149,7 +142,7 @@ class QuestionDetailPage extends Component {
                     </a>
                   </span>
                   <span className="crumbs-span">/</span>
-                  <span className="current">Q {question ? question.id : null}</span>
+                  <span className="current">{question ? question.id : null}</span>
                 </span>
               </span>
             </div>
@@ -162,7 +155,10 @@ class QuestionDetailPage extends Component {
           </span>
         </div>
         <div className='post-articles question-articles question-detail' style={loading ? { display: "none" } : { display: "block" }}>
-          {question ? <Question question={question} shorten={false} scrollToRef={this.scrollToMyRef} /> : null}
+          {question
+            ? <Question question={question} shorten={false} scrollToRef={this.scrollToMyRef}
+              modifiable={this.canModifyQuestion()} />
+            : null}
           <div className='question-adv-comments question-has-comments clearfix'>
             <div id='comments' className='post-section comments-popup-share'>
               <div className='post-inner'>
@@ -192,13 +188,19 @@ class QuestionDetailPage extends Component {
                     <a rel="nofollow" id="cancel-comment-reply-link" href="#" style={{ display: 'none' }}>Cancel reply</a>
                   </div>
                 </h3>
-                <form noValidate method='post' >
+                <form noValidate ref={this.errorRef}>
+                  <div className="wpqa_error" style={{ display: localError ? 'block' : 'none' }}>
+                    <strong>Lỗi :&nbsp;</strong>{localError}
+                  </div>
+                  <div className="wpqa_error" style={{ display: apiError ? 'block' : 'none' }}>
+                    <strong>Lỗi :&nbsp;</strong>{apiError}
+                  </div>
                   <div className="wpqa_form">
                     <label htmlFor="featured_image">Featured image</label>
                     <div className="fileinputs">
                       <input type="file" name="featured_image" id="featured_image" accept='image/*' onChange={e => this.handleFileSelect(e)} />
                       <div className="fakefile">
-                        <button type="button">{path}</button>
+                        <button type="button">{imgUrl}</button>
                         <span>Browse</span>
                       </div>
                       <i className="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
@@ -207,7 +209,6 @@ class QuestionDetailPage extends Component {
                   <div className='clearfix'> </div>
                   <Editor
                     apiKey="h9hlzkzrsfhoiq76kipttagym5wpp1gxqd9cug045u86x11g"
-                    initialValue="<p>This is the initial content of the editor</p>"
                     init={{
                       height: 500,
                       menubar: false,
@@ -222,12 +223,15 @@ class QuestionDetailPage extends Component {
                         'bullist numlist outdent indent | link | preview fullpage | forecolor backcolor emoticons | tiny_mce_wiris_formulaEditor | help'
                       ]
                     }}
+                    value={body}
                     onEditorChange={this.handleEditorChange}
                   />
                   <p className="form-submit" >
-                    <input name="submit" type="submit" id="submit" className="button-default button-hide-click" value="Submit" />
+                    <input type="submit" id="submit" className="button-default button-hide-click" value="Trả lời"
+                      onClick={this.handleSubmit} style={{ display: loadingAddAns ? "none" : "inline-block" }} />
                     <span className="clearfix"></span>
-                    <span className="load_span"><span className="loader_2"></span>
+                    <span className="load_span" style={{ display: loadingAddAns ? "block" : "none" }}>
+                      <span className="loader_2"></span>
                     </span>
                   </p>
                 </form>
@@ -243,11 +247,15 @@ class QuestionDetailPage extends Component {
 
 const mapStateToProps = (state) => ({
   questionDetails: state.post.questionDetails,
-  loading: state.post.loadingQuestionDetails
+  loading: state.post.loadingQuestionDetails,
+  loadingAddAns: state.post.loadingAddAnswer,
+  addAnsError: state.post.addAnswerError,
+  profileId: state.profile.id
 })
 
 const mapDispatchToProps = {
-  fetchQuestionDetails
+  fetchQuestionDetails,
+  addAnswer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetailPage)

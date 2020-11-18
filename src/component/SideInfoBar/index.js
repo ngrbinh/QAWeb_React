@@ -2,8 +2,10 @@ import { faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {changeModal, toggleModal} from '../../redux/ducks/modal'
+import { changeModal, toggleModal } from '../../redux/ducks/modal'
+import { addQuestion } from '../../redux/ducks/post'
 import AskPanel from '../Modal/AskPanel'
+import LoginPanel from '../Modal/LoginPanel'
 class SideInfoBar extends Component {
   state = {
     tabIndex: 1
@@ -16,10 +18,17 @@ class SideInfoBar extends Component {
       }
     })
   }
-  showAskModal = () => {
-    const { changeModal, toggleModal} = this.props
-    changeModal(AskPanel)
+  showModal = (panel) => {
+    const { changeModal, toggleModal } = this.props
+    changeModal(panel)
     toggleModal()
+  }
+  handleAddQuesClick = () => {
+    if (this.props.token) {
+      this.showModal(AskPanel)
+    } else {
+      this.showModal(LoginPanel)
+    }
   }
   render() {
     //window.onscroll = function () { stickyEffect() }
@@ -29,9 +38,9 @@ class SideInfoBar extends Component {
         <div id='empty'></div>
         <div className='theiaStickySidebar side-bar'>
           <h3 className="screen-reader-text">Sidebar</h3>
-          <div className='inner-sidebar'  id='infoBarContent'>
+          <div className='inner-sidebar' id='infoBarContent'>
             <div className="widget widget_ask">
-              <a target="_self" className="button-default wpqa-question" onClick={this.showAskModal}>Đặt câu hỏi</a>
+              <a target="_self" className="button-default wpqa-question" onClick={this.handleAddQuesClick}>Đặt câu hỏi</a>
             </div>
             <section id="stats-widget-2" className="widget-no-divider widget stats-widget">
               <h3 className="screen-reader-text">Số liệu</h3>
@@ -80,7 +89,7 @@ class SideInfoBar extends Component {
                         <li className="widget-posts-text widget-no-img">
                           <span className="span-icon">
                             <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20"  src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
+                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
                             </a>
                           </span>
                           <div>
@@ -99,7 +108,7 @@ class SideInfoBar extends Component {
                         <li className="widget-posts-text widget-no-img">
                           <span className="span-icon">
                             <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20"  src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
+                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
                             </a>
                           </span>
                           <div>
@@ -140,7 +149,7 @@ class SideInfoBar extends Component {
                 </div>
               </div>
             </div>
-            <section className='widget users-widget' style={{marginBottom:'0px'}}>
+            <section className='widget users-widget' style={{ marginBottom: '0px' }}>
               <h2 className="widget-title">
                 <i className="icon-folder">
                   <FontAwesomeIcon icon={faUserFriends} />
@@ -261,7 +270,7 @@ class SideInfoBar extends Component {
 // }
 
 const mapStateToProps = (state) => ({
-  
+  token: state.account.token,
 })
 
 const mapDispatchToProps = {
@@ -269,4 +278,4 @@ const mapDispatchToProps = {
   toggleModal
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SideInfoBar)
+export default connect(mapStateToProps, mapDispatchToProps)(SideInfoBar)

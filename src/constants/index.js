@@ -4,6 +4,7 @@ import UserPage from "../container/Default/UserPage"
 import QuestionDetailPage from "../container/Default/QuestionDetailPage"
 import UserDetailPage from "../container/Default/UserDetailPage"
 import EditProfilePage from "../container/Default/EditProfilePage"
+import EditQuestionPage from "../container/Default/EditQuestionPage"
 
 export const API_URL = "https://queswer.herokuapp.com/"
 
@@ -72,7 +73,20 @@ export const DEFAULT_ROUTES = [
     path: "/edit",
     exact: false,
     component: EditProfilePage,
-    privateRoute: false
+    attachProps: {
+
+    },
+    privateRoute: true
+  },
+  {
+    name: "EditQuestion",
+    path: "/question/:id/edit",
+    exact: false,
+    component: EditQuestionPage,
+    attachProps: {
+
+    },
+    privateRoute: true
   }
 ]
 

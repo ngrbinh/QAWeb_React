@@ -1,20 +1,11 @@
-import { faCaretDown, faCaretUp, faCommentAlt, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp, faCommentAlt, faEye, faLock, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { truncateWithEllipsis } from '../../common/functions'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
 export default function Question(props) {
-  // useEffect(() => {
-  //   var element = document.getElementsByClassName("content-text");
-  //   console.log(element[0].textContent)
-  //   let mathJaxScript = document.createElement('script')
-  //   mathJaxScript.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"
-  //   mathJaxScript.async = true
-  //   document.body.appendChild(mathJaxScript)
-  //   return () => document.body.removeChild(mathJaxScript)
-  // }, [])
-  const { shorten, scrollToRef } = props
+  const { shorten, scrollToRef, modifiable } = props
   var question = props.question
   if (Object.keys(question).length === 0) {
     question = {
@@ -136,6 +127,21 @@ export default function Question(props) {
           </div>
           <div className='clearfix'></div>
         </div>
+        {modifiable
+          ? <div className="question-bottom">
+            <ul className="question-link-list">
+              <li>
+                <Link to={`/question/${id}/edit`}><i><FontAwesomeIcon icon={faPencilAlt}/></i>Chỉnh sửa</Link>
+              </li>
+              <li>
+                <a href="#"><i><FontAwesomeIcon icon={faTrash}/></i>Xóa</a>
+              </li>
+              <li>
+                <a href="#"><i><FontAwesomeIcon icon={faLock}/></i>Đóng bài viết</a>
+              </li>
+            </ul>
+            <div className="clearfix"></div>
+          </div> : null}
       </div>
     </article>
   )

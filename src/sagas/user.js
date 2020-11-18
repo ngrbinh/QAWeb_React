@@ -1,6 +1,6 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword } from "../apis/user";
-import { fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, userTypes } from '../redux/ducks/user'
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow } from "../apis/user";
+import { fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
 import { hideLoading, showLoading } from '../redux/ducks/globalLoading'
 import { accountTypes, changePasswordFail, changePasswordSuccess, login, loginFail, loginSuccess, logout, signupFail, signupSuccess } from "../redux/ducks/account";
 import { setModal, toggleModal } from "../redux/ducks/modal"
@@ -13,6 +13,9 @@ export function* userSaga() {
   yield takeLatest(profileTypes.FETCH_PROFILE, watchFetchProfile)
   yield takeLatest(profileTypes.EDIT_PROFILE, watchEditProfile)
   yield takeLatest(accountTypes.CHANGE_PASSWORD, watchChangePassword)
+  yield takeEvery(userTypes.FOLLOW, watchFollow)
+  yield takeEvery(userTypes.UN_FOLLOW, watchUnFollow)
+  yield takeEvery(userTypes.VOTE, watchVote)
 }
 
 function* watchFetchUsers(action) {
@@ -20,6 +23,7 @@ function* watchFetchUsers(action) {
     const { page, limit, sortBy } = action.payload
     const resp = yield call(getUsers, page, limit, sortBy)
     const { status, data } = resp
+    console.log(data)
     yield put(fetchUsersSuccess(data))
   } catch (error) {
     yield put(fetchUsersFail())
@@ -93,18 +97,60 @@ function* watchEditProfile(action) {
   } catch (error) {
     const { message } = error.response.data
     yield put(editProfileFail(message))
+    if (error.response.status === 403) {
+      yield put(logout())
+    }
   }
 }
 
 function* watchChangePassword(action) {
   try {
-    const { data,history } = action.payload
+    const { data, history } = action.payload
     const resp = yield call(updatePassword, data)
     yield put(changePasswordSuccess())
     history.push("/profile")
   } catch (error) {
     const { message } = error.response.data
-    console.log(message)
     yield put(changePasswordFail(message))
+    if (error.response.status === 403) {
+      yield put(logout())
+    }
+  }
+}
+
+function* watchFollow(action) {
+  const { id } = action.payload
+  try {
+    const resp = yield call(createFollow, id)
+    yield put(followSuccess(id))
+  } catch (error) {
+    const { message } = error.response.data
+    console.log(message)
+    yield put(followFail(message, id))
+  }
+}
+
+function* watchUnFollow(action) {
+  const { id } = action.payload
+  try {
+    const resp = yield call(deleteFollow, id)
+    console.log("done")
+    yield put(unFollowSuccess(id))
+  } catch (error) {
+    const { message } = error.response.data
+    console.log(message)
+    yield put(unFollowFail(id))
+  }
+}
+
+function* watchVote(action) {
+  const { id } = action.payload
+  try {
+    const resp = yield call(createFollow, id)
+    yield put(voteSuccess(id))
+  } catch (error) {
+    const { message } = error.response.data
+    console.log(message)
+    yield put(voteFail(id))
   }
 }

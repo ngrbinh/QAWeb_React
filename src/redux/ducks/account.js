@@ -31,7 +31,6 @@ export default function reducer(state = initState, action) {
       }
     case accountTypes.LOGIN_SUCCESS:
       const { token } = action.payload
-      console.log(token)
       return {
         ...state,
         token: token,

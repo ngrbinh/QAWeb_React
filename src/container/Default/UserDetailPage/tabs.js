@@ -1,4 +1,4 @@
-import { faBook, faCommentAlt, faGlobeAsia, faHeart, faMapMarkerAlt, faPhoneAlt, faStar, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faCheck, faCommentAlt, faGlobeAsia, faHeart, faMapMarkerAlt, faPhoneAlt, faStar, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import Answer from '../../../component/Answer'
@@ -8,10 +8,13 @@ import defaultAvatar from '../../../assets/image/user_avatar_default.png'
 
 export function About(props) {
   //console.log(props)
-  const { displayName, gender, birthDate, phoneNumber, questionCount, answerCount, point, aboutMe, address } = props.user
+  console.log(props.user)
+  const { gender, birthDate, phoneNumber, questionCount, answerCount, point,
+    aboutMe, address, followingUsers, followedByUsers, voteCount } = props.user
   const date = new Date(birthDate)
   const now = new Date()
-  const url = 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-7-29x29.jpg'
+  //const url = 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-7-29x29.jpg'
+  const url = defaultAvatar
   return (
     <div className="user-area-content wpqa-profile">
       <div className="post-section user-area user-area-advanced user-advanced user-area-head mgb0">
@@ -34,7 +37,7 @@ export function About(props) {
                     {gender ? 'Nam' : 'Nữ'}
                   </li>
                   <li className="user-age">
-                    <i className="icon-globe"><FontAwesomeIcon icon={faGlobeAsia}/></i>
+                    <i className="icon-globe"><FontAwesomeIcon icon={faGlobeAsia} /></i>
                     {now.getFullYear() - date.getFullYear()} tuổi
                   </li>
                 </ul>
@@ -48,21 +51,21 @@ export function About(props) {
         <ul className="row">
           <li className="col col3 user-questions">
             <div><a href="#"></a><i className="icon-book-open"><FontAwesomeIcon icon={faBook} /></i>
-              <div><span>{questionCount}</span>
+              <div><span>{questionCount ? questionCount : 0}</span>
                 <h4>Câu hỏi</h4>
               </div>
             </div>
           </li>
           <li className="col col3 user-answers">
             <div><a href="#"></a><i className="icon-comment"><FontAwesomeIcon icon={faCommentAlt} /></i>
-              <div><span>{answerCount}</span>
+              <div><span>{answerCount ? answerCount : 0}</span>
                 <h4>Câu trả lời</h4>
               </div>
             </div>
           </li>
           <li className="col col3 user-best-answers">
-            <div><a href="#"></a><i className="icon-graduation-cap"></i>
-              <div><span>0</span>
+            <div><a href="#"></a><i className="icon-graduation-cap"><FontAwesomeIcon icon={faCheck} /></i>
+              <div><span>{voteCount ? voteCount : 0}</span>
                 <h4>Bình chọn</h4>
               </div>
             </div>
@@ -80,26 +83,51 @@ export function About(props) {
         <ul className="row">
           <li className="col col6 user-followers">
             <div><a href="#"></a>
-              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends} /></i>Followers</h4>
+              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends} /></i>Người theo dõi</h4>
               <div>
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <span><span>+3</span> Followers</span>
+                {
+                  followedByUsers.map((item, i) => {
+                    return i <= 3
+                      ? <img className="avatar avatar-29 photo" title="" width="29" height="29" src={item.avatarUrl ? item.avatarUrl : defaultAvatar} key={item.id} />
+                      : null
+                  })
+                }
+                {
+                  followedByUsers.length > 3
+                    ? <span><span>+ {followedByUsers.length - 4}</span> Người khác</span>
+                    : null
+                }
+                {
+                  followedByUsers.length === 0
+                    ? <div style={{ height: "29px" }}></div>
+                    : null
+                }
               </div>
             </div>
           </li>
           <li className="col col6 user-following">
             <div>
               <a href="#"></a>
-              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends} /></i>Following</h4>
+              <h4><i className="icon-users"><FontAwesomeIcon icon={faUserFriends} /></i>Đang theo dõi</h4>
               <div>
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <img className="avatar avatar-29 photo" alt="" title="" width="29" height="29" src={url} />
-                <span><span>+2</span> Members</span></div>
+                {
+                  followingUsers.map((item, i) => {
+                    return i <= 3
+                      ? <img className="avatar avatar-29 photo" title="" width="29" height="29" src={item.avatarUrl ? item.avatarUrl : defaultAvatar} key={item.id} />
+                      : null
+                  })
+                }
+                {
+                  followingUsers.length > 3
+                    ? <span><span>+ {followedByUsers.length - 3}</span> Người khác</span>
+                    : null
+                }
+                {
+                  followingUsers.length < 1
+                    ? <div style={{ height: "29px" }}></div>
+                    : null
+                }
+              </div>
             </div>
           </li>
         </ul>
@@ -111,123 +139,7 @@ export function About(props) {
 export function Questions(props) {
   const id = props.id
   console.log(id)
-  const questions = [
-    {
-      id: 2,
-      user: {
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
-        name: 'Martin Hope',
-        id: 1
-      },
-      createdDate: '2020-10-08T14:59:00.000+00:00',
-      body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
-
-        I saw him last night (correct)
-        
-        I see him last night (incorrect)
-        
-        But i think both has the same meaning and are understandable,
-        
-        Isn’t it?`,
-      voteCount: 33,
-      subject: "Vật lý",
-      grade: "Lớp 10",
-      answerCount: "7",
-      viewCount: "152"
-    },
-    {
-      id: 3,
-      user: {
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
-        name: 'Martin Hope',
-        id: 2
-      },
-      createdDate: '2020-10-08T14:59:00.000+00:00',
-      body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
-
-        I saw him last night (correct)
-        
-        I see him last night (incorrect)
-        
-        But i think both has the same meaning and are understandable,
-        
-        Isn’t it?`,
-      voteCount: 33,
-      subject: "Vật lý",
-      grade: "Lớp 10",
-      answerCount: "7",
-      viewCount: "152"
-    },
-    {
-      id: 4,
-      user: {
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
-        name: 'Martin Hope',
-        id: 3
-      },
-      createdDate: '2020-10-08T14:59:00.000+00:00',
-      body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
-
-        I saw him last night (correct)
-        
-        I see him last night (incorrect)
-        
-        But i think both has the same meaning and are understandable,
-        
-        Isn’t it?`,
-      voteCount: 33,
-      subject: "Vật lý",
-      grade: "Lớp 10",
-      answerCount: "7",
-      viewCount: "152"
-    },
-    {
-      id: 5,
-      user: {
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
-        name: 'Martin Hope',
-        id: 4
-      },
-      createdDate: '2020-10-08T14:59:00.000+00:00',
-      body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
-
-        I saw him last night (correct)
-        
-        I see him last night (incorrect)
-        
-        But i think both has the same meaning and are understandable,
-        
-        Isn’t it?`,
-      voteCount: 33,
-      subject: "Vật lý",
-      grade: "Lớp 10",
-      answerCount: "7",
-      viewCount: "152"
-    },
-    {
-      id: 6,
-      user: {
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
-        name: 'Martin Hope',
-        id: 5
-      },
-      createdDate: '2020-10-08T14:59:00.000+00:00',
-      body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
-
-        I saw him last night (correct)
-        
-        I see him last night (incorrect)
-        
-        But i think both has the same meaning and are understandable,
-        
-        Isn’t it?`,
-      voteCount: 33,
-      subject: "Vật lý",
-      grade: "Lớp 10",
-      answerCount: "7",
-      viewCount: "152"
-    }
-  ]
+  const questions = []
   return (
     <section>
       <h2 className="screen-reader-text">Questions</h2>
@@ -302,58 +214,7 @@ export function Answers(props) {
 }
 
 export function Followers(props) {
-  const id = props.id
-  console.log(id)
-  const users = [
-    {
-      id: 12,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 19,
-      questionCount: 4,
-      point: 112
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 8,
-      questionCount: 0,
-      point: 50
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-  ]
+  const { id, users } = props
   return (
     <div className='section-page-div user-section user-section-columns row user-not-normal'>
       {
@@ -364,58 +225,9 @@ export function Followers(props) {
 }
 
 export function Following(props) {
-  const id = props.id
+  const { id, users } = props
   console.log(id)
-  const users = [
-    {
-      id: 12,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 19,
-      questionCount: 4,
-      point: 112
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 8,
-      questionCount: 0,
-      point: 50
-    },
-    {
-      id: 11,
-      name: 'Aaron Aiken',
-      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-      answerCount: 18,
-      questionCount: 3,
-      point: 110
-    },
-  ]
+
   return (
     <div className='section-page-div user-section user-section-columns row user-not-normal'>
       {

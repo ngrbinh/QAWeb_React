@@ -4,19 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
+import { follow, unFollow } from '../../redux/ducks/user'
 
 const UserDetailsTopBar = (props) => {
   const id = props.match.params.id
-  const { userDetails, profile, isProfile } = props
-  const user1 = {
-    name: 'Martin Hope',
-    avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-84x84.jpg',
-    questionCount: 3,
-    followCount: 7
-  }
+  const { userDetails, profile, isProfile, loadingFollow } = props
   const user = isProfile ? profile : userDetails
   //console.log(profile)
   const { displayName, avatarUrl, questionCount, followCount } = user
+  const followingIds = profile.followingUsers.map(item => item.id)
+  const handleFollowClick = () => {
+    props.follow(id)
+  }
+  const handleUnfollowClick = () => {
+    props.unFollow(id)
+  }
   return (
     <div className="wpqa-profile-cover wpqa-profile">
       <div className="wpqa-cover-background">
@@ -46,9 +48,17 @@ const UserDetailsTopBar = (props) => {
               {isProfile
                 ? null
                 : <div className="user_follow_4 user_follow_done">
-                  <div className="small_loader loader_2"></div>
-                  <a href="#" className="following_not button-default" data-rel="6" title="Unfollow">
-                    <span className="follow-value">Hủy theo dõi</span></a>
+                  <div className="small_loader loader_2"
+                    style={{ display: loadingFollow.includes(id) ? "block" : "none" }}></div>
+                  {
+                    followingIds.includes(parseInt(id))
+                      ? <a className="button-default" title="Unfollow" onClick={handleUnfollowClick}
+                        style={{ display: loadingFollow.includes(id) ? "none" : "block" }}>
+                        <span className="follow-value">Hủy theo dõi</span></a>
+                      : <a className="button-default" title="follow" onClick={handleFollowClick}
+                        style={{ display: loadingFollow.includes(id) ? "none" : "block" }}>
+                        <span className="follow-value">Theo dõi</span></a>
+                  }
                 </div>
               }
               {
@@ -79,11 +89,13 @@ const UserDetailsTopBar = (props) => {
 
 const mapStateToProps = (state) => ({
   userDetails: state.user.userDetails,
-  profile: state.profile
+  profile: state.profile,
+  loadingFollow: state.user.loadingFollow,
 })
 
 const mapDispatchToProps = {
-
+  follow,
+  unFollow
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetailsTopBar)

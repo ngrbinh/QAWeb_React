@@ -4,11 +4,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { toggleModal} from '../../redux/ducks/modal'
 import './Modal.css'
+import { useHistory } from "react-router-dom";
 function ModalHandler(props) {
   const {modal, toggleModal} = props;
   //console.log(modal)
   const {component: MyPanel} = modal;
   const modalClass = modal.showModal?"panel-pop panel-pop-image show":"panel-pop panel-pop-image hide";
+  const history = useHistory()
   return (
     <React.Fragment>
       <div className="put-wrap-pop">
@@ -19,7 +21,7 @@ function ModalHandler(props) {
           <FontAwesomeIcon icon={faTimes} size='xs' onClick={toggleModal}/>
         </i>
         <div className='pop-border-radius'>
-          {MyPanel==null?"":<MyPanel/>}
+          {MyPanel==null?"":<MyPanel history={history}/>}
         </div>
       </div>
     </React.Fragment>

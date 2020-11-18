@@ -6,6 +6,7 @@ import AdminRoute from '../../routes/AdminRoute';
 import DefaultRoute from '../../routes/DefaultRoute';
 import ModalHandler from '../../component/Modal/ModalHandler';
 import GlobalLoading from '../../component/GlobalLoading';
+import { useEffect } from 'react';
 
 function renderAdminRoutes() {
   let xhtml = null

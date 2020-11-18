@@ -51,8 +51,37 @@ class Home extends Component {
     resetQuestions()
     fetchQuestions(page, limit, sortBy);
   }
+  componentDidUpdate() {
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML";
+      var element = document.getElementsByClassName("content-text");
+      var config =
+        'MathJax.Hub.Config({' +
+        'messageStyle: "none",' +
+        'SVG: {' +
+        'scale: 120,' +
+        'linebreaks: {' +
+        'automatic: true' +
+        '}' +
+        '},' +
+        '"HTML-CSS": { linebreaks: { automatic: true } },' +
+        'CommonHTML: { linebreaks: { automatic: true } },' +
+        'tex2jax: {' +
+        `inlineMath: [['$', '$'], ["\\(", "\\)"]]` +
+        '},' +
+        '});' +
+        'MathJax.Hub.Startup.onload();';
+
+      if (window.opera) { script.innerHTML = config }
+      else { script.text = config }
+      script.onload = new Function("MathJax.Hub.Queue(['Typeset',MathJax.Hub]);")
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  }
   render() {
-    console.log(this.props)
+    //console.log(this.props)
     const { tabIndex, page } = this.state
     const questions1 = [
       {

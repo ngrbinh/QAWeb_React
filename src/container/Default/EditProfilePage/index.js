@@ -95,7 +95,7 @@ class EditProfilePage extends Component {
   }
   //End: Funtions for password tab 
   componentDidMount() {
-    this.props.fetchProfile()
+    //this.props.fetchProfile()
     this.props.fetchAddresses()
   }
   componentDidUpdate(prevProps) {

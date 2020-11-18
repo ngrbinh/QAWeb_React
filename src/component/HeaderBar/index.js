@@ -5,12 +5,12 @@ import { faAngleDown, faBell, faEdit, faQuestionCircle, faSearch, faSignOutAlt, 
 import LoginPanel from '../Modal/LoginPanel'
 import SignupPanel from '../Modal/SignupPanel'
 import { connect } from 'react-redux'
-import { loginSuccess, login } from '../../redux/ducks/account'
+import { logout } from '../../redux/ducks/account'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
 function HeaderBar(props) {
   const [showUserActions, setShowUserActions] = useState(false)
-  const { actions } = props
+  const { actions, logout } = props
   const signInClick = () => {
     actions.changeModal(LoginPanel)
     actions.toggleModal()
@@ -22,6 +22,10 @@ function HeaderBar(props) {
   }
   const toggleUserActions = () => {
     setShowUserActions(!showUserActions)
+  }
+  const handleLogoutClick = e => {
+    e.preventDefault()
+    logout()
   }
   const { profile } = props
   const loginClass = 'right-header float_r' + (profile.displayName ? ' wrap-login' : ' wrap-not-login')
@@ -84,7 +88,7 @@ function HeaderBar(props) {
                           </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="#" onClick={handleLogoutClick}>
                           <i className="icon-pencil"><FontAwesomeIcon icon={faSignOutAlt} /></i>Đăng xuất
                           </a>
                       </li>
@@ -144,7 +148,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  loginSuccess
+  logout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar)

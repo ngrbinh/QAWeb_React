@@ -12,7 +12,7 @@ class UserDetailPage extends Component {
   componentDidMount() {
     const { fetchUserDetails, fetchProfile, isProfile } = this.props
     if (isProfile) {
-      fetchProfile()
+      //fetchProfile()
     } else {
       const id = this.props.match.params.id
       fetchUserDetails(id)
@@ -23,16 +23,8 @@ class UserDetailPage extends Component {
     const { userDetails, profile, isProfile } = this.props
     //console.log(isProfile)
     const id = isProfile ? profile.id : this.props.match.params.id
-    const user1 = {
-      name: 'Martin Hope',
-      questionCount: 3,
-      answerCount: 7,
-      point: 110,
-      phoneNumber: '123023012',
-      gender: 1,
-      birthDate: '2012-02-12'
-    }
     const user = isProfile ? profile : userDetails
+    const { followingUsers, followedByUsers } = user
     return (
       <React.Fragment>
         <div className="breadcrumbs breadcrumbs_1">
@@ -69,11 +61,11 @@ class UserDetailPage extends Component {
         <div className="wrap-tabs">
           <div className="menu-tabs active-menu">
             <ul className="menu flex menu-tabs-desktop">
-              <li><NavLink to={url} activeClassName='userdetail-active-tab' exact>About</NavLink></li>
-              <li><NavLink to={`${url}/questions`} activeClassName='userdetail-active-tab' exact>Questions</NavLink></li>
-              <li><NavLink to={url + '/answers'} activeClassName='userdetail-active-tab' exact>Answers</NavLink></li>
-              <li><NavLink to={url + '/followers'} activeClassName='userdetail-active-tab' exact>Followers</NavLink></li>
-              <li><NavLink to={url + '/following'} activeClassName='userdetail-active-tab' exact>Following</NavLink></li>
+              <li><NavLink to={url} activeClassName='userdetail-active-tab' exact>Thông tin cá nhân</NavLink></li>
+              <li><NavLink to={`${url}/questions`} activeClassName='userdetail-active-tab' exact>Câu hỏi</NavLink></li>
+              <li><NavLink to={url + '/answers'} activeClassName='userdetail-active-tab' exact>Câu trả lời</NavLink></li>
+              <li><NavLink to={url + '/followers'} activeClassName='userdetail-active-tab' exact>Người theo dõi</NavLink></li>
+              <li><NavLink to={url + '/following'} activeClassName='userdetail-active-tab' exact>Đang theo dõi</NavLink></li>
             </ul>
           </div>
         </div>
@@ -82,8 +74,8 @@ class UserDetailPage extends Component {
             <Route path={path} exact><About user={user} /></Route>
             <Route path={`${path}/questions`} exact><Questions id={id} /></Route>
             <Route path={`${path}/answers`} exact><Answers id={id} /></Route>
-            <Route path={`${path}/followers`} exact><Followers id={id} /></Route>
-            <Route path={`${path}/following`} exact><Following id={id} /></Route>
+            <Route path={`${path}/followers`} exact><Followers id={id} users={followedByUsers} /></Route>
+            <Route path={`${path}/following`} exact><Following id={id} users={followingUsers}/></Route>
           </Switch>
         </React.Fragment>
       </React.Fragment>

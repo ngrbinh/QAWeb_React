@@ -29,3 +29,11 @@ export const updateProfile = (id,data) => {
 export const updatePassword = (data) => {
   return axiosService.post(`${url}/password`,data)
 }
+
+export const createFollow = (id) => {
+  return axiosService.post(`${url}/follow/${id}`)
+}
+
+export const deleteFollow = (id) => {
+  return axiosService.post(`${url}/unfollow/${id}`)
+}

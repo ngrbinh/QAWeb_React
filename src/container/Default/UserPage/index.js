@@ -1,4 +1,4 @@
-import { faAngleDown, faAngleLeft, faAngleRight, faHome, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleLeft, faAngleDoubleRight, faAngleDown, faAngleLeft, faAngleRight, faHome, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -9,14 +9,14 @@ import { fetchUsers, resetUsers } from '../../../redux/ducks/user'
 class UserPage extends Component {
   state = {
     sortBy: "-follow",
-    page: 1,
+    curPage: 1,
     limit: 9
   }
   componentDidMount() {
-    const { fetchUsers,resetUsers } = this.props
-    const { page, limit, sortBy } = this.state
+    const { fetchUsers, resetUsers } = this.props
+    const { curPage, limit, sortBy } = this.state
     resetUsers()
-    fetchUsers(page, limit, sortBy)
+    fetchUsers(curPage, limit, sortBy)
   }
   handleSelectChange = (e) => {
     const newSortBy = e.target.value
@@ -24,46 +24,31 @@ class UserPage extends Component {
       ...state,
       sortBy: newSortBy
     }))
-    const { fetchUsers,resetUsers } = this.props
-    const { page, limit} = this.state
+    const { fetchUsers, resetUsers } = this.props
+    const { page, limit } = this.state
     resetUsers()
     fetchUsers(page, limit, newSortBy)
   }
+  handleLoadPage = (i) => () => {
+    this.setState(state => ({
+      ...state,
+      curPage: i
+    }))
+  }
+  componentDidUpdate(prevProps, prevState) {
+    for (let x in this.state) {
+      if (this.state[x] !== prevState[x]) {
+        const { fetchUsers, resetUsers } = this.props
+        const { curPage, limit, sortBy } = this.state
+        resetUsers()
+        fetchUsers(curPage, limit, sortBy)
+        break
+      }
+    }
+  }
   render() {
-    const users1 = [
-      {
-        name: 'Aaron Aiken',
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-        answerCount: 18,
-      },
-      {
-        name: 'Aaron Aiken',
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-        answerCount: 18,
-      },
-      {
-        name: 'Aaron Aiken',
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-        answerCount: 18,
-      },
-      {
-        name: 'Aaron Aiken',
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-        answerCount: 18,
-      },
-      {
-        name: 'Aaron Aiken',
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-        answerCount: 18,
-      },
-      {
-        name: 'Aaron Aiken',
-        avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-1-84x84.jpg',
-        answerCount: 18,
-      },
-    ]
-    const { users, loadingUsers } = this.props
-    const { sortBy } = this.state
+    const { users, loadingUsers, totalPage } = this.props
+    const { sortBy, curPage } = this.state
     return (
       <React.Fragment>
         <div className="breadcrumbs breadcrumbs_1">
@@ -90,11 +75,12 @@ class UserPage extends Component {
                     <FontAwesomeIcon icon={faAngleDown} className='arrow_down' />
                     <select onChange={this.handleSelectChange} value={sortBy}>
                       <option value="-name">Tên</option>
-                      <option value="-id">ID</option>
+                      {/* <option value="-id">ID</option> */}
                       <option value="-question">Số câu hỏi</option>
                       <option value="-answer">Số câu trả lời</option>
                       <option value="-point">Điểm</option>
                       <option value="-follow">Người theo dõi</option>
+                      <option value="-date">Ngày sinh</option>
                     </select>
                   </span>
                 </form>
@@ -124,7 +110,7 @@ class UserPage extends Component {
                 <div className="post-content-text"></div>
                 <div className="user-section user-section-small_grid row user-not-normal">
                   {
-                    users.map(item => <UserTag user={item} key={item.id}/>)
+                    users.map(item => <UserTag user={item} key={item.id} />)
                   }
                 </div>
                 <div className="main-pagination center-child">
@@ -132,14 +118,27 @@ class UserPage extends Component {
                     <span className="loader_2"></span>
                   </span>
                   <div className="pagination" style={loadingUsers ? { display: "none" } : { display: "block" }}>
-                    <a className="prev page-numbers" href="https://2code.info/demo/themes/Discy/Main/users/">
-                      <i className="icon-left-open"><FontAwesomeIcon icon={faAngleLeft} /></i>
-                    </a>
-                    <span aria-current="page" className="page-numbers current">1</span>
-                    <a className="page-numbers" href="#">2</a>
-                    <a className="next page-numbers" href="#">
-                      <i className="icon-right-open"><FontAwesomeIcon icon={faAngleRight} /></i>
-                    </a>
+                    {
+                      curPage > 1
+                        ? <React.Fragment>
+                          <a className="page-numbers" onClick={this.handleLoadPage(1)}>
+                            <i className="icon-left-open"><FontAwesomeIcon icon={faAngleDoubleLeft} /></i>
+                          </a>
+                          <a className="page-numbers" onClick={this.handleLoadPage(curPage - 1)}>{curPage - 1}</a>
+                        </React.Fragment>
+                        : null
+                    }
+                    <span aria-current="page" className="page-numbers current">{curPage}</span>
+                    {
+                      curPage < totalPage
+                        ? <React.Fragment>
+                          <a className="page-numbers" onClick={this.handleLoadPage(curPage + 1)}>{curPage + 1}</a>
+                          <a className="next page-numbers" onClick={this.handleLoadPage(totalPage)}>
+                            <i className="icon-right-open"><FontAwesomeIcon icon={faAngleDoubleRight} /></i>
+                          </a>
+                        </React.Fragment>
+                        : null
+                    }
                   </div>
                 </div>
                 <div className="clearfix"></div>
@@ -154,7 +153,8 @@ class UserPage extends Component {
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
-  loadingUsers: state.user.loadingUsers
+  loadingUsers: state.user.loadingUsers,
+  totalPage: state.user.totalPage
 })
 
 const mapDispatchToProps = {

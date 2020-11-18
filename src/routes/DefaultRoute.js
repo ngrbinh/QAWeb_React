@@ -35,19 +35,19 @@ class DefaultRoute extends Component {
     })
   }
   componentDidMount() {
-    const { token, fetchProfile } = this.props
+    const { token, displayName, fetchProfile } = this.props
     if (token) {
       fetchProfile()
     }
+
   }
   render() {
     const { component: MyComponent, privateRoute, attachProps, token, changeModal, toggleModal, ...remainProps } = this.props
     const actionGetter = ({ toggleModal, changeModal }) => ({ toggleModal, changeModal })
     const actions = actionGetter(this.props)
+    //console.log(token)
     const { showUpButton } = this.state
-    window.onscroll = this.handleUpButton
     if (privateRoute && !token) {
-      //console.log(token)
       changeModal(LoginPanel)
       toggleModal()
     }
@@ -92,7 +92,8 @@ class DefaultRoute extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.account.token
+    token: state.account.token,
+    displayName: state.profile.displayName
   };
 }
 

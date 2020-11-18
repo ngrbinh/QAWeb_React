@@ -6,6 +6,8 @@ import post from './ducks/post'
 import user from './ducks/user'
 import globalLoading from './ducks/globalLoading'
 import address from './ducks/address'
+import grade from './ducks/grade'
+import subject from './ducks/subject'
 const rootReducer = combineReducers({
   account,
   modal,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   post,
   user,
   address,
+  grade,
+  subject,
   globalLoading
 })
 

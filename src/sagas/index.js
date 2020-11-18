@@ -2,6 +2,8 @@ import { fork, all, take } from "redux-saga/effects";
 import { postSaga } from "./post";
 import { userSaga } from "./user";
 import { addressSaga } from "./address"
+import { subjectSaga } from "./subject"
+import { gradeSaga } from "./grade"
 import { REHYDRATE } from 'redux-persist/lib/constants';
 
 export default function* rootSaga() {
@@ -14,4 +16,6 @@ export default function* rootSaga() {
   yield fork(postSaga)
   yield fork(userSaga)
   yield fork(addressSaga)
+  yield fork(subjectSaga)
+  yield fork(gradeSaga)
 }
