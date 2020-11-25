@@ -36,7 +36,7 @@ class DefaultRoute extends Component {
   }
   componentDidMount() {
     const { token, displayName, fetchProfile } = this.props
-    if (token) {
+    if (token && !displayName) {
       fetchProfile()
     }
 

@@ -109,9 +109,9 @@ function HeaderBar(props) {
                 <form role="search" className="searchform main-search-form" method="GET" action="">
                   <div className="search-wrapper">
                     <input type="search" className="live-search live-search-icon" autoComplete="off" placeholder="Nhập từ khóa" name="search" />
-                    <div className="search-click"></div>
+                    {/* <div className="search-click"></div> */}
                     <button type="submit">
-                      <i className="icon-search">
+                      <i>
                         <FontAwesomeIcon icon={faSearch} size='xs' />
                       </i>
                     </button>

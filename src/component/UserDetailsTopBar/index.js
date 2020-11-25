@@ -12,6 +12,7 @@ const UserDetailsTopBar = (props) => {
   const user = isProfile ? profile : userDetails
   //console.log(profile)
   const { displayName, avatarUrl, questionCount, followCount } = user
+  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const followingIds = profile.followingUsers.map(item => item.id)
   const handleFollowClick = () => {
     props.follow(id)
@@ -39,7 +40,7 @@ const UserDetailsTopBar = (props) => {
                 <div className="user-content">
                   <div className="user-inner">
                     <h4><a href="">{displayName}</a></h4>
-                    <span className="badge-span" style={{ backgroundColor: '#ffbf00' }}>Pundit</span>
+                    <span className="badge-span" style={{ backgroundColor: `#${badges[0].typeColor}` }}>{badges[0].typeName}</span>
                   </div>
                 </div>
               </div>

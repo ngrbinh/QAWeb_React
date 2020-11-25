@@ -17,6 +17,7 @@ export default function Question(props) {
   const shortBody = shorten ? truncateWithEllipsis(body, 250) : body;
   const formatDate = new Date(creationDate)
   const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
+  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const parse = require('html-react-parser')
   return (
     <article className='question-articles article-post clearfix question-answer-before'>
@@ -36,7 +37,7 @@ export default function Question(props) {
               <header className='article-header'>
                 <div className='question-header'>
                   <Link className='post-author' to={`/user/${user.id}`}>{user.displayName}</Link>
-                  <span className="badge-span" style={{ backgroundColor: '#ffbf00' }}>Pundit</span>
+                  <span className="badge-span" style={{ backgroundColor: `#${badges[0].typeColor}` }}>{badges[0].typeName}</span>
                   <div className='post-meta'>
                     <span className="post-date">Ngày đăng<span className="date-separator">: </span>
                       <a href="#" itemProp="url">

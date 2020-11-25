@@ -1,4 +1,4 @@
-import { faBook, faCheck, faCommentAlt, faGlobeAsia, faHeart, faMapMarkerAlt, faPhoneAlt, faStar, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faCheck, faCommentAlt, faFlag, faGlobeAsia, faHeart, faMapMarkerAlt, faPhoneAlt, faStar, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import Answer from '../../../component/Answer'
@@ -137,11 +137,9 @@ export function About(props) {
 }
 
 export function Questions(props) {
-  const id = props.id
-  console.log(id)
-  const questions = []
-  return (
-    <section>
+  const { id, questions } = props
+  return questions.length !== 0 ?
+    (<section>
       <h2 className="screen-reader-text">Questions</h2>
       <div className="post-articles question-articles">
         {questions.map(item => {
@@ -149,58 +147,25 @@ export function Questions(props) {
         })}
       </div>
       <div className='clearfix'></div>
-      <div className="pagination-wrap pagination-question">
+      {/* <div className="pagination-wrap pagination-question">
         <div className="pagination-nav posts-load-more">
           <span className="load_span"><span className="loader_2"></span></span>
           <div className="load-more">
             <a href="#">Xem thêm</a>
           </div>
         </div>
-      </div>
-    </section>
-  )
+      </div> */}
+    </section>)
+    : (<div className="alert-message warning">
+      <i className="icon-flag"><FontAwesomeIcon icon={faFlag} /></i>
+      <p>Chưa có câu hỏi nào</p>
+    </div>)
 }
 
 export function Answers(props) {
-  const id = props.id
-  console.log(id)
-  const answers = [
-    {
-      id: 3,
-      user: {
-        avatarUrl: "https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-42x42.jpg",
-        name: "Marko Smith",
-        id: 7
-      },
-      voteCount: 8,
-      body: `<div> <p>You are correct that both are understandable.</p><p>The only other possible everyday meaning I could think of would be ‘I see him [in my mind’s eye] last night’; that is, I am, at this very moment, imagining him last night. But it should almost always be clear from context which one is intended.</p><p>‘Correct’ doesn’t mean ‘understandable’, though. If I say ‘Me want have fooding’ it’s pretty clear what to understand from that, but it’s not anywhere near correct Standard English grammar. If you lived somewhere where you spoke a dialect of English in which this was acceptable grammar, however, then it would be correct for that dialect.</p> </div>`,
-      createdDate: '2020-10-08T14:59:00.000+00:00'
-    },
-    {
-      id: 3,
-      user: {
-        avatarUrl: "https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-42x42.jpg",
-        name: "Marko Smith",
-        id: 8
-      },
-      voteCount: 8,
-      body: `<div> <p>You are correct that both are understandable.</p><p>The only other possible everyday meaning I could think of would be ‘I see him [in my mind’s eye] last night’; that is, I am, at this very moment, imagining him last night. But it should almost always be clear from context which one is intended.</p><p>‘Correct’ doesn’t mean ‘understandable’, though. If I say ‘Me want have fooding’ it’s pretty clear what to understand from that, but it’s not anywhere near correct Standard English grammar. If you lived somewhere where you spoke a dialect of English in which this was acceptable grammar, however, then it would be correct for that dialect.</p> </div>`,
-      createdDate: '2020-10-08T14:59:00.000+00:00'
-    },
-    {
-      id: 3,
-      user: {
-        avatarUrl: "https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-42x42.jpg",
-        name: "Marko Smith",
-        id: 9
-      },
-      voteCount: 8,
-      body: `<div> <p>You are correct that both are understandable.</p><p>The only other possible everyday meaning I could think of would be ‘I see him [in my mind’s eye] last night’; that is, I am, at this very moment, imagining him last night. But it should almost always be clear from context which one is intended.</p><p>‘Correct’ doesn’t mean ‘understandable’, though. If I say ‘Me want have fooding’ it’s pretty clear what to understand from that, but it’s not anywhere near correct Standard English grammar. If you lived somewhere where you spoke a dialect of English in which this was acceptable grammar, however, then it would be correct for that dialect.</p> </div>`,
-      createdDate: '2020-10-08T14:59:00.000+00:00'
-    }
-  ]
-  return (
-    <div className='question-adv-comments question-has-comments clearfix'>
+  const { id, answers } = props
+  return answers.length !== 0 ?
+    (<div className='question-adv-comments question-has-comments clearfix'>
       <div id='comments' className='post-section comments-popup-share'>
         <div className='post-inner'>
           <ol className='commentlist clearfix'>
@@ -209,8 +174,11 @@ export function Answers(props) {
           <div className='clearfix'></div>
         </div>
       </div>
-    </div>
-  )
+    </div>)
+    : (<div className="alert-message warning">
+      <i className="icon-flag"><FontAwesomeIcon icon={faFlag} /></i>
+      <p>Chưa có câu trả lời nào</p>
+    </div>)
 }
 
 export function Followers(props) {

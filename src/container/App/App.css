@@ -153,7 +153,7 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   background-color: #1a1c21;
 }
 
-.button-default, .button-default-2, input[type="search"], nav.nav ul li a, .pop-border-radius, .pop-border-radius .panel-pop-content, .wpqa_error, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .user-not-normal .user-area, .load-more a, .question-footer, .footer-meta li, a.meta-answer, .go-up, .user-login-click>i, .fakefile button, .fileinputs span, .styled-select, .styled-select .arrow_down, input[type="search"], div.search-results, .pagination .page-numbers.current, .points-section ul .point-section, .badges-section ul li, .cover-opacity, .wpqa-cover-buttons, .user-stats>ul>li>div, .user-follower>ul>li>div, .user-follower>ul>li h4 i, .user-columns-data, .user-follow-profile a, .question-navigation a, .page-section .post-title-2>i, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea, .wpqa-delete-image>span {
+.button-default, .button-default-2, input[type="search"], nav.nav ul li a, .pop-border-radius, .pop-border-radius .panel-pop-content, .wpqa_error, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .stats-inner li, .user-not-normal .user-area, .load-more a, .question-footer, .footer-meta li, a.meta-answer, .go-up, .user-login-click>i, .fakefile button, .fileinputs span, .styled-select, .styled-select .arrow_down, input[type="search"], div.search-results, .pagination .page-numbers.current, .points-section ul .point-section, .badges-section ul li, .cover-opacity, .wpqa-cover-buttons, .user-stats>ul>li>div, .user-follower>ul>li>div, .user-follower>ul>li h4 i, .user-columns-data, .user-follow-profile a, .question-navigation a, .page-section .post-title-2>i, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea, .wpqa-delete-image>span, .alert-message {
   border-radius: 2px;
 }
 
@@ -212,7 +212,7 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   color: #7c7f85;
 }
 
-.header-search input, .wpqa_form p input, .wpqa_form .form-submit, .widget-title-tabs .tabs li, .user-notifications>div>ul li:last-child, .widget li:last-child, .widget-posts .user-notifications.user-profile-area>div>ul>li:last-child, .user-section-small .user-data ul li:last-child, .user-notifications>div>ul li:last-child, .user-login-click>ul li:last-child, .fakefile button, #respond .form-submit, .breadcrumb-right .search-form input.search-input, .page-template-template-users .article-post, .points-section ul, .points-section:not(.buy-points-section) ul li p, .badges-section ul, .badges-section ul li p, .wpqa-profile .post-section.user-area.user-advanced, .wpqa-cover-content .user-head-area, .user-head-area .author-image, .wpqa-cover-content .user-area .user-content>.user-inner .badge-span, .user-stats>ul, .user-stats>ul>li>div>div h4, .user-follower>ul, .user-columns-data ul li:last-child {
+.header-search input, .wpqa_form p input, .wpqa_form .form-submit, .widget-title-tabs .tabs li, .user-notifications>div>ul li:last-child, .widget li:last-child, .widget-posts .user-notifications.user-profile-area>div>ul>li:last-child, .user-section-small .user-data ul li:last-child, .user-notifications>div>ul li:last-child, .user-login-click>ul li:last-child, .fakefile button, #respond .form-submit, .breadcrumb-right .search-form input.search-input, .page-template-template-users .article-post, .points-section ul, .points-section:not(.buy-points-section) ul li p, .badges-section ul, .badges-section ul li p, .wpqa-profile .post-section.user-area.user-advanced, .wpqa-cover-content .user-head-area, .user-head-area .author-image, .wpqa-cover-content .user-area .user-content>.user-inner .badge-span, .user-stats>ul, .user-stats>ul>li>div>div h4, .user-follower>ul, .user-columns-data ul li:last-child, .alert-message p {
   margin-bottom: 0;
 }
 
@@ -228,7 +228,7 @@ nav.nav ul li.current_page_item a, nav.nav ul li.current-menu-item a, nav.nav ul
   color: #FFF !important;
 }
 
-.panel-pop-content, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .queswer-main-inner, .hide-main-inner, .inner-sidebar, .widget-no-divider .stats-inner li, .widget-title-tabs .tabs li.current:before, .widget-title-tabs .tabs li.current a, .widget.tabs-wrap.widget-tabs .widget-wrap, .footer-meta li, .user-notifications>div, .user-login-click>ul, .answers-tabs-inner li.active-tab:before, .answers-tabs-inner li.active-tab a, .fakefile button, .styled-select, input[type="search"], .search_loader, div.search-results, .search-form .button-search, .pagination .page-numbers, .wpqa-cover-buttons, .user-stats>ul>li>div, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea {
+.panel-pop-content, input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"], input[type="email"], .queswer-main-inner, .hide-main-inner, .inner-sidebar, .widget-no-divider .stats-inner li, .widget-title-tabs .tabs li.current:before, .widget-title-tabs .tabs li.current a, .widget.tabs-wrap.widget-tabs .widget-wrap, .footer-meta li, .user-notifications>div, .user-login-click>ul, .answers-tabs-inner li.active-tab:before, .answers-tabs-inner li.active-tab a, .fakefile button, .styled-select, input[type="search"], .search_loader, div.search-results, .search-form .button-search, .pagination .page-numbers, .wpqa-cover-buttons, .user-stats>ul>li>div, .wpqa_radio input[type="radio"], input[type="date"], .wpqa_form textarea, .admin-body, .site-layout-background {
   background-color: #FFF;
 }
 
@@ -240,7 +240,7 @@ input[type="text"], input[type="password"], .wpqa_checkbox input[type="checkbox"
   border: 1px solid #e1e3e3;
 }
 
-h1, h2, h3, h4, h5, .button-default, .button-default-2, nav.nav ul li, .panel-image-inner p, .nav_menu>div>ul li a, .widget li, .stats-value, .widget-title, .widget-posts .user-notifications>div>ul li div h3 a, .menu-tabs>ul>li>a, .load-more a, .post-author, .vote_result, .question-content-text, a.meta-answer, .answers-tabs .section-title, .answers-tabs-inner li, .vote_result, .comment-respond>.section-title, .fileinputs span, .post-content-text, .point-div span, .user-area .bio_editor, .user-stats>ul>li>div>div span, .user-follow-profile, .post-title-2 {
+h1, h2, h3, h4, h5, .button-default, .button-default-2, nav.nav ul li, .panel-image-inner p, .nav_menu>div>ul li a, .widget li, .stats-value, .widget-title, .widget-posts .user-notifications>div>ul li div h3 a, .menu-tabs>ul>li>a, .load-more a, .post-author, .vote_result, .question-content-text, a.meta-answer, .answers-tabs .section-title, .answers-tabs-inner li, .vote_result, .comment-respond>.section-title, .fileinputs span, .post-content-text, .point-div span, .user-area .bio_editor, .user-stats>ul>li>div>div span, .user-follow-profile, .post-title-2, .alert-message {
   font-family: "Roboto", Arial, sans-serif;
 }
 
@@ -476,6 +476,8 @@ img {
   position: absolute;
   top: 0;
   right: 5px;
+  font-family: Arial;
+  line-height: normal;
 }
 
 .header-search button i {
@@ -1086,6 +1088,12 @@ img {
 }
 
 .author-image img.question {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+}
+
+.author-image img.admin-table {
   width: 42px;
   height: 42px;
   object-fit: cover;
@@ -2512,4 +2520,37 @@ textarea {
 
 .user-best-answers>div>i, .referral-earned>div>i {
   color: #1fae5b;
+}
+
+.alert-message.warning, .alert-message.warning p, .alert-message.warning i, .alert-message.warning a:hover {
+  color: #ebc035;
+}
+
+.alert-message.warning {
+  background-color: #fffcdd;
+}
+
+.alert-message {
+  position: relative;
+  display: block;
+  background-color: #d8f6fe;
+  color: #3bb5d8;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 20px;
+  text-align: left;
+}
+
+.alert-message i {
+  margin: 1px 10px 0 0;
+  float: left;
+  font-size: 17px;
+  font-weight: normal;
+  color: #3bb5d8;
+}
+
+.alert-message p {
+  overflow: hidden;
 }

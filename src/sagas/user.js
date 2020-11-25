@@ -1,6 +1,6 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow } from "../apis/user";
-import { fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
+import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow, deleteUserById } from "../apis/user";
+import { deleteUserFail, deleteUserSuccess, fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
 import { hideLoading, showLoading } from '../redux/ducks/globalLoading'
 import { accountTypes, changePasswordFail, changePasswordSuccess, login, loginFail, loginSuccess, logout, signupFail, signupSuccess } from "../redux/ducks/account";
 import { setModal, toggleModal } from "../redux/ducks/modal"
@@ -16,6 +16,7 @@ export function* userSaga() {
   yield takeEvery(userTypes.FOLLOW, watchFollow)
   yield takeEvery(userTypes.UN_FOLLOW, watchUnFollow)
   yield takeEvery(userTypes.VOTE, watchVote)
+  yield takeEvery(userTypes.DELETE_USER, watchDeleteUser)
 }
 
 function* watchFetchUsers(action) {
@@ -23,7 +24,7 @@ function* watchFetchUsers(action) {
     const { page, limit, sortBy } = action.payload
     const resp = yield call(getUsers, page, limit, sortBy)
     const { status, data } = resp
-    console.log(data)
+    //console.log(data)
     yield put(fetchUsersSuccess(data))
   } catch (error) {
     yield put(fetchUsersFail())
@@ -152,5 +153,20 @@ function* watchVote(action) {
     const { message } = error.response.data
     console.log(message)
     yield put(voteFail(id))
+  }
+}
+
+function* watchDeleteUser(action) {
+  const { id } = action.payload
+  try {
+    const resp = yield call(deleteUserById, id)
+    yield put(deleteUserSuccess(id))
+  }
+  catch (error) {
+    console.log(error)
+    const response = error.response
+    //console.log(data)
+    const message = response ? response.data.message : ""
+    yield put(deleteUserFail(id, message))
   }
 }

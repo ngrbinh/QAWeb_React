@@ -9,6 +9,7 @@ function UserTagDetail(props) {
   const { user, profile, loadingFollow } = props
   const { avatarUrl, answerCount, questionCount, point, id, displayName, voteCount } = user
   const followingIds = profile.followingUsers.map(item => item.id)
+  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const handleFollowClick = () => {
     props.follow(id)
   }
@@ -33,7 +34,7 @@ function UserTagDetail(props) {
               <div className="user-data-columns">
                 <h4><Link to={`/user/${id}`}>{displayName}</Link><span className="verified_user tooltip-n" original-title="Verified"><i
                   className="icon-check"></i></span></h4><span className="badge-span"
-                    style={{ backgroundColor: '#ffbf00' }}>Pundit</span>
+                    style={{ backgroundColor: `#${badges[0].typeColor}` }}>{badges[0].typeName}</span>
               </div>
             </div>
           </div>

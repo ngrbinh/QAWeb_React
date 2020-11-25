@@ -14,7 +14,11 @@ export const userTypes = {
   UN_FOLLOW_FAIL: "user/UN_FOLLOW_FAIL",
   VOTE: "user/VOTE",
   VOTE_SUCCESS: "user/VOTE_SUCCESS",
-  VOTE_FAIL: "user/VOTE_FAIL"
+  VOTE_FAIL: "user/VOTE_FAIL",
+  DELETE_USER: "user/DELETE_USER",
+  DELETE_USER_SUCCESS: "user/DELETE_USER_SUCCESS",
+  DELETE_USER_FAIL: "user/DELETE_USER_FAIL",
+  REMOVE_DEL_ERR: "user/REMOVE_DEL_ERR"
 }
 
 const initState = {
@@ -28,7 +32,9 @@ const initState = {
   loadingFollow: [],
   followError: [],
   loadingVote: [],
-  voteError: []
+  voteError: [],
+  deletingIds: [],
+  deleteError: []
 }
 
 export default function reducer(state = initState, action) {
@@ -41,6 +47,7 @@ export default function reducer(state = initState, action) {
     id = null
     message = null
   }
+  const payload = action.payload
   switch (action.type) {
     case userTypes.FETCH_USERS:
       return {
@@ -131,6 +138,28 @@ export default function reducer(state = initState, action) {
         ...state,
         loadingVote: state.loadingVote.filter(item => item !== id)
       }
+    case userTypes.DELETE_USER:
+      return {
+        ...state,
+        deletingIds: [...state.deletingIds, payload.id]
+      }
+    case userTypes.DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        deletingIds: state.deletingIds.filter(item => item !== payload.id),
+        users: state.users.filter(item => item.id !== payload.id)
+      }
+    case userTypes.DELETE_USER_FAIL:
+      return {
+        ...state,
+        deletingIds: state.deletingIds.filter(item => item !== payload.id),
+        deleteError: [...state.deleteError, { ...payload }]
+      }
+    case userTypes.REMOVE_DEL_ERR:
+      return {
+        ...state,
+        deleteError: state.deleteError.filter(item => item.id !== payload.id)
+      }
     default:
       return state
   }
@@ -212,5 +241,25 @@ export const voteSuccess = (id) => ({
 
 export const voteFail = (id) => ({
   type: userTypes.VOTE_FAIL,
+  payload: { id }
+})
+
+export const deleteUser = (id) => ({
+  type: userTypes.DELETE_USER,
+  payload: { id }
+})
+
+export const deleteUserSuccess = (id) => ({
+  type: userTypes.DELETE_USER_SUCCESS,
+  payload: { id }
+})
+
+export const deleteUserFail = (id, message) => ({
+  type: userTypes.DELETE_USER_FAIL,
+  payload: { id, message }
+})
+
+export const removeDelErr = (id) => ({
+  type: userTypes.REMOVE_DEL_ERR,
   payload: { id }
 })

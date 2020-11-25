@@ -7,13 +7,13 @@ import DefaultRoute from '../../routes/DefaultRoute';
 import ModalHandler from '../../component/Modal/ModalHandler';
 import GlobalLoading from '../../component/GlobalLoading';
 import { useEffect } from 'react';
-
+import "antd/dist/antd.css";
 function renderAdminRoutes() {
   let xhtml = null
   xhtml = ADMIN_ROUTES.map(route => {
     return <AdminRoute
       key={route.path}
-      path={route.path}
+      path={`/admin${route.path}`}
       component={route.component}
       exact={route.exact}
       name={route.name}

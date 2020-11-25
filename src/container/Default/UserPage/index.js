@@ -45,6 +45,19 @@ class UserPage extends Component {
         break
       }
     }
+    this.processPointDivHeight()
+  }
+  processPointDivHeight = () => {
+    var divs = document.querySelectorAll('.col4 .post-section')
+    var i, j, max
+    for (i = 0; i < divs.length; i += 3) {
+      var j_end = i + 2 > (divs.length - 1) ? divs.length - 1 : i + 2
+      max = 0
+      for (j = i; j <= j_end; j++) {
+        if (divs[j].offsetHeight > max) max = divs[j].offsetHeight
+        else divs[j].style.height = max + 'px'
+      }
+    }
   }
   render() {
     const { users, loadingUsers, totalPage } = this.props

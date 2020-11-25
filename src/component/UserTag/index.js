@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
@@ -6,17 +6,15 @@ import { follow, unFollow } from '../../redux/ducks/user'
 
 function UserTag(props) {
   const { user, profile, loadingFollow } = props
-  const { displayName, avatarUrl, id, badges } = user
-  let badge = {
-  }
-  if (badges) {
-    badge = badges[0]
-  }
+  const { displayName, avatarUrl, id } = user
+  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const followingIds = profile.followingUsers.map(item => item.id)
-  const handleFollowClick = () => {
+  const handleFollowClick = (e) => {
+    e.preventDefault()
     props.follow(id)
   }
-  const handleUnfollowClick = () => {
+  const handleUnfollowClick = (e) => {
+    e.preventDefault()
     props.unFollow(id)
   }
   return (
@@ -34,7 +32,7 @@ function UserTag(props) {
           <div className="user-content">
             <div className="user-inner">
               <h4><Link to={`/user/${id}`}>{displayName}</Link></h4>
-              <span className="badge-span" style={{ backgroundColor: '#0d0e11' }}>Begginer</span>
+              <span className="badge-span" style={{ backgroundColor: `#${badges[0].typeColor}` }}>{badges[0].typeName}</span>
               <div className="user_follow_4 follow-btn" style={displayName ? null : { display: 'none' }}>
                 <div className="small_loader loader_2" style={{ display: loadingFollow.includes(id) ? "inline-block" : "none" }}>
                 </div>

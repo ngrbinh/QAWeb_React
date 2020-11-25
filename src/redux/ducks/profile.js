@@ -16,6 +16,7 @@ export const profileTypes = {
 
 const initState = {
   displayName: "",
+  account: {},
   followingUsers: [],
   followedByUsers: [],
   loadingFetch: false,

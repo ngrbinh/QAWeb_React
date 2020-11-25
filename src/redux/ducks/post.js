@@ -1,5 +1,3 @@
-import { act } from "react-dom/test-utils"
-
 export const postTypes = {
   FETCH_QUESTIONS: "post/FETCH_QUESTIONS",
   FETCH_QUESTIONS_SUCCESS: "post/FETCH_QUESTIONS_SUCCESS",
@@ -22,12 +20,23 @@ export const postTypes = {
   FETCH_QUESTIONS_BY_USER_FAIL: "post/FETCH_QUESTIONS_BY_USER_FAIL",
   FETCH_ANSWERS_BY_USER: "post/FETCH_ANSWERS_BY_USER",
   FETCH_ANSWERS_BY_USER_SUCCESS: "post/FETCH_ANSWERS_BY_USER_SUCCESS",
-  FETCH_ANSWERS_BY_USER_FAIL: "post/FETCH_ANSWERS_BY_USER_FAIL"
+  FETCH_ANSWERS_BY_USER_FAIL: "post/FETCH_ANSWERS_BY_USER_FAIL",
+  DELETE_POST: "post/DELETE_POST",
+  DELETE_POST_SUCCESS: "post/DELETE_POST_SUCCESS",
+  DELETE_POST_FAIL: "post/DELETE_POST_FAIL",
+  REMOVE_DEL_ERR: "post/REMOVE_DEL_ERR",
+  FETCH_ANSWERS: "post/FETCH_ANSWERS",
+  FETCH_ANSWERS_SUCCESS: "post/FETCH_ANSWERS_SUCCESS",
+  FETCH_ANSWERS_FAIL: "post/FETCH_ANSWERS_FAIL"
 }
 
 const initState = {
   questions: [],
   loadingQuestions: false,
+  totalQuestionPage: 0,
+  answers: [],
+  loadingAnswers: false,
+  totalAnswerPage: 0,
   questionDetails: {},
   loadingQuestionDetails: false,
   questionDetailsError: "",
@@ -42,22 +51,26 @@ const initState = {
   userQuestions: [],
   loadingUserAnswers: false,
   userAnswersError: "",
-  userAnswers: []
+  userAnswers: [],
+  deletingIds: [],
+  deleteError: []
 }
 
 export default function reducer(state = initState, action) {
-  switch (action.type) {
+  const { type, payload } = action
+  switch (type) {
     case postTypes.FETCH_QUESTIONS:
       return {
         ...state,
         loadingQuestions: true
       }
     case postTypes.FETCH_QUESTIONS_SUCCESS:
-      const { data } = action.payload
+      const { totalPage: totalQuestionPage, questions } = action.payload.data
       return {
         ...state,
-        questions: state.questions.concat(data),
-        loadingQuestions: false
+        questions: state.questions.concat(questions),
+        loadingQuestions: false,
+        totalQuestionPage
       }
     case postTypes.FETCH_QUESTIONS_FAIL:
       return {
@@ -68,6 +81,24 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         questions: []
+      }
+    case postTypes.FETCH_ANSWERS:
+      return {
+        ...state,
+        loadingAnswers: true
+      }
+    case postTypes.FETCH_ANSWERS_SUCCESS:
+      const { totalPage: totalAnswerPage, answers } = action.payload.data
+      return {
+        ...state,
+        answers: [answers],
+        loadingAnswers: false,
+        totalAnswerPage
+      }
+    case postTypes.FETCH_ANSWERS_FAIL:
+      return {
+        ...state,
+        loadingAnswers: false
       }
     case postTypes.FETCH_QUESTION_DETAILS:
       return {
@@ -171,6 +202,27 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         loadingUserAnswers: false
+      }
+    case postTypes.DELETE_POST:
+      return {
+        ...state,
+        deletingIds: [...state.deletingIds, payload.id]
+      }
+    case postTypes.DELETE_POST_SUCCESS:
+      return {
+        ...state,
+        deletingIds: state.deletingIds.filter(item => item !== payload.id)
+      }
+    case postTypes.DELETE_POST_FAIL:
+      return {
+        ...state,
+        deletingIds: state.deletingIds.filter(item => item !== payload.id),
+        deleteError: [...state.deleteError, { ...payload }]
+      }
+    case postTypes.REMOVE_DEL_ERR:
+      return {
+        ...state,
+        deleteError: state.deleteError.filter(item => item.id !== payload.id)
       }
     default:
       return state
@@ -284,4 +336,39 @@ export const fetchAnswersByUserSuccess = (data) => ({
 export const fetchAnswersByUserFail = () => ({
   type: postTypes.FETCH_ANSWERS_BY_USER_FAIL,
   payload: {}
+})
+
+export const deletePost = (id) => ({
+  type: postTypes.DELETE_POST,
+  payload: { id }
+})
+
+export const deletePostSuccess = (id) => ({
+  type: postTypes.DELETE_POST_SUCCESS,
+  payload: { id }
+})
+
+export const deletePostFail = (id, message) => ({
+  type: postTypes.DELETE_POST_FAIL,
+  payload: { id, message }
+})
+
+export const removeDelErr = (id) => ({
+  type: postTypes.REMOVE_DEL_ERR,
+  payload: { id }
+})
+
+export const fetchAnswers = (page, limit, sortBy) => ({
+  type: postTypes.FETCH_ANSWERS,
+  payload: { page, limit, sortBy }
+})
+
+export const fetchAnswersSuccess = (data) => ({
+  type: postTypes.FETCH_ANSWERS_SUCCESS,
+  payload: { data }
+})
+
+export const fetchAnswersFail = (message) => ({
+  type: postTypes.FETCH_ANSWERS_FAIL,
+  payload: { message }
 })

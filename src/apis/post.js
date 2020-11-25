@@ -7,6 +7,11 @@ export const getQuestions = (page, limit, sortBy) => {
   return axiosService.get(`${url}/question/all?page=${page}&limit=${limit}&sort_by=${sortBy}`)
 }
 
+export const getAnswers = (page, limit, sortBy) => {
+  //console.log("api")
+  return axiosService.get(`${url}/answer/all?page=${page}&limit=${limit}&sort_by=${sortBy}`)
+}
+
 export const getQuestionDetails = (id) => {
   return axiosService.get(`${url}/question/${id}`)
 }
@@ -30,4 +35,8 @@ export const getQuestionsByUser = (id) => {
 
 export const getAnswersByUser = (id) => {
   return axiosService.get(`${url}/answer/user/${id}`)
+}
+
+export const deletePostById = (id) => {
+  return axiosService.delete(`${url}/${id}`)
 }

@@ -5,16 +5,50 @@ import QuestionDetailPage from "../container/Default/QuestionDetailPage"
 import UserDetailPage from "../container/Default/UserDetailPage"
 import EditProfilePage from "../container/Default/EditProfilePage"
 import EditQuestionPage from "../container/Default/EditQuestionPage"
+import Admin from "../container/Admin"
+import ManageUser from "../container/Admin/ManageUser"
+import ManageQuestion from "../container/Admin/ManageQuestion"
+import ManageAnswer from "../container/Admin/ManageAnswer"
 
 export const API_URL = "https://queswer.herokuapp.com/"
-
+//export const API_URL = "localhost:8080/"
 export const ADMIN_ROUTES = [
-  // {
-  //   name: 'Admin Home',
-  //   path: '/admin',
-  //   exact: true,
-  //   component: ,
-  // }
+  {
+    name: 'Admin Home',
+    path: '/',
+    exact: true,
+    component: Admin,
+    componentProp: {
+
+    }
+  },
+  {
+    name: 'Quản lý người dùng',
+    path: '/user',
+    exact: true,
+    component: ManageUser,
+    componentProp: {
+
+    }
+  },
+  {
+    name: 'Quản lý câu hỏi',
+    path: '/question',
+    exact: true,
+    component: ManageQuestion,
+    componentProp: {
+
+    }
+  },
+  {
+    name: 'Quản lý câu trả lời',
+    path: '/answer',
+    exact: true,
+    component: ManageAnswer,
+    componentProp: {
+
+    }
+  }
 ]
 
 export const DEFAULT_ROUTES = [

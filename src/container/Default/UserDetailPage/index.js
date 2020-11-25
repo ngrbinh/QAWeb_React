@@ -6,21 +6,25 @@ import { About, Answers, Followers, Following, Questions } from './tabs'
 import { Link, NavLink, Route, Switch } from 'react-router-dom'
 import { fetchUserDetails } from '../../../redux/ducks/user'
 import { fetchProfile } from '../../../redux/ducks/profile'
+import { fetchAnswersByUser, fetchQuestionsByUser } from '../../../redux/ducks/post'
 
 class UserDetailPage extends Component {
   handleSwitchTab = (i) => () => this.setState(state => ({ ...state, tabIndex: i }))
   componentDidMount() {
-    const { fetchUserDetails, fetchProfile, isProfile } = this.props
+    const { fetchUserDetails, fetchProfile, isProfile, fetchAnswersByUser, fetchQuestionsByUser,
+      profile } = this.props
+    const id = this.props.match.params.id
     if (isProfile) {
-      //fetchProfile()
+      fetchProfile()
     } else {
-      const id = this.props.match.params.id
       fetchUserDetails(id)
     }
+    fetchAnswersByUser(isProfile ? profile.id : id)
+    fetchQuestionsByUser(isProfile ? profile.id : id)
   }
   render() {
     const { url, path } = this.props.match
-    const { userDetails, profile, isProfile } = this.props
+    const { userDetails, profile, isProfile, userQuestions, userAnswers } = this.props
     //console.log(isProfile)
     const id = isProfile ? profile.id : this.props.match.params.id
     const user = isProfile ? profile : userDetails
@@ -72,10 +76,10 @@ class UserDetailPage extends Component {
         <React.Fragment>
           <Switch>
             <Route path={path} exact><About user={user} /></Route>
-            <Route path={`${path}/questions`} exact><Questions id={id} /></Route>
-            <Route path={`${path}/answers`} exact><Answers id={id} /></Route>
+            <Route path={`${path}/questions`} exact><Questions id={id} questions={userQuestions} /></Route>
+            <Route path={`${path}/answers`} exact><Answers id={id} answers={userAnswers} /></Route>
             <Route path={`${path}/followers`} exact><Followers id={id} users={followedByUsers} /></Route>
-            <Route path={`${path}/following`} exact><Following id={id} users={followingUsers}/></Route>
+            <Route path={`${path}/following`} exact><Following id={id} users={followingUsers} /></Route>
           </Switch>
         </React.Fragment>
       </React.Fragment>
@@ -85,12 +89,16 @@ class UserDetailPage extends Component {
 
 const mapStateToProps = (state) => ({
   userDetails: state.user.userDetails,
-  profile: state.profile
+  profile: state.profile,
+  userQuestions: state.post.userQuestions,
+  userAnswers: state.post.userAnswers
 })
 
 const mapDispatchToProps = {
   fetchUserDetails,
-  fetchProfile
+  fetchProfile,
+  fetchAnswersByUser,
+  fetchQuestionsByUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetailPage)

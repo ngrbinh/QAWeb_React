@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { formatAMPM } from '../../common/functions'
+import defaultAvatar from '../../assets/image/user_avatar_default.png'
+
 export default function Answer(props) {
   const { showQuestionLink } = props
   const { id, user, creationDate, body, voteCount } = props.answer
   const formatDate = new Date(creationDate)
   const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
   const parse = require('html-react-parser')
+  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{typeName:"",typeColor:""}]
+  console.log(badges)
   return (
     <li className='comment byuser comment-author-marko even thread-even depth-1' id={'li-ans' + id}>
       <div className='comment-body clearfix'>
@@ -16,7 +20,7 @@ export default function Answer(props) {
           <div className='author-image'>
             <Link to={`/user/${user.id}`}>
               <span className='author-image-span'>
-                <img className='avatar' width='42px' height='42px' src={user.avatarUrl} />
+                <img className='avatar' width='42px' height='42px' src={user.avatarUrl ? user.avatarUrl : defaultAvatar} />
               </span>
             </Link>
           </div>
@@ -28,7 +32,7 @@ export default function Answer(props) {
                     <span itemProp="name">{user.displayName}</span>
                   </Link>
                 </span>
-                <span className="badge-span" style={{ backgroundColor: '#6b3de4' }}>Professional</span>
+                <span className="badge-span" style={{ backgroundColor: `#${badges[0].typeColor}` }}>{badges[0].typeName}</span>
               </div>
               <a href="#" className="comment-date" itemProp="url">
                 <span className="queswer_hide" dateTime={creationDate}>{creationDate}</span>
