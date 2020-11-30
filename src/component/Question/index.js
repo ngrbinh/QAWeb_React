@@ -1,11 +1,20 @@
 import { faCaretDown, faCaretUp, faCommentAlt, faEye, faLock, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react'
+import { connect } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
 import { truncateWithEllipsis } from '../../common/functions'
+import { vote } from '../../redux/ducks/user'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
-export default function Question(props) {
-  const { shorten, scrollToRef, modifiable } = props
+import { addView, deletePost } from '../../redux/ducks/post'
+import { Modal, Button } from 'antd'
+
+function Question(props) {
+  const [deleteModal, setDeletModal] = useState(false)
+  const [resultModal, setResultModal] = useState(false)
+  const isInitialMount = useRef(true)
+  const { shorten, scrollToRef, modifiable, vote, loadingVote, addView, deletingIds, deleteMessage, deletePost } = props
+  let history = useHistory()
   var question = props.question
   if (Object.keys(question).length === 0) {
     question = {
@@ -14,13 +23,72 @@ export default function Question(props) {
     }
   }
   const { user, creationDate, body, voteCount, subjectTypeName, gradeTypeName, answerCount, viewCount, id, imgUrl } = question
+  const handleVote = voteType => {
+    vote(id, voteType)
+  }
   const shortBody = shorten ? truncateWithEllipsis(body, 250) : body;
   const formatDate = new Date(creationDate)
   const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
   const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const parse = require('html-react-parser')
+  const handleAddView = () => {
+    addView(id)
+  }
+  const cancelDelete = () => {
+    setDeletModal(false)
+  }
+  const confirmDelete = () => {
+    deletePost(id)
+  }
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      if (deleteModal) {
+        setDeletModal(false)
+      }
+      setResultModal(true)
+    }
+  }, [deleteMessage])
+  const handleOk = () => {
+    if (deleteMessage === "OK") {
+      history.push("/")
+      setResultModal(false)
+    } else {
+      setResultModal(false)
+    }
+  }
   return (
     <article className='question-articles article-post clearfix question-answer-before'>
+      <Modal
+        title="Xóa câu hỏi"
+        visible={deleteModal}
+        footer={[
+          <Button key={'cancel'} onClick={cancelDelete}>Hủy</Button>,
+          <Button key={'confirm'} type='primary' danger onClick={confirmDelete}
+            loading={deletingIds.includes(id)}
+          >
+            Xóa
+          </Button>
+        ]}
+      //afterClose={() => setResultModal(true)}
+      >
+        Bạn có chắc muốn xóa câu hỏi này?
+      </Modal>
+      <Modal
+        title="Xóa câu hỏi"
+        visible={resultModal}
+        footer={[
+          <Button key={'ok'} type='primary' onClick={handleOk}>
+            OK
+          </Button>
+        ]}
+      >
+        {deleteMessage === "OK"
+          ? "Xóa thành công"
+          : deleteMessage
+        }
+      </Modal>
       <div className='single-inner-content'>
         <div className='question-inner'>
           <div className='question-top-bar'>
@@ -64,16 +132,16 @@ export default function Question(props) {
             <div className="">
               <ul className="question-vote">
                 <li className="question-vote-up">
-                  <a href="#" id="question_vote_up-118" data-type="question" data-vote-type="up" className="wpqa_vote question_vote_up vote_allow" title="Like">
+                  <a className="wpqa_vote question_vote_up vote_allow" title="Vote" onClick={() => handleVote(true)}>
                     <i className="icon-up-dir"><FontAwesomeIcon icon={faCaretUp} /></i>
                   </a>
                 </li>
-                <li className="vote_result" style={{ display: 'list-item' }}>{voteCount}</li>
-                <li className="li_loader">
+                <li className="vote_result" style={{ display: loadingVote.includes(id) ? "none" : "list-item" }}>{voteCount}</li>
+                <li className="li_loader" style={{ display: loadingVote.includes(id) ? "inline-block" : "none" }}>
                   <span className="loader_3 fa-spin"></span>
                 </li>
                 <li className="question-vote-down">
-                  <a href="#" id="question_vote_down-118" data-type="question" data-vote-type="down" className="wpqa_vote question_vote_down vote_allow" title="Dislike">
+                  <a className="wpqa_vote question_vote_down vote_allow" title="downVote" onClick={() => handleVote(false)}>
                     <i className="icon-down-dir"><FontAwesomeIcon icon={faCaretDown} /></i>
                   </a>
                 </li>
@@ -120,7 +188,7 @@ export default function Question(props) {
               </ul>
               {
                 shorten ?
-                  <Link className="meta-answer meta-answer-a" to={`/question/${id}`} >Chi tiết</Link>
+                  <Link className="meta-answer meta-answer-a" to={`/question/${id}`} onClick={handleAddView}>Chi tiết</Link>
                   :
                   <a className='meta-answer meta-answer-a' onClick={scrollToRef}>Trả lời</a>
               }
@@ -132,13 +200,13 @@ export default function Question(props) {
           ? <div className="question-bottom">
             <ul className="question-link-list">
               <li>
-                <Link to={`/question/${id}/edit`}><i><FontAwesomeIcon icon={faPencilAlt}/></i>Chỉnh sửa</Link>
+                <Link to={`/question/${id}/edit`}><i><FontAwesomeIcon icon={faPencilAlt} /></i>Chỉnh sửa</Link>
               </li>
               <li>
-                <a href="#"><i><FontAwesomeIcon icon={faTrash}/></i>Xóa</a>
+                <a onClick={() => setDeletModal(true)}><i><FontAwesomeIcon icon={faTrash} /></i>Xóa</a>
               </li>
               <li>
-                <a href="#"><i><FontAwesomeIcon icon={faLock}/></i>Đóng bài viết</a>
+                <a href="#"><i><FontAwesomeIcon icon={faLock} /></i>Đóng bài viết</a>
               </li>
             </ul>
             <div className="clearfix"></div>
@@ -147,3 +215,17 @@ export default function Question(props) {
     </article>
   )
 }
+
+const mapStateToProps = (state) => ({
+  loadingVote: state.user.loadingVote,
+  deletingIds: state.post.deletingIds,
+  deleteMessage: state.post.deleteMessage
+})
+
+const mapDispatchToProps = {
+  vote,
+  addView,
+  deletePost
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Question)

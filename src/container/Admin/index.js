@@ -16,7 +16,7 @@ class Admin extends Component {
           style={{
             padding: 24,
             margin: 0,
-            minHeight: 280,
+            minHeight: "calc(100vh - 100px)",
           }}
         >
           Quản lý chung

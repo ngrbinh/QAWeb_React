@@ -1,10 +1,12 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import { createAnswer, createQuestion, deletePostById, getAnswers, getQuestionDetails, getQuestions, getQuestionsByUser, updatePost } from '../apis/post'
+import { addView, createAnswer, createQuestion, deletePostById, getAnswers, getQuestionDetails, getQuestions, getQuestionsByUser, updatePost } from '../apis/post'
 import {
   addAnswerFail,
   addAnswerSuccess,
   addQuestionFail,
   addQuestionSuccess,
+  addViewFail,
+  addViewSuccess,
   deletePostFail,
   deletePostSuccess,
   editPostFail,
@@ -18,14 +20,15 @@ import { logout } from '../redux/ducks/account'
 import { toggleModal } from '../redux/ducks/modal'
 export function* postSaga() {
   yield takeLatest(postTypes.FETCH_QUESTIONS, watchFetchQuestions)
-  yield takeLatest(postTypes.FETCH_ANSWERS,watchFetchAnswers)
+  yield takeLatest(postTypes.FETCH_ANSWERS, watchFetchAnswers)
   yield takeLatest(postTypes.FETCH_QUESTION_DETAILS, watchFetchQuestionDetails)
   yield takeLatest(postTypes.ADD_QUESTION, watchAddQuestion)
   yield takeLatest(postTypes.ADD_ANSWER, watchAddAnswer)
   yield takeLatest(postTypes.EDIT_POST, watchEditPost)
   yield takeLatest(postTypes.FETCH_ANSWERS_BY_USER, watchFetchUserAnswers)
   yield takeLatest(postTypes.FETCH_QUESTIONS_BY_USER, watchFetchUserQuestions)
-  yield takeEvery(postTypes.DELETE_POST,watchDeletePost)
+  yield takeEvery(postTypes.DELETE_POST, watchDeletePost)
+  yield takeEvery(postTypes.ADD_VIEW, watchAddView)
 }
 
 function* watchFetchQuestions(action) {
@@ -42,12 +45,12 @@ function* watchFetchQuestions(action) {
 }
 
 function* watchFetchAnswers(action) {
-  //console.log("saga")
   try {
     const { page, limit, sortBy } = action.payload
     const resp = yield call(getAnswers, page, limit, sortBy)
     const { status, data } = resp
     yield put(fetchAnswersSuccess(data))
+    //console.log(data)
   } catch (error) {
     //console.log("error")
     yield put(fetchAnswersFail())
@@ -149,8 +152,20 @@ function* watchDeletePost(action) {
     yield put(deletePostSuccess(id))
   } catch (error) {
     const data = error.response.data
-    console.log(data)
     const message = data ? data.message : ""
     yield put(deletePostFail(id, message))
+  }
+}
+
+function* watchAddView(action) {
+  try {
+    const { postId } = action.payload
+    yield call(addView, postId)
+    yield put(addViewSuccess(postId))
+  } catch (error) {
+    console.log(error)
+    const data = error.response.data
+    const message = data ? data.message : ""
+    yield put(addViewFail)
   }
 }

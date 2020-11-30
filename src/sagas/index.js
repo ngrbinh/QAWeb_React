@@ -4,8 +4,8 @@ import { userSaga } from "./user";
 import { addressSaga } from "./address"
 import { subjectSaga } from "./subject"
 import { gradeSaga } from "./grade"
-import { REHYDRATE } from 'redux-persist/lib/constants';
-
+import { metaSaga } from "./meta";
+import { notificationSaga } from './notification'
 export default function* rootSaga() {
   //yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
   // yield all([
@@ -18,4 +18,6 @@ export default function* rootSaga() {
   yield fork(addressSaga)
   yield fork(subjectSaga)
   yield fork(gradeSaga)
+  yield fork(metaSaga)
+  yield fork(notificationSaga)
 }

@@ -41,3 +41,7 @@ export const deleteFollow = (id) => {
 export const deleteUserById = (id) => {
   return axiosService.delete(`${url}/${id}`)
 }
+
+export const vote = (data) => {
+  return axiosService.post(`${url}/vote`, data)
+}

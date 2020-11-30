@@ -6,16 +6,32 @@ import LoginPanel from '../Modal/LoginPanel'
 import SignupPanel from '../Modal/SignupPanel'
 import { connect } from 'react-redux'
 import { logout } from '../../redux/ducks/account'
+import { fetchNotifications, checkAll } from '../../redux/ducks/notification'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
+import { useEffect } from 'react'
+import Notification from '../Notification'
+import { Modal, Button } from 'antd'
+
 function HeaderBar(props) {
   const [showUserActions, setShowUserActions] = useState(false)
-  const { actions, logout } = props
+  const [showNotifications, setShowNotifications] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const { actions, logout, fetchNotifications, checkAll } = props
+  useEffect(() => {
+    if (props.token) {
+      fetchNotifications(1, 5, "-date")
+    }
+  }, [])
+  useEffect(() => {
+    if (props.token) {
+      fetchNotifications(1, 5, "-date")
+    }
+  }, [props.token])
   const signInClick = () => {
     actions.changeModal(LoginPanel)
     actions.toggleModal()
   }
-
   const sigunUpClick = () => {
     actions.changeModal(SignupPanel)
     actions.toggleModal()
@@ -25,12 +41,31 @@ function HeaderBar(props) {
   }
   const handleLogoutClick = e => {
     e.preventDefault()
+    setShowModal(true)
     logout()
   }
-  const { profile } = props
+  const toggleNotifications = () => {
+    console.log("hic")
+    setShowNotifications(!showNotifications)
+    if (unCheckCount > 0) {
+      checkAll()
+    }
+  }
+  const { profile, loadingNotifications, notifications } = props
+  //console.log(loadingNotifications)
   const loginClass = 'right-header float_r' + (profile.displayName ? ' wrap-login' : ' wrap-not-login')
+  const unCheckCount = notifications.filter(item => !item.checked).length
   return (
     <div className='hidden-header header-dark mobile_bar_active'>
+      <Modal
+        title="Đăng xuất"
+        visible={showModal}
+        footer={[
+          <Button key="ok" onClick={() => setShowModal(false)} type='primary'>Ok</Button>,
+        ]}
+      >
+        Đăng xuất thành công
+      </Modal>
       <header className="header">
         <div className="queswer-container the-main-container">
           <div className={loginClass}>
@@ -43,16 +78,30 @@ function HeaderBar(props) {
                 :
                 <div className='user-login-area'>
                   <div className="notifications-area user-notifications float_r">
-                    <span className="notifications-click"></span>
-                    <i className="icon-bell"><FontAwesomeIcon icon={faBell} /></i>
-                    <div>
-                      <ul>
-                        <li>
-                          <i className="icon-bucket"></i>
-                          <div> Quà đăng ký - 20 điểm.<span className="notifications-date">22/10/2020 3:18pm</span></div>
-                        </li>
-                      </ul>
-                      <a href="https://2code.info/demo/themes/Discy/Main/profile/binh123/notifications/">Tất cả thông báo.</a>
+                    <span className="notifications-click" onClick={toggleNotifications}></span>
+                    <i style={{ color: showNotifications ? "white" : "" }}><FontAwesomeIcon icon={faBell} /></i>
+                    <span className="notifications-number" style={{ display: unCheckCount ? "" : "none" }}>{unCheckCount}</span>
+                    <div style={showNotifications ? { display: 'block' } : {}}>
+                      {
+                        loadingNotifications
+                          ? <span className="load_span" style={{ display: "block" }}>
+                            <span className="loader_2"></span>
+                          </span>
+                          : notifications.length > 0
+                            ? <React.Fragment>
+                              <ul>
+                                {
+                                  notifications.map(item => <Notification notification={{ ...item }} key={item.id} toggle={toggleNotifications} />)
+                                }
+                              </ul>
+                              <a href="">Tất cả thông báo.</a>
+                            </React.Fragment>
+                            : <ul>
+                              <li>
+                                <div>Không có thông báo nào cả.</div>
+                              </li>
+                            </ul>
+                      }
                     </div>
                   </div>
                   <div className="user-login-click float_r">
@@ -144,11 +193,16 @@ function HeaderBar(props) {
 const mapStateToProps = (state) => {
   return {
     profile: state.profile,
+    notifications: state.notification.notifications,
+    loadingNotifications: state.notification.loading,
+    token: state.account.token
   };
 }
 
 const mapDispatchToProps = {
-  logout
+  logout,
+  fetchNotifications,
+  checkAll
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar)

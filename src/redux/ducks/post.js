@@ -1,3 +1,5 @@
+import { userTypes } from "./user"
+
 export const postTypes = {
   FETCH_QUESTIONS: "post/FETCH_QUESTIONS",
   FETCH_QUESTIONS_SUCCESS: "post/FETCH_QUESTIONS_SUCCESS",
@@ -27,7 +29,10 @@ export const postTypes = {
   REMOVE_DEL_ERR: "post/REMOVE_DEL_ERR",
   FETCH_ANSWERS: "post/FETCH_ANSWERS",
   FETCH_ANSWERS_SUCCESS: "post/FETCH_ANSWERS_SUCCESS",
-  FETCH_ANSWERS_FAIL: "post/FETCH_ANSWERS_FAIL"
+  FETCH_ANSWERS_FAIL: "post/FETCH_ANSWERS_FAIL",
+  ADD_VIEW: "post/ADD_VIEW",
+  ADD_VIEW_SUCCESS: "post/ADD_VIEW_SUCCESS",
+  ADD_VIEW_FAIL: "post/ADD_VIEW_FAIL"
 }
 
 const initState = {
@@ -53,7 +58,8 @@ const initState = {
   userAnswersError: "",
   userAnswers: [],
   deletingIds: [],
-  deleteError: []
+  deleteError: [],
+  deleteMessage: ""
 }
 
 export default function reducer(state = initState, action) {
@@ -89,9 +95,10 @@ export default function reducer(state = initState, action) {
       }
     case postTypes.FETCH_ANSWERS_SUCCESS:
       const { totalPage: totalAnswerPage, answers } = action.payload.data
+      console.log(answers)
       return {
         ...state,
-        answers: [answers],
+        answers: [...answers],
         loadingAnswers: false,
         totalAnswerPage
       }
@@ -206,23 +213,50 @@ export default function reducer(state = initState, action) {
     case postTypes.DELETE_POST:
       return {
         ...state,
-        deletingIds: [...state.deletingIds, payload.id]
+        deletingIds: [...state.deletingIds, payload.id],
+        deleteMessage: ""
       }
     case postTypes.DELETE_POST_SUCCESS:
       return {
         ...state,
-        deletingIds: state.deletingIds.filter(item => item !== payload.id)
+        deletingIds: state.deletingIds.filter(item => item !== payload.id),
+        answers: state.answers.filter(item => item.id !== payload.id),
+        questions: state.questions.filter(item => item.id !== payload.id),
+        deleteMessage: "OK"
       }
     case postTypes.DELETE_POST_FAIL:
       return {
         ...state,
         deletingIds: state.deletingIds.filter(item => item !== payload.id),
-        deleteError: [...state.deleteError, { ...payload }]
+        deleteError: [...state.deleteError, { ...payload }],
+        deleteMessage: payload.message
       }
     case postTypes.REMOVE_DEL_ERR:
       return {
         ...state,
         deleteError: state.deleteError.filter(item => item.id !== payload.id)
+      }
+    case userTypes.VOTE_SUCCESS:
+      return {
+        ...state,
+        questionDetails: {
+          ...state.questionDetails,
+          answers: state.questionDetails.answers.map(item => item.id === payload.id ?
+            { ...item, voteCount: item.voteCount + parseInt(payload.voteChange) }
+            : item),
+        },
+        questions: state.questions.map(item => item.id === payload.id ?
+          { ...item, voteCount: item.voteCount + parseInt(payload.voteChange) }
+          : item)
+      }
+    case postTypes.ADD_VIEW_SUCCESS:
+      console.log("hi")
+      return {
+        ...state,
+        questionDetails: {
+          ...state.questionDetails,
+          viewCount: state.questionDetails.viewCount + 1
+        }
       }
     default:
       return state
@@ -370,5 +404,20 @@ export const fetchAnswersSuccess = (data) => ({
 
 export const fetchAnswersFail = (message) => ({
   type: postTypes.FETCH_ANSWERS_FAIL,
+  payload: { message }
+})
+
+export const addView = (postId) => ({
+  type: postTypes.ADD_VIEW,
+  payload: { postId }
+})
+
+export const addViewSuccess = (id) => ({
+  type: postTypes.ADD_VIEW_SUCCESS,
+  payload: { id }
+})
+
+export const addViewFail = (message) => ({
+  type: postTypes.ADD_VIEW_FAIL,
   payload: { message }
 })

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, Tag, Button } from 'antd'
+import { Layout, Breadcrumb, Table, Tag, Button, Modal } from 'antd'
 import { fetchUsers, deleteUser } from '../../../redux/ducks/user'
 import defaultAvatar from '../../../assets/image/user_avatar_default.png'
 class ManageUser extends Component {
   state = {
-    curPage: 1
+    curPage: 1,
+    alertModal: false,
+    curId: null
   }
   componentDidMount() {
     const { fetchUsers } = this.props
@@ -18,11 +20,32 @@ class ManageUser extends Component {
   }
   deleteUser = (id) => {
     //console.log(id)
-    this.props.deleteUser(id)
+    //this.props.deleteUser(id)
+  }
+  handleConfirm = () => {
+    const { curId } = this.state
+    this.setState(state => ({
+      ...state,
+      alertModal: false
+    }))
+    this.props.deleteUser(curId)
+  }
+  handleCancel = () => {
+    this.setState(state => ({
+      ...state,
+      alertModal: false
+    }))
+  }
+  showAlert = (id) => {
+    this.setState(state => ({
+      ...state,
+      alertModal: true,
+      curId: id
+    }))
   }
   render() {
     const { totalPage, users, loadingUsers, deletingIds } = this.props
-    const { curPage } = this.state
+    const { curPage, alertModal } = this.state
     const columns = [
       {
         title: 'STT',
@@ -91,7 +114,7 @@ class ManageUser extends Component {
             <Button
               type='primary'
               danger
-              onClick={() => this.deleteUser(id)}
+              onClick={() => this.showAlert(id)}
               loading={deletingIds.includes(id)}
             >Xóa</Button>
           </span>
@@ -124,6 +147,19 @@ class ManageUser extends Component {
     const { Content } = Layout
     return (
       <Layout style={{ padding: '0 24px 24px' }}>
+        <Modal
+          title="Xóa người dùng"
+          visible={alertModal}
+          footer={[
+            <Button key={'cancel'} onClick={this.handleCancel}>Hủy</Button>,
+            <Button key={'confirm'} type='primary' danger onClick={this.handleConfirm}>
+              Xác nhận
+            </Button>
+          ]}
+        >
+          <p>Việc xóa người dùng cũng sẽ xóa tất cả các câu hỏi và câu trả lời mà người này đã đăng</p>
+          <p>Bạn có chắc chắn muốn xóa người dùng này?</p>
+        </Modal>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Admin</Breadcrumb.Item>
           <Breadcrumb.Item>Quản lý người dùng</Breadcrumb.Item>
@@ -133,7 +169,7 @@ class ManageUser extends Component {
           style={{
             padding: 24,
             margin: 0,
-            minHeight: '80vh',
+            minHeight: "calc(100vh - 100px)",
           }}
         >
           <Table

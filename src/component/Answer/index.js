@@ -4,15 +4,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { formatAMPM } from '../../common/functions'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
+import { vote } from '../../redux/ducks/user'
+import { connect } from 'react-redux'
 
-export default function Answer(props) {
-  const { showQuestionLink } = props
+function Answer(props) {
+  const { showQuestionLink, vote, loadingVote } = props
   const { id, user, creationDate, body, voteCount } = props.answer
   const formatDate = new Date(creationDate)
   const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
   const parse = require('html-react-parser')
-  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{typeName:"",typeColor:""}]
-  console.log(badges)
+  const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
+  const handleVote = voteType => {
+    vote(id, voteType)
+  }
   return (
     <li className='comment byuser comment-author-marko even thread-even depth-1' id={'li-ans' + id}>
       <div className='comment-body clearfix'>
@@ -20,7 +24,8 @@ export default function Answer(props) {
           <div className='author-image'>
             <Link to={`/user/${user.id}`}>
               <span className='author-image-span'>
-                <img className='avatar' width='42px' height='42px' src={user.avatarUrl ? user.avatarUrl : defaultAvatar} />
+                <img className='avatar' style={{ width: 42, height: 42, objectFit: 'cover' }}
+                  src={user.avatarUrl ? user.avatarUrl : defaultAvatar} />
               </span>
             </Link>
           </div>
@@ -49,17 +54,18 @@ export default function Answer(props) {
             <div className='wpqa_error'></div>
             <ul className="question-vote answer-vote answer-vote-dislike">
               <li>
-                <a href="#" id="comment_vote_up-64" className="wpqa_vote comment_vote_up vote_allow" title="Like">
+                <a className="wpqa_vote comment_vote_up vote_allow" title="Like" onClick={() => handleVote(true)}>
                   <i className="icon-up-dir"><FontAwesomeIcon icon={faCaretUp} /></i>
                 </a>
               </li>
-              <li className="vote_result" itemProp="upvoteCount">{voteCount}</li>
-              <li className="li_loader">
+              <li className="vote_result" style={{ display: loadingVote.includes(id) ? "none" : "list-item" }}>{voteCount}</li>
+              <li className="li_loader" style={{ display: loadingVote.includes(id) ? "inline-block" : "none" }}>
                 <span className="loader_3 fa-spin"></span>
               </li>
-              <li className="dislike_answers"><a href="#" id="comment_vote_down-64" className="wpqa_vote comment_vote_down vote_allow" title="Dislike">
-                <i className="icon-down-dir"><FontAwesomeIcon icon={faCaretDown} /></i>
-              </a>
+              <li className="dislike_answers">
+                <a className="wpqa_vote comment_vote_down vote_allow" title="Dislike" onClick={() => handleVote(false)}>
+                  <i className="icon-down-dir"><FontAwesomeIcon icon={faCaretDown} /></i>
+                </a>
               </li>
             </ul>
             {
@@ -75,3 +81,13 @@ export default function Answer(props) {
     </li>
   )
 }
+
+const mapStateToProps = (state) => ({
+  loadingVote: state.user.loadingVote
+})
+
+const mapDispatchToProps = {
+  vote,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Answer)

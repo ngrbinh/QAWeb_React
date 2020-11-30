@@ -357,3 +357,120 @@ const answers = [
   }
 ]
 
+const questions1 = [
+  {
+    id: 2,
+    user: {
+      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
+      name: 'Martin Hope',
+      id: 1
+    },
+    createdDate: '2020-10-08T14:59:00.000+00:00',
+    body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
+
+        I saw him last night (correct)
+        
+        I see him last night (incorrect)
+        
+        But i think both has the same meaning and are understandable,
+        
+        Isn’t it?`,
+    voteCount: 33,
+    subject: "Vật lý",
+    grade: "Lớp 10",
+    answerCount: "7",
+    viewCount: "152"
+  },
+  {
+    id: 3,
+    user: {
+      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
+      name: 'Martin Hope',
+      id: 2
+    },
+    createdDate: '2020-10-08T14:59:00.000+00:00',
+    body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
+
+        I saw him last night (correct)
+        
+        I see him last night (incorrect)
+        
+        But i think both has the same meaning and are understandable,
+        
+        Isn’t it?`,
+    voteCount: 33,
+    subject: "Vật lý",
+    grade: "Lớp 10",
+    answerCount: "7",
+    viewCount: "152"
+  },
+  {
+    id: 4,
+    user: {
+      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
+      name: 'Martin Hope',
+      id: 3
+    },
+    createdDate: '2020-10-08T14:59:00.000+00:00',
+    body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
+
+        I saw him last night (correct)
+        
+        I see him last night (incorrect)
+        
+        But i think both has the same meaning and are understandable,
+        
+        Isn’t it?`,
+    voteCount: 33,
+    subject: "Vật lý",
+    grade: "Lớp 10",
+    answerCount: "7",
+    viewCount: "152"
+  },
+  {
+    id: 5,
+    user: {
+      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
+      name: 'Martin Hope',
+      id: 4
+    },
+    createdDate: '2020-10-08T14:59:00.000+00:00',
+    body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
+
+        I saw him last night (correct)
+        
+        I see him last night (incorrect)
+        
+        But i think both has the same meaning and are understandable,
+        
+        Isn’t it?`,
+    voteCount: 33,
+    subject: "Vật lý",
+    grade: "Lớp 10",
+    answerCount: "7",
+    viewCount: "152"
+  },
+  {
+    id: 6,
+    user: {
+      avatarUrl: 'https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-2-42x42.jpg',
+      name: 'Martin Hope',
+      id: 5
+    },
+    createdDate: '2020-10-08T14:59:00.000+00:00',
+    body: `In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english.
+
+        I saw him last night (correct)
+        
+        I see him last night (incorrect)
+        
+        But i think both has the same meaning and are understandable,
+        
+        Isn’t it?`,
+    voteCount: 33,
+    subject: "Vật lý",
+    grade: "Lớp 10",
+    answerCount: "7",
+    viewCount: "152"
+  }
+]

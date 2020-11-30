@@ -40,3 +40,7 @@ export const getAnswersByUser = (id) => {
 export const deletePostById = (id) => {
   return axiosService.delete(`${url}/${id}`)
 }
+
+export const addView = (postId) => {
+  return axiosService.get(`${url}/view/${postId}`)
+}

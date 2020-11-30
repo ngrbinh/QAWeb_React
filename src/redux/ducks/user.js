@@ -126,7 +126,7 @@ export default function reducer(state = initState, action) {
     case userTypes.VOTE:
       return {
         ...state,
-        loadingVote: [...state.loadingVote, id]
+        loadingVote: [...state.loadingVote, payload.postId]
       }
     case userTypes.VOTE_SUCCESS:
       return {
@@ -229,14 +229,14 @@ export const unFollowFail = (id) => ({
   payload: { id }
 })
 
-export const vote = (id) => ({
+export const vote = (id, voteType) => ({
   type: userTypes.VOTE,
-  payload: { id }
+  payload: { postId: id, voteType }
 })
 
-export const voteSuccess = (id) => ({
+export const voteSuccess = (id, voteChange) => ({
   type: userTypes.VOTE_SUCCESS,
-  payload: { id }
+  payload: { id, voteChange }
 })
 
 export const voteFail = (id) => ({

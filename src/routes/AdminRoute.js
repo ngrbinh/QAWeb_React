@@ -6,7 +6,7 @@ import HeaderBar from '../component/HeaderBar';
 import { toggleModal, changeModal } from '../redux/ducks/modal'
 import { fetchProfile } from '../redux/ducks/profile'
 import { connect } from 'react-redux'
-import { Menu, Layout, Breadcrumb } from 'antd'
+import { Menu, Layout } from 'antd'
 import { Link } from 'react-router-dom'
 class AdminRoute extends Component {
   state = {

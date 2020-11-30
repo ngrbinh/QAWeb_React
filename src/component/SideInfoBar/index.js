@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeModal, toggleModal } from '../../redux/ducks/modal'
+import { fetchMeta } from '../../redux/ducks/meta'
 import { addQuestion } from '../../redux/ducks/post'
 import AskPanel from '../Modal/AskPanel'
 import LoginPanel from '../Modal/LoginPanel'
@@ -30,9 +31,13 @@ class SideInfoBar extends Component {
       this.showModal(LoginPanel)
     }
   }
+  componentDidMount() {
+    this.props.fetchMeta()
+  }
   render() {
     //window.onscroll = function () { stickyEffect() }
     const tabIndex = this.state.tabIndex
+    const { viewCount, userCount, answerCount, questionCount } = this.props.meta
     return (
       <aside id='sideInfoBar' className='sidebar sidebar-width float_l fixed-sidebar .side-info-bar'>
         <div id='empty'></div>
@@ -49,25 +54,25 @@ class SideInfoBar extends Component {
                   <li className="stats-questions">
                     <div>
                       <span className="stats-text">Câu hỏi</span>
-                      <span className="stats-value">23</span>
+                      <span className="stats-value">{questionCount}</span>
                     </div>
                   </li>
                   <li className="stats-answers">
                     <div>
                       <span className="stats-text">Câu trả lời</span>
-                      <span className="stats-value">73</span>
+                      <span className="stats-value">{answerCount}</span>
                     </div>
                   </li>
                   <li className="stats-best_answers">
                     <div>
                       <span className="stats-text">Số lượt xem</span>
-                      <span className="stats-value">12</span>
+                      <span className="stats-value">{viewCount}</span>
                     </div>
                   </li>
                   <li className="stats-users">
                     <div>
                       <span className="stats-text">Người dùng</span>
-                      <span className="stats-value">30</span>
+                      <span className="stats-value">{userCount}</span>
                     </div>
                   </li>
                 </ul>
@@ -271,11 +276,13 @@ class SideInfoBar extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.account.token,
+  meta: state.meta
 })
 
 const mapDispatchToProps = {
   changeModal,
-  toggleModal
+  toggleModal,
+  fetchMeta
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideInfoBar)

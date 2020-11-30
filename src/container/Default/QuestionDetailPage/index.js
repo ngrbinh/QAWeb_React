@@ -69,7 +69,7 @@ class QuestionDetailPage extends Component {
     const id = this.props.match.params.id
     this.props.fetchQuestionDetails(id)
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     (function () {
       var script = document.createElement("script");
       script.type = "text/javascript";
@@ -101,6 +101,9 @@ class QuestionDetailPage extends Component {
       //window.scrollTo(0, this.errorRef.current.scrollIntoView(true))
       this.errorRef.current.scrollIntoView()
     }
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.fetchQuestionDetails(this.props.match.params.id)
+    }
   }
   canModifyQuestion = () => {
     const { profileId, questionDetails } = this.props
@@ -130,14 +133,14 @@ class QuestionDetailPage extends Component {
                 <span>
                   <span>
                     <meta content="1" />
-                    <Link to='/' title="Home">
+                    <Link to='/' title="Home" style={{ color: "#7c7f85" }}>
                       <span><i className="icon-home"><FontAwesomeIcon icon={faHome} /></i>Trang chủ</span>
                     </Link>
                   </span>
                   <span className="crumbs-span">/</span>
                   <span className="current">
                     <meta content="2" />
-                    <a itemProp="item" href="#" title="Questions">
+                    <a title="Questions" style={{ color: "#7c7f85" }}>
                       <span itemProp="name">Câu hỏi</span>
                     </a>
                   </span>

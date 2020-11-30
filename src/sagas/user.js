@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow, deleteUserById } from "../apis/user";
+import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow, deleteUserById, vote } from "../apis/user";
 import { deleteUserFail, deleteUserSuccess, fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
 import { hideLoading, showLoading } from '../redux/ducks/globalLoading'
 import { accountTypes, changePasswordFail, changePasswordSuccess, login, loginFail, loginSuccess, logout, signupFail, signupSuccess } from "../redux/ducks/account";
@@ -68,6 +68,11 @@ function* watchLogin(action) {
     yield put(setModal(false))
     yield put(fetchProfile())
   } catch (error) {
+    // if (error.response) {
+    //   if (error.response.data) {
+    //     message = error.response.data
+    //   }
+    // }
     const message = "Đăng nhập thất bại"
     yield put(loginFail(message))
     yield put(resetProfile())
@@ -144,18 +149,6 @@ function* watchUnFollow(action) {
   }
 }
 
-function* watchVote(action) {
-  const { id } = action.payload
-  try {
-    const resp = yield call(createFollow, id)
-    yield put(voteSuccess(id))
-  } catch (error) {
-    const { message } = error.response.data
-    console.log(message)
-    yield put(voteFail(id))
-  }
-}
-
 function* watchDeleteUser(action) {
   const { id } = action.payload
   try {
@@ -168,5 +161,18 @@ function* watchDeleteUser(action) {
     //console.log(data)
     const message = response ? response.data.message : ""
     yield put(deleteUserFail(id, message))
+  }
+}
+
+function* watchVote(action) {
+  const id = action.payload.postId
+  try {
+    const reqData = action.payload
+    console.log(reqData)
+    const resp = yield call(vote, reqData)
+    const { data: respData } = resp
+    yield put(voteSuccess(id, respData))
+  } catch (error) {
+    yield put(voteFail(id))
   }
 }
