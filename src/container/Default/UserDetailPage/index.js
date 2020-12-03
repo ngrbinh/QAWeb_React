@@ -51,7 +51,7 @@ class UserDetailPage extends Component {
             {isProfile
               ? <div className="breadcrumb-right">
                 <div className="question-navigation edit-profile">
-                  <Link to='/edit'>
+                  <Link to='/editprofile'>
                     <i className="icon-pencil"><FontAwesomeIcon icon={faPencilAlt} /></i>Chỉnh sửa thông tin
                   </Link>
                 </div>

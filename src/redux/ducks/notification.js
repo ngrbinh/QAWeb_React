@@ -34,9 +34,10 @@ export default function reducer(state = initState, action) {
         loading: false,
       }
     case notificationTypes.CHECK_ALL:
+      console.log("?")
       return {
         ...state,
-        notification: state.notifications.map(item => {
+        notifications: state.notifications.map(item => {
           return {
             ...item,
             checked: true

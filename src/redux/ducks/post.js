@@ -11,12 +11,18 @@ export const postTypes = {
   ADD_QUESTION: "post/ADD_QUESTION",
   ADD_QUESTION_SUCCESS: "post/ADD_QUESTION_SUCCESS",
   ADD_QUESTION_FAIL: "post/ADD_QUESTION_FAIL",
+  ADD_IMAGE: "post/ADD_IMAGE",
+  ADD_IMAGE_FAIL: "post/ADD_IMAGE_FAIL",
   ADD_ANSWER: "post/ADD_ANSWER",
   ADD_ANSWER_SUCCESS: "post/ADD_ANSWER_SUCCESS",
   ADD_ANSWER_FAIL: "post/ADD_ANSWER_FAIL",
+  ADD_ANSWER_IMAGE: "post/ADD_ANSWER_IMAGE",
+  ADD_ANSWER_IMAGE_FAIL: "post/ADD_ANSWER_IMAGE_FAIL",
   EDIT_POST: "post/EDIT_POST",
   EDIT_POST_SUCCESS: "post/EDIT_POST_SUCCESS",
   EDIT_POST_FAIL: "post/EDIT_POST_FAIL",
+  EDIT_POST_IMAGE: "post/EDIT_POST_IMAGE",
+  EDIT_POST_IMAGE_FAIL: "post/EDIT_POST_IMAGE_FAIL",
   FETCH_QUESTIONS_BY_USER: "post/FETCH_QUESTIONS_BY_USER",
   FETCH_QUESTIONS_BY_USER_SUCCESS: "post/FETCH_QUESTIONS_BY_USER_SUCCESS",
   FETCH_QUESTIONS_BY_USER_FAIL: "post/FETCH_QUESTIONS_BY_USER_FAIL",
@@ -32,7 +38,13 @@ export const postTypes = {
   FETCH_ANSWERS_FAIL: "post/FETCH_ANSWERS_FAIL",
   ADD_VIEW: "post/ADD_VIEW",
   ADD_VIEW_SUCCESS: "post/ADD_VIEW_SUCCESS",
-  ADD_VIEW_FAIL: "post/ADD_VIEW_FAIL"
+  ADD_VIEW_FAIL: "post/ADD_VIEW_FAIL",
+  FETCH_POPULAR_QUESTIONS: "post/FETCH_POPULAR_QUESTIONS",
+  FETCH_POPULAR_QUESTIONS_SUCCESS: "post/FETCH_POPULAR_QUESTIONS_SUCCESS",
+  FETCH_POPULAR_QUESTIONS_FAIL: "post/FETCH_POPULAR_QUESTIONS_FAIL",
+  FETCH_RECOMMEND_QUESTIONS: "post/FETCH_RECOMMEND_QUESTIONS",
+  FETCH_RECOMMEND_QUESTIONS_SUCCESS: "post/FETCH_RECOMMEND_QUESTIONS_SUCCESS",
+  FETCH_RECOMMEND_QUESTIONS_FAIL: "post/FETCH_RECOMMEND_QUESTIONS_FAIL"
 }
 
 const initState = {
@@ -59,7 +71,9 @@ const initState = {
   userAnswers: [],
   deletingIds: [],
   deleteError: [],
-  deleteMessage: ""
+  deleteMessage: "",
+  popularQuestions: [],
+  recommendQuestions: []
 }
 
 export default function reducer(state = initState, action) {
@@ -142,6 +156,16 @@ export default function reducer(state = initState, action) {
         loadingAddQuestion: false,
         addQuestionError: addError
       }
+    case postTypes.ADD_IMAGE:
+      return {
+        ...state,
+        loadingAddQuestion: true
+      }
+    case postTypes.ADD_IMAGE_FAIL:
+      return {
+        ...state,
+        loadingAddQuestion: false
+      }
     case postTypes.ADD_ANSWER:
       return {
         ...state,
@@ -159,6 +183,16 @@ export default function reducer(state = initState, action) {
         loadingAddAnswer: false,
         addAnswerError: addAnsError
       }
+    case postTypes.ADD_ANSWER_IMAGE:
+      return {
+        ...state,
+        loadingAddAnswer: true
+      }
+    case postTypes.ADD_ANSWER_IMAGE_FAIL:
+      return {
+        ...state,
+        loadingAddAnswer: false
+      }
     case postTypes.EDIT_POST:
       return {
         ...state,
@@ -175,6 +209,16 @@ export default function reducer(state = initState, action) {
         ...state,
         loadingEdit: false,
         editError: editError
+      }
+    case postTypes.EDIT_POST_IMAGE:
+      return {
+        ...state,
+        loadingEdit: true
+      }
+    case postTypes.EDIT_POST_IMAGE_FAIL:
+      return {
+        ...state,
+        loadingEdit: false
       }
     case postTypes.FETCH_QUESTIONS_BY_USER:
       return {
@@ -249,23 +293,24 @@ export default function reducer(state = initState, action) {
           { ...item, voteCount: item.voteCount + parseInt(payload.voteChange) }
           : item)
       }
-    case postTypes.ADD_VIEW_SUCCESS:
-      console.log("hi")
+    case postTypes.FETCH_POPULAR_QUESTIONS_SUCCESS:
       return {
         ...state,
-        questionDetails: {
-          ...state.questionDetails,
-          viewCount: state.questionDetails.viewCount + 1
-        }
+        popularQuestions: payload.data.questions
+      }
+    case postTypes.FETCH_RECOMMEND_QUESTIONS_SUCCESS:
+      return {
+        ...state,
+        recommendQuestions: payload.data
       }
     default:
       return state
   }
 }
 
-export const fetchQuestions = (page, limit, sortBy) => ({
+export const fetchQuestions = (page, limit, sortBy, subjectId, gradeId, keyword ) => ({
   type: postTypes.FETCH_QUESTIONS,
-  payload: { page, limit, sortBy }
+  payload: { page, limit, sortBy, subjectId, gradeId, keyword }
 })
 
 export const fetchQuestionsSuccess = (data) => ({
@@ -312,6 +357,15 @@ export const addQuestionFail = (message) => ({
   payload: { message }
 })
 
+export const addImage = () => ({
+  type: postTypes.ADD_IMAGE,
+  payload: {}
+})
+
+export const addImageFail = () => ({
+  type: postTypes.ADD_ANSWER_FAIL,
+  payload: {}
+})
 export const addAnswer = (data, history) => ({
   type: postTypes.ADD_ANSWER,
   payload: { data, history }
@@ -327,6 +381,14 @@ export const addAnswerFail = (message) => ({
   payload: { message }
 })
 
+export const addAnswerImage = () => ({
+  type: postTypes.ADD_ANSWER_IMAGE,
+  payload: {}
+})
+export const addAnswerImageFail = () => ({
+  type: postTypes.ADD_ANSWER_IMAGE_FAIL,
+  payload: {}
+})
 export const editPost = (id, data, history) => ({
   type: postTypes.EDIT_POST,
   payload: { id, data, history }
@@ -342,6 +404,14 @@ export const editPostFail = (message) => ({
   payload: { message }
 })
 
+export const editPostImage = () => ({
+  type: postTypes.EDIT_POST_IMAGE,
+  payload: {}
+})
+export const editPostImageFail = () => ({
+  type: postTypes.EDIT_POST_IMAGE_FAIL,
+  payload: {}
+})
 export const fetchQuestionsByUser = (id) => ({
   type: postTypes.FETCH_QUESTIONS_BY_USER,
   payload: { id }
@@ -420,4 +490,34 @@ export const addViewSuccess = (id) => ({
 export const addViewFail = (message) => ({
   type: postTypes.ADD_VIEW_FAIL,
   payload: { message }
+})
+
+export const fetchPopularQuestions = () => ({
+  type: postTypes.FETCH_POPULAR_QUESTIONS,
+  payload: {}
+})
+
+export const fetchPopularQuestionsSuccess = (data) => ({
+  type: postTypes.FETCH_POPULAR_QUESTIONS_SUCCESS,
+  payload: { data }
+})
+
+export const fetchPopularQuestionsFail = () => ({
+  type: postTypes.FETCH_POPULAR_QUESTIONS_FAIL,
+  payload: {}
+})
+
+export const fetchRecommendQuestions = (id) => ({
+  type: postTypes.FETCH_RECOMMEND_QUESTIONS,
+  payload: { id }
+})
+
+export const fetchRecommendQuestionsSuccess = (data) => ({
+  type: postTypes.FETCH_RECOMMEND_QUESTIONS_SUCCESS,
+  payload: { data }
+})
+
+export const fetchRecommendQuestionsFail = () => ({
+  type: postTypes.FETCH_RECOMMEND_QUESTIONS_FAIL,
+  payload: {}
 })

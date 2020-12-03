@@ -12,17 +12,13 @@ import defaultAvatar from '../../assets/image/user_avatar_default.png'
 import { useEffect } from 'react'
 import Notification from '../Notification'
 import { Modal, Button } from 'antd'
-
+import { setKeyword } from '../../redux/ducks/questionSearch'
 function HeaderBar(props) {
   const [showUserActions, setShowUserActions] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
+  const [searchKeyword, setSearchKeyword] = useState(props.keyword)
   const [showModal, setShowModal] = useState(false)
-  const { actions, logout, fetchNotifications, checkAll } = props
-  useEffect(() => {
-    if (props.token) {
-      fetchNotifications(1, 5, "-date")
-    }
-  }, [])
+  const { actions, logout, fetchNotifications, checkAll, setKeyword } = props
   useEffect(() => {
     if (props.token) {
       fetchNotifications(1, 5, "-date")
@@ -45,14 +41,25 @@ function HeaderBar(props) {
     logout()
   }
   const toggleNotifications = () => {
-    console.log("hic")
     setShowNotifications(!showNotifications)
     if (unCheckCount > 0) {
       checkAll()
     }
   }
+  const handleKeywordChange = e => {
+    setSearchKeyword(e.target.value)
+  }
+  const handleKeywordSubmit = e => {
+    e.preventDefault()
+    setKeyword(searchKeyword)
+  }
+  const handleKeyPress = e => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      setKeyword(searchKeyword)
+    }
+  }
   const { profile, loadingNotifications, notifications } = props
-  //console.log(loadingNotifications)
   const loginClass = 'right-header float_r' + (profile.displayName ? ' wrap-login' : ' wrap-not-login')
   const unCheckCount = notifications.filter(item => !item.checked).length
   return (
@@ -127,9 +134,9 @@ function HeaderBar(props) {
                           </Link>
                       </li>
                       <li>
-                        <a href="#">
+                        <Link to="/editprofile">
                           <i className="icon-pencil"><FontAwesomeIcon icon={faEdit} /></i>Chỉnh sửa thông tin
-                          </a>
+                        </Link>
                       </li>
                       <li>
                         <a href="#">
@@ -157,9 +164,9 @@ function HeaderBar(props) {
               <div className='header-search float_r'>
                 <form role="search" className="searchform main-search-form" method="GET" action="">
                   <div className="search-wrapper">
-                    <input type="search" className="live-search live-search-icon" autoComplete="off" placeholder="Nhập từ khóa" name="search" />
+                    <input type="search" className="live-search live-search-icon" autoComplete="off" placeholder="Nhập từ khóa" name="search" onChange={handleKeywordChange} onKeyPress={handleKeyPress} />
                     {/* <div className="search-click"></div> */}
-                    <button type="submit">
+                    <button type="submit" onClick={handleKeywordSubmit}>
                       <i>
                         <FontAwesomeIcon icon={faSearch} size='xs' />
                       </i>
@@ -195,14 +202,16 @@ const mapStateToProps = (state) => {
     profile: state.profile,
     notifications: state.notification.notifications,
     loadingNotifications: state.notification.loading,
-    token: state.account.token
+    token: state.account.token,
+    keyword: state.questionSearch.keyword
   };
 }
 
 const mapDispatchToProps = {
   logout,
   fetchNotifications,
-  checkAll
+  checkAll,
+  setKeyword
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar)

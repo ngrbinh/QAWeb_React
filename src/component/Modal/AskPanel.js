@@ -3,24 +3,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Editor } from '@tinymce/tinymce-react';
-import { addQuestion } from '../../redux/ducks/post'
+import { addQuestion, addImage, addImageFail } from '../../redux/ducks/post'
 import { fetchSubjects } from '../../redux/ducks/subject'
 import { fetchGrades } from '../../redux/ducks/grade'
+import { firebaseStorage } from '../../common/firebase';
 class AskPanel extends Component {
   state = {
-    imgUrl: '',
+    localImgUrl: '',
     body: '',
     subjectTypeId: 0,
     gradeTypeId: 0,
     localError: '',
-    apiError: ''
+    apiError: '',
+    file: null
   }
   myRef = React.createRef()
   handleFileSelect = (e) => {
-    const newUrl = e.target.value
+    const file = e.target.files[0]
+    const localImgUrl = file ? e.target.value : ""
     this.setState(state => ({
       ...state,
-      imgUrl: newUrl,
+      localImgUrl,
+      file: file ? file : null,
       localError: '',
       apiError: ''
     }))
@@ -59,10 +63,35 @@ class AskPanel extends Component {
         localError: error
       }))
     } else {
-      const { body, imgUrl, subjectTypeId, gradeTypeId } = this.state
-      const { history } = this.props
-      //console.log(history)
-      this.props.addQuestion({ body, imgUrl, subjectTypeId, gradeTypeId }, history)
+      const { body, subjectTypeId, gradeTypeId, file } = this.state
+      const { history, addImage, addImageFail } = this.props
+      var imgUrl = ''
+      if (file) {
+        addImage()
+        const uploadTask = firebaseStorage.ref(`/images/${file.name}`).put(file)
+        uploadTask.on('state_changed',
+          (snapShot) => {
+            //takes a snap shot of the process as it is happening
+            console.log(snapShot)
+          }, (err) => {
+            console.log(err)
+            addImageFail()
+            this.setState(state => ({
+              ...state,
+              localError: "Không thể upload ảnh. Vui lòng thử lại sau"
+            }))
+          }, () => {
+            // gets the functions from storage refences the image storage in firebase by the children
+            // gets the download url then sets the image from firebase as the value for the imgUrl key:
+            firebaseStorage.ref('images').child(file.name).getDownloadURL()
+              .then(fireBaseUrl => {
+                imgUrl = fireBaseUrl
+                this.props.addQuestion({ body, imgUrl, subjectTypeId, gradeTypeId }, history)
+              })
+          })
+      } else {
+        this.props.addQuestion({ body, imgUrl, subjectTypeId, gradeTypeId }, history)
+      }
     }
   }
   componentDidUpdate() {
@@ -75,7 +104,7 @@ class AskPanel extends Component {
     this.props.fetchSubjects()
   }
   render() {
-    const { imgUrl, subjectTypeId, gradeTypeId, localError } = this.state
+    const { localImgUrl, subjectTypeId, gradeTypeId, localError, file } = this.state
     const { apiError, loadingAddQues, subjects, grades } = this.props
     return (
       <div className='panel-pop-content' id='wpqa-question'>
@@ -123,7 +152,7 @@ class AskPanel extends Component {
             <div className="fileinputs">
               <input type="file" name="featured_image" id="featured_image" onChange={e => this.handleFileSelect(e)} accept='image/*' />
               <div className="fakefile">
-                <button type="button">{imgUrl}</button>
+                <button type="button">{localImgUrl}</button>
                 <span>Browse</span>
               </div>
               <i className="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
@@ -174,7 +203,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addQuestion,
   fetchSubjects,
-  fetchGrades
+  fetchGrades,
+  addImage,
+  addImageFail,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AskPanel)

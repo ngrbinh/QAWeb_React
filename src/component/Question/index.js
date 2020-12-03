@@ -12,6 +12,7 @@ import { Modal, Button } from 'antd'
 function Question(props) {
   const [deleteModal, setDeletModal] = useState(false)
   const [resultModal, setResultModal] = useState(false)
+  const [deleteClicked, setDeleteClicked] = useState(false)
   const isInitialMount = useRef(true)
   const { shorten, scrollToRef, modifiable, vote, loadingVote, addView, deletingIds, deleteMessage, deletePost } = props
   let history = useHistory()
@@ -32,22 +33,25 @@ function Question(props) {
   const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const parse = require('html-react-parser')
   const handleAddView = () => {
-    addView(id)
+    //addView(id)F
   }
   const cancelDelete = () => {
     setDeletModal(false)
   }
   const confirmDelete = () => {
     deletePost(id)
+    setDeleteClicked(true)
   }
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      if (deleteModal) {
-        setDeletModal(false)
+      if (deleteClicked) {
+        if (deleteModal) {
+          setDeletModal(false)
+        }
+        setResultModal(true)
       }
-      setResultModal(true)
     }
   }, [deleteMessage])
   const handleOk = () => {
@@ -153,7 +157,7 @@ function Question(props) {
               <div className="question-content-text">
                 <div className="all_not_signle_post_content">
                   {shorten ?
-                    <p className="excerpt-question">{shortBody}</p>
+                    <div className="excerpt-question">{parse(shortBody)}</div>
                     : <div className='content-text'>
                       {parse(shortBody)}
                     </div>

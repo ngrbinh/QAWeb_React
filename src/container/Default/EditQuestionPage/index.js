@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchQuestionDetails, editPost } from '../../../redux/ducks/post'
+import { fetchQuestionDetails, editPost, editPostImage, editPostImageFail } from '../../../redux/ducks/post'
 import { Link } from 'react-router-dom'
 import { faCamera, faHome, faFolder, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Editor } from '@tinymce/tinymce-react';
 import { fetchSubjects } from '../../../redux/ducks/subject'
 import { fetchGrades } from '../../../redux/ducks/grade'
+import { firebaseStorage } from '../../../common/firebase';
 
 class EditQuestionPage extends Component {
   state = {
@@ -25,12 +26,16 @@ class EditQuestionPage extends Component {
     return null
   }
   handleFileSelect = (e) => {
-    const newUrl = e.target.value
+    const file = e.target.files[0]
+    const newUrl = file ? URL.createObjectURL(file) : ""
+    const localImgUrl = file ? e.target.value : ""
     this.setState(state => ({
       ...state,
       question: {
         ...state.question,
-        newImgUrl: newUrl,
+        imgUrl: newUrl ? newUrl : state.question.imgUrl,
+        file: file ? file : null,
+        localImgUrl: localImgUrl ? localImgUrl : state.question.localImgUrl
       },
       localError: ''
     }))
@@ -44,10 +49,32 @@ class EditQuestionPage extends Component {
         localError: error
       }))
     } else {
-      const { id, body, imgUrl, subjectTypeId, gradeTypeId } = this.state.question
-      const { history } = this.props
-      //console.log(history)
-      this.props.editPost(id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
+      const { id, body, subjectTypeId, gradeTypeId, file } = this.state.question
+      var { imgUrl } = this.state.question
+      const { history, editPost, editPostImage, editPostImageFail } = this.props
+      if (file) {
+        editPostImage()
+        const uploadTask = firebaseStorage.ref(`/images/${file.name}`).put(file)
+        uploadTask.on('state_changed',
+          (snapShot) => {
+            console.log(snapShot)
+          }, (err) => {
+            console.log(err)
+            editPostImageFail()
+            this.setState(state => ({
+              ...state,
+              localError: "Không thể upload ảnh. Vui lòng thử lại sau"
+            }))
+          }, () => {
+            firebaseStorage.ref('images').child(file.name).getDownloadURL()
+              .then(fireBaseUrl => {
+                imgUrl = fireBaseUrl
+                editPost(id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
+              })
+          })
+      } else {
+        editPost(id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
+      }
     }
   }
   handleInputChange = (e) => {
@@ -76,7 +103,8 @@ class EditQuestionPage extends Component {
       ...state,
       question: {
         ...state.question,
-        imgUrl: ''
+        imgUrl: '',
+        localImgUrl: ''
       },
       localError: ''
     }))
@@ -91,7 +119,8 @@ class EditQuestionPage extends Component {
       subjectTypeId: subjectTypeId ? subjectTypeId : 0,
       gradeTypeId: gradeTypeId ? gradeTypeId : 0,
       body,
-      newImgUrl: ""
+      file: null,
+      localImgUrl: '',
     }
     return { ...state }
   }
@@ -112,7 +141,7 @@ class EditQuestionPage extends Component {
   render() {
     const { loadingEditQues, subjects, grades, apiError } = this.props
     const { localError, question } = this.state
-    const { id, imgUrl, subjectTypeId, gradeTypeId, body, newImgUrl } = question
+    const { id, imgUrl, subjectTypeId, gradeTypeId, body, localImgUrl } = question
     return (
       <React.Fragment>
         <div className='breadcrumbs breadcrumbs_1'>
@@ -199,7 +228,7 @@ class EditQuestionPage extends Component {
               <div className="fileinputs">
                 <input type="file" name="featured_image" id="featured_image" onChange={e => this.handleFileSelect(e)} accept='image/*' />
                 <div className="fakefile">
-                  <button type="button">{newImgUrl}</button>
+                  <button type="button">{localImgUrl}</button>
                   <span>Browse</span>
                 </div>
                 <i className="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
@@ -253,7 +282,9 @@ const mapDispatchToProps = {
   fetchQuestionDetails,
   fetchSubjects,
   fetchGrades,
-  editPost
+  editPost,
+  editPostImage,
+  editPostImageFail
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditQuestionPage)

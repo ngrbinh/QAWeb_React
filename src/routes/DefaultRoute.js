@@ -75,7 +75,7 @@ class DefaultRoute extends Component {
                         </div>
                         <div className="hide-main-inner"></div>
                         <div className="hide-sidebar sidebar-width"><div className="hide-sidebar-inner"></div></div>
-                        <SideInfoBar />
+                        <SideInfoBar {...routeProps} />
                       </div>
                     </main>
                     <SideNavBar />

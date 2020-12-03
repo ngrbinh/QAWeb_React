@@ -2,8 +2,8 @@ import axiosService from "../common/axiosService"
 
 const url = "user"
 
-export const getUsers = (page, limit, sortBy) => {
-  return axiosService.get(`${url}/all?page=${page}&limit=${limit}&sort_by=${sortBy}`)
+export const getUsers = (page, limit, sortBy, keyword) => {
+  return axiosService.get(`${url}/all?page=${page}&limit=${limit}&sort_by=${sortBy}&name=${keyword}`)
 }
 
 export const getUserDetails = (id) => {

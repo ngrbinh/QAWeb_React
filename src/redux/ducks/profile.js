@@ -11,6 +11,8 @@ export const profileTypes = {
   EDIT_PROFILE: "profile/EDIT_PROFILE",
   EDIT_PROFILE_SUCCESS: "profile/EDIT_PROFILE_SUCCESS",
   EDIT_PROFILE_FAIL: "profile/EDIT_PROFILE_FAIL",
+  EDIT_AVATAR: "profile/EDIT_AVATAR",
+  EDIT_AVATAR_FAIL: "profile/EDIT_AVATAR_FAIL",
   RESET_ERROR: "profile/RESET_ERROR"
 }
 
@@ -74,6 +76,16 @@ export default function reducer(state = initState, action) {
         ...state,
         loadingEdit: false
       }
+    case profileTypes.EDIT_AVATAR:
+      return {
+        ...state,
+        loadingEdit: true
+      }
+    case profileTypes.EDIT_AVATAR_FAIL:
+      return {
+        ...state,
+        loadingEdit: false
+      }
     case profileTypes.EDIT_PROFILE_FAIL:
       const { message } = action.payload
       return {
@@ -125,6 +137,14 @@ export const editProfileFail = (message) => ({
   payload: { message }
 })
 
+export const editAvatar = () => ({
+  type: profileTypes.EDIT_AVATAR,
+  payload: {}
+})
+export const editAvatarFail = () => ({
+  type: profileTypes.EDIT_AVATAR_FAIL,
+  payload: {}
+})
 export const resetError = () => ({
   type: profileTypes.RESET_ERROR,
 })

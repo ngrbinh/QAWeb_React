@@ -13,7 +13,7 @@ export function EditProfile(props) {
   const scrollToMyRef = () => {
     window.scrollTo(0, myRef.current.scrollIntoView())
   }
-  const { profile, handleInputChange, handleDateChange, addresses, handleSubmit,
+  const { profile, handleInputChange, handleDateChange, handleFileSelect, addresses, handleSubmit,
     localErr, apiErr, loading } = props
   useEffect(() => {
     if (localErr || apiErr) {
@@ -21,7 +21,7 @@ export function EditProfile(props) {
     }
   })
   //console.log(profile)
-  const { displayName, aboutMe, avatarUrl, email, phoneNumber, gender, birthDate, addressId } = profile
+  const { displayName, aboutMe, avatarUrl, email, phoneNumber, gender, birthDate, addressId, localAvatarUrl } = profile
   return <form className='edit-profile-form wpqa_form wpqa-readonly' ref={myRef}>
     {localErr ? <div className="wpqa_error" style={{ display: "block" }}>
       <strong>Lỗi :&nbsp;</strong> {localErr}
@@ -52,8 +52,11 @@ export function EditProfile(props) {
             </div>
             <label htmlFor="your_avatar_372">Ảnh đại diện</label>
             <div className="fileinputs">
-              <input type="file" name="you_avatar" id="your_avatar_372" />
-              <div className="fakefile"><button type="button">Select file</button><span>Browse</span></div>
+              <input type="file" name="you_avatar" id="your_avatar_372" onChange={handleFileSelect} />
+              <div className="fakefile">
+                <button type="button">{localAvatarUrl ? localAvatarUrl : "Select file"}</button>
+                <span>Browse</span>
+              </div>
               <i className="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
             </div>
             <div className="clearfix"></div>

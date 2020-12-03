@@ -6,6 +6,8 @@ import { subjectSaga } from "./subject"
 import { gradeSaga } from "./grade"
 import { metaSaga } from "./meta";
 import { notificationSaga } from './notification'
+import { badgeSaga } from "./badge";
+
 export default function* rootSaga() {
   //yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
   // yield all([
@@ -20,4 +22,5 @@ export default function* rootSaga() {
   yield fork(gradeSaga)
   yield fork(metaSaga)
   yield fork(notificationSaga)
+  yield fork(badgeSaga)
 }

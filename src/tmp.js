@@ -474,3 +474,36 @@ const questions1 = [
     viewCount: "152"
   }
 ]
+
+[
+  {
+    point: 30,
+    name: 'Beginner',
+    description: 'You must have a total score of 50 in at least 10 non-community wiki answers to achieve this badge. Highest scoring answer that outscored an accepted answer with score of more than 10.'
+  },
+  {
+    point: 30,
+    name: 'Beginner',
+    description: 'You must have a total score of 50 in at least 10 non-community wiki answers to achieve this badge. Highest scoring answer that outscored an accepted answer with score of more than 10.'
+  },
+  {
+    point: 30,
+    name: 'Beginner',
+    description: 'You must have a total score of 50 in at least 10 non-community wiki answers to achieve this badge. Highest scoring answer that outscored an accepted answer with score of more than 10.'
+  },
+  {
+    point: 30,
+    name: 'Beginner',
+    description: 'You must have a total score of 50 in at least 10 non-community wiki answers to achieve this badge. Highest scoring answer that outscored an accepted answer with score of more than 10.'
+  },
+  {
+    point: 30,
+    name: 'Beginner',
+    description: 'You must have a total score of 50 in at least 10 non-community wiki answers to achieve this badge. Highest scoring answer that outscored an accepted answer with score of more than 10.'
+  },
+  {
+    point: 30,
+    name: 'Beginner',
+    description: 'You must have a total score of 50 in at least 10 non-community wiki answers to achieve this badge. Highest scoring answer that outscored an accepted answer with score of more than 10.'
+  }
+]

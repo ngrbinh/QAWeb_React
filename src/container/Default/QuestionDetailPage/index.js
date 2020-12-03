@@ -7,7 +7,8 @@ import Question from '../../../component/Question'
 import './index.css'
 import { Editor } from '@tinymce/tinymce-react';
 import { Link } from 'react-router-dom'
-import { fetchQuestionDetails, addAnswer } from '../../../redux/ducks/post'
+import { fetchQuestionDetails, addAnswer, addAnswerImage, addAnswerImageFail } from '../../../redux/ducks/post'
+import { firebaseStorage } from '../../../common/firebase';
 
 class QuestionDetailPage extends Component {
   constructor(props) {
@@ -17,9 +18,10 @@ class QuestionDetailPage extends Component {
   errorRef = React.createRef()
   state = {
     questionTab: 1,
-    imgUrl: '',
     body: '',
-    localError: ''
+    localError: '',
+    localImgUrl: '',
+    file: null
   }
   setQuestionTab = (i) => () => {
     this.setState(state => ({
@@ -38,10 +40,12 @@ class QuestionDetailPage extends Component {
     window.scrollTo(0, this.myRef.current.offsetTop + this.myRef.current.offsetHeight - 100)
   }
   handleFileSelect = (e) => {
-    const newUrl = e.target.value
+    const file = e.target.files[0]
+    const localImgUrl = file ? e.target.value : ""
     this.setState(state => ({
       ...state,
-      imgUrl: newUrl
+      localImgUrl,
+      file: file ? file : null,
     }))
   }
   checkInput = () => {
@@ -52,7 +56,6 @@ class QuestionDetailPage extends Component {
   }
   handleSubmit = e => {
     e.preventDefault()
-    const { history } = this.props
     const error = this.checkInput()
     if (error) {
       this.setState(state => ({
@@ -60,9 +63,35 @@ class QuestionDetailPage extends Component {
         localError: error
       }))
     } else {
+      const { history, addAnswer, addAnswerImage, addAnswerImageFail } = this.props
       const parentId = this.props.match.params.id
-      const { body, imgUrl } = this.state
-      this.props.addAnswer({ body, imgUrl, parentId }, history)
+      const { body, file } = this.state
+      var imgUrl = ''
+      if (file) {
+        addAnswerImage()
+        const uploadTask = firebaseStorage.ref(`/images/${file.name}`).put(file)
+        uploadTask.on('state_changed',
+          (snapShot) => {
+            //takes a snap shot of the process as it is happening
+            console.log(snapShot)
+          }, (err) => {
+            console.log(err)
+            addAnswerImageFail()
+            this.setState(state => ({
+              ...state,
+              localError: "Không thể upload ảnh. Vui lòng thử lại sau"
+            }))
+          }, () => {
+            firebaseStorage.ref('images').child(file.name).getDownloadURL()
+              .then(fireBaseUrl => {
+                imgUrl = fireBaseUrl
+                addAnswer({ body, imgUrl, parentId }, history)
+              })
+          })
+      } else {
+        addAnswer({ body, imgUrl, parentId }, history)
+      }
+
     }
   }
   componentDidMount() {
@@ -119,11 +148,21 @@ class QuestionDetailPage extends Component {
     }
     return true
   }
+  canModifyAnswer = (answerOwner) => {
+    const { profileId } = this.props
+    if (!profileId) {
+      return false
+    }
+    if (answerOwner.id !== profileId) {
+      return false
+    }
+    return true
+  }
   render() {
     const { questionDetails, loading, apiError, loadingAddAns } = this.props
     var { answers, ...question } = questionDetails
     if (!answers) answers = []
-    const { questionTab, imgUrl, localError, body } = this.state
+    const { questionTab, localImgUrl, localError, body } = this.state
     return (
       <React.Fragment>
         <div className='breadcrumbs breadcrumbs_1'>
@@ -179,7 +218,7 @@ class QuestionDetailPage extends Component {
                   <div className='clearfix'></div>
                 </div>
                 <ol className='commentlist clearfix'>
-                  {answers.map(item => <Answer answer={item} key={item.id} />)}
+                  {answers.map(item => <Answer answer={item} key={item.id} modifiable={this.canModifyAnswer(item.user)} />)}
                 </ol>
                 <div className='clearfix'></div>
               </div>
@@ -203,7 +242,7 @@ class QuestionDetailPage extends Component {
                     <div className="fileinputs">
                       <input type="file" name="featured_image" id="featured_image" accept='image/*' onChange={e => this.handleFileSelect(e)} />
                       <div className="fakefile">
-                        <button type="button">{imgUrl}</button>
+                        <button type="button">{localImgUrl}</button>
                         <span>Browse</span>
                       </div>
                       <i className="icon-camera"><FontAwesomeIcon icon={faCamera} /></i>
@@ -258,7 +297,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchQuestionDetails,
-  addAnswer
+  addAnswer,
+  addAnswerImage,
+  addAnswerImageFail
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetailPage)

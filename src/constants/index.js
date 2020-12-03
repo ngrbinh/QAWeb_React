@@ -104,7 +104,7 @@ export const DEFAULT_ROUTES = [
   },
   {
     name: "EditProfile",
-    path: "/edit",
+    path: "/editprofile",
     exact: false,
     component: EditProfilePage,
     attachProps: {

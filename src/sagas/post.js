@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import { addView, createAnswer, createQuestion, deletePostById, getAnswers, getQuestionDetails, getQuestions, getQuestionsByUser, updatePost } from '../apis/post'
+import { addView, createAnswer, createQuestion, deletePostById, getAnswers, getQuestionDetails, getQuestions, getQuestionsByUser, getRecommendQuestions, updatePost } from '../apis/post'
 import {
   addAnswerFail,
   addAnswerSuccess,
@@ -10,14 +10,15 @@ import {
   deletePostFail,
   deletePostSuccess,
   editPostFail,
-  editPostSuccess, fetchAnswersByUserFail, fetchAnswersByUserSuccess, fetchAnswersFail, fetchAnswersSuccess, fetchQuestionDetails,
+  editPostSuccess, fetchAnswersByUserFail, fetchAnswersByUserSuccess, fetchAnswersFail, fetchAnswersSuccess, fetchPopularQuestionsFail, fetchPopularQuestionsSuccess,
   fetchQuestionDetailsFail, fetchQuestionDetailsSuccess,
   fetchQuestionsByUserFail,
   fetchQuestionsByUserSuccess,
-  fetchQuestionsFail, fetchQuestionsSuccess, postTypes
+  fetchQuestionsFail, fetchQuestionsSuccess, fetchRecommendQuestionsFail, fetchRecommendQuestionsSuccess, postTypes
 } from '../redux/ducks/post'
 import { logout } from '../redux/ducks/account'
 import { toggleModal } from '../redux/ducks/modal'
+import { getRecommendIds } from '../apis/recommend'
 export function* postSaga() {
   yield takeLatest(postTypes.FETCH_QUESTIONS, watchFetchQuestions)
   yield takeLatest(postTypes.FETCH_ANSWERS, watchFetchAnswers)
@@ -29,13 +30,15 @@ export function* postSaga() {
   yield takeLatest(postTypes.FETCH_QUESTIONS_BY_USER, watchFetchUserQuestions)
   yield takeEvery(postTypes.DELETE_POST, watchDeletePost)
   yield takeEvery(postTypes.ADD_VIEW, watchAddView)
+  yield takeEvery(postTypes.FETCH_POPULAR_QUESTIONS, watchFetchPopularQuestion)
+  yield takeLatest(postTypes.FETCH_RECOMMEND_QUESTIONS, watchFetchRecommendQuestions)
 }
 
 function* watchFetchQuestions(action) {
   //console.log("saga")
   try {
-    const { page, limit, sortBy } = action.payload
-    const resp = yield call(getQuestions, page, limit, sortBy)
+    const { page, limit, sortBy, subjectId, gradeId, keyword } = action.payload
+    const resp = yield call(getQuestions, page, limit, sortBy, subjectId, gradeId, keyword)
     const { status, data } = resp
     yield put(fetchQuestionsSuccess(data))
   } catch (error) {
@@ -60,6 +63,7 @@ function* watchFetchAnswers(action) {
 function* watchFetchQuestionDetails(action) {
   try {
     const { id } = action.payload
+    yield call(addView, id)
     const resp = yield call(getQuestionDetails, id)
     const { status, data } = resp
     yield put(fetchQuestionDetailsSuccess(data))
@@ -163,9 +167,36 @@ function* watchAddView(action) {
     yield call(addView, postId)
     yield put(addViewSuccess(postId))
   } catch (error) {
+    yield put(addViewFail(""))
     console.log(error)
-    const data = error.response.data
-    const message = data ? data.message : ""
-    yield put(addViewFail)
+  }
+}
+
+function* watchFetchPopularQuestion(action) {
+  try {
+    const resp = yield call(getQuestions, 1, 5, '-view')
+    const { data } = resp
+    yield put(fetchPopularQuestionsSuccess(data))
+  } catch (error) {
+    console.log(error)
+    yield put(fetchPopularQuestionsFail())
+  }
+}
+
+function* watchFetchRecommendQuestions(action) {
+  const { id } = action.payload
+  try {
+    const resp = yield call(getRecommendIds, id)
+    const { data } = resp
+    let ids = []
+    for (const id in data) {
+      ids.push(data[id])
+    }
+    const resp2 = yield call(getRecommendQuestions, ids)
+    const { data: data2 } = resp2
+    yield put(fetchRecommendQuestionsSuccess(data2))
+  } catch (error) {
+    console.log(error)
+    yield put(fetchRecommendQuestionsFail())
   }
 }

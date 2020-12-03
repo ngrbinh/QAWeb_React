@@ -31,9 +31,9 @@ class Home extends Component {
       sortBy: newSortBy,
       page: 1
     }))
-    const { fetchQuestions,resetQuestions } = this.props
+    const { fetchQuestions, resetQuestions } = this.props
     resetQuestions()
-    const { limit} = this.state
+    const { limit } = this.state
     fetchQuestions(1, limit, newSortBy);
   }
   loadMore = () => {
@@ -46,12 +46,12 @@ class Home extends Component {
     fetchQuestions(page + 1, limit, sortBy);
   }
   componentDidMount() {
-    const { fetchQuestions,resetQuestions } = this.props
+    const { fetchQuestions, resetQuestions, gradeId, subjectId, keyword } = this.props
     const { page, limit, sortBy } = this.state
     resetQuestions()
-    fetchQuestions(page, limit, sortBy);
+    fetchQuestions(page, limit, sortBy, subjectId, gradeId, keyword);
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     (function () {
       var script = document.createElement("script");
       script.type = "text/javascript";
@@ -78,12 +78,20 @@ class Home extends Component {
       else { script.text = config }
       script.onload = new Function("MathJax.Hub.Queue(['Typeset',MathJax.Hub]);")
       document.getElementsByTagName("head")[0].appendChild(script);
-    })();
+    })()
+    const { gradeId, subjectId, keyword } = this.props
+    if (prevProps.gradeId !== gradeId || prevProps.subjectId !== subjectId
+      || prevProps.keyword !== keyword) {
+      const { fetchQuestions, resetQuestions } = this.props
+      const { page, limit, sortBy } = this.state
+      resetQuestions()
+      fetchQuestions(page, limit, sortBy, subjectId, gradeId, keyword);
+    }
   }
   render() {
     //console.log(this.props)
     const { tabIndex, page } = this.state
-    const { questions, loadingQuestions } = this.props
+    const { questions, loadingQuestions, totalPage } = this.props
     return (
       <React.Fragment>
         <div className='clefix'></div>
@@ -122,7 +130,7 @@ class Home extends Component {
               <span className="load_span" style={loadingQuestions ? { display: "inline-block" } : { display: "none" }}>
                 <span className="loader_2"></span>
               </span>
-              <div className="load-more" style={loadingQuestions ? { display: "none" } : { display: "block" }}>
+              <div className="load-more" style={loadingQuestions || page >= totalPage ? { display: "none" } : { display: "block" }}>
                 <a onClick={this.loadMore}>Xem thêm</a>
               </div>
             </div>
@@ -140,7 +148,11 @@ const mapStateToProps = (state) => {
     questions: state.post.questions,
     loadingQuestions: state.post.loadingQuestions,
     modal: state.modal,
-    token: state.account.token
+    token: state.account.token,
+    gradeId: state.questionSearch.gradeId,
+    subjectId: state.questionSearch.subjectId,
+    keyword: state.questionSearch.keyword,
+    totalPage: state.post.totalQuestionPage
   };
 }
 

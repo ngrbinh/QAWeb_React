@@ -4,9 +4,11 @@ import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, Route, Switch } from 'react-router-dom'
 import { ChangePassword, EditProfile } from './tabs'
-import { fetchProfile, editProfile, resetError as resetPrfError } from '../../../redux/ducks/profile'
+import { fetchProfile, editProfile, resetError as resetPrfError, editAvatar, editAvatarFail } from '../../../redux/ducks/profile'
 import { changePassword, resetError as resetPwError } from '../../../redux/ducks/account'
 import { fetchAddresses } from '../../../redux/ducks/address'
+import { firebaseStorage } from '../../../common/firebase';
+
 class EditProfilePage extends Component {
   state = {
     prfError: "",
@@ -34,8 +36,23 @@ class EditProfilePage extends Component {
     }))
     this.props.resetPrfError()
   }
+  handleFileSelect = e => {
+    const file = e.target.files[0]
+    const avatarUrl = file ? URL.createObjectURL(file) : this.state.profile.avatarUrl
+    const localAvatarUrl = file ? e.target.value : this.state.profile.localAvatarUrl
+    console.log(avatarUrl)
+    this.setState(state => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        localAvatarUrl,
+        avatarUrl,
+        file: file ? file : state.profile.file
+      },
+      prfError: ""
+    }))
+  }
   handleSubmitProfile = e => {
-    const { history } = this.props
     e.preventDefault()
     const prfError = this.checkInputProfile()
     if (prfError) {
@@ -44,7 +61,32 @@ class EditProfilePage extends Component {
         prfError
       }))
     } else {
-      this.props.editProfile(this.state.profile.id, { ...this.state.profile }, history)
+      var data = { ...this.state.profile }
+      const { history, editProfile, editAvatar, editAvatarFail } = this.props
+      const { id, file } = data
+      if (file) {
+        editAvatar()
+        const uploadTask = firebaseStorage.ref(`/images/${file.name}`).put(file)
+        uploadTask.on('state_changed',
+          (snapShot) => {
+            console.log(snapShot)
+          }, (err) => {
+            console.log(err)
+            editAvatarFail()
+            this.setState(state => ({
+              ...state,
+              prfError: "Không thể upload ảnh. Vui lòng thử lại sau"
+            }))
+          }, () => {
+            firebaseStorage.ref('images').child(file.name).getDownloadURL()
+              .then(fireBaseUrl => {
+                data.avatarUrl = fireBaseUrl
+                editProfile(id, data, history)
+              })
+          })
+      } else {
+        editProfile(id, data, history)
+      }
     }
   }
   checkInputProfile = () => {
@@ -80,7 +122,7 @@ class EditProfilePage extends Component {
       }))
     } else {
       const { oldPw, newPw } = this.state.password
-      this.props.changePassword({ oldPassword: oldPw, newPassword: newPw },history)
+      this.props.changePassword({ oldPassword: oldPw, newPassword: newPw }, history)
     }
   }
   checkInputPw = () => {
@@ -109,7 +151,9 @@ class EditProfilePage extends Component {
       ...profile,
       email: profile.account ? profile.account.email : "",
       addressId: profile.address ? profile.address.id : 0,
-      gender: profile.gender
+      gender: profile.gender,
+      localAvatarUrl: '',
+      file: null
     }
     return {
       ...state
@@ -160,7 +204,7 @@ class EditProfilePage extends Component {
           <Route path={path} exact>
             <EditProfile profile={profile} addresses={addresses} handleSubmit={this.handleSubmitProfile}
               handleInputChange={this.handlePrfInputChange} handleDateChange={this.handleDateChange}
-              localErr={prfError} apiErr={apiPrfErr} loading={loadingProfile} />
+              localErr={prfError} apiErr={apiPrfErr} loading={loadingProfile} handleFileSelect={this.handleFileSelect} />
           </Route>
           <Route path={`${path}/password`}>
             <ChangePassword handleInputChange={this.handlePwInputChange} handleSubmit={this.handleSubmitPw}
@@ -187,7 +231,9 @@ const mapDispatchToProps = {
   fetchAddresses,
   editProfile,
   resetPrfError,
-  resetPwError
+  resetPwError,
+  editAvatar,
+  editAvatarFail
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfilePage)

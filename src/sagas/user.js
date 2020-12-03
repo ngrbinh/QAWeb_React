@@ -1,6 +1,6 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow, deleteUserById, vote } from "../apis/user";
-import { deleteUserFail, deleteUserSuccess, fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
+import { deleteUserFail, deleteUserSuccess, fetchTopUserFail, fetchTopUserSuccess, fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
 import { hideLoading, showLoading } from '../redux/ducks/globalLoading'
 import { accountTypes, changePasswordFail, changePasswordSuccess, login, loginFail, loginSuccess, logout, signupFail, signupSuccess } from "../redux/ducks/account";
 import { setModal, toggleModal } from "../redux/ducks/modal"
@@ -17,12 +17,13 @@ export function* userSaga() {
   yield takeEvery(userTypes.UN_FOLLOW, watchUnFollow)
   yield takeEvery(userTypes.VOTE, watchVote)
   yield takeEvery(userTypes.DELETE_USER, watchDeleteUser)
+  yield takeEvery(userTypes.FETCH_TOP_USER, watchFetchTopUsers)
 }
 
 function* watchFetchUsers(action) {
   try {
-    const { page, limit, sortBy } = action.payload
-    const resp = yield call(getUsers, page, limit, sortBy)
+    const { page, limit, sortBy, keyword } = action.payload
+    const resp = yield call(getUsers, page, limit, sortBy, keyword)
     const { status, data } = resp
     //console.log(data)
     yield put(fetchUsersSuccess(data))
@@ -174,5 +175,16 @@ function* watchVote(action) {
     yield put(voteSuccess(id, respData))
   } catch (error) {
     yield put(voteFail(id))
+  }
+}
+
+function* watchFetchTopUsers(action) {
+  try {
+    const resp = yield call(getUsers, 1, 5, "-point", "")
+    const { data } = resp
+    yield put(fetchTopUserSuccess(data))
+  } catch (error) {
+    console.log(error)
+    yield put(fetchTopUserFail())
   }
 }

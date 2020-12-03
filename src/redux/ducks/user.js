@@ -18,7 +18,10 @@ export const userTypes = {
   DELETE_USER: "user/DELETE_USER",
   DELETE_USER_SUCCESS: "user/DELETE_USER_SUCCESS",
   DELETE_USER_FAIL: "user/DELETE_USER_FAIL",
-  REMOVE_DEL_ERR: "user/REMOVE_DEL_ERR"
+  REMOVE_DEL_ERR: "user/REMOVE_DEL_ERR",
+  FETCH_TOP_USER: "user/FETCH_TOP_USER",
+  FETCH_TOP_USER_SUCCESS: "user/FETCH_TOP_USER_SUCCESS",
+  FETCH_TOP_USER_FAIL: "user/FETCH_TOP_USER_FAIL",
 }
 
 const initState = {
@@ -34,7 +37,9 @@ const initState = {
   loadingVote: [],
   voteError: [],
   deletingIds: [],
-  deleteError: []
+  deleteError: [],
+  topUsers: [],
+  loadingTopUsers: false,
 }
 
 export default function reducer(state = initState, action) {
@@ -160,14 +165,30 @@ export default function reducer(state = initState, action) {
         ...state,
         deleteError: state.deleteError.filter(item => item.id !== payload.id)
       }
+    case userTypes.FETCH_TOP_USER:
+      return {
+        ...state,
+        loadingTopUsers: true
+      }
+    case userTypes.FETCH_TOP_USER_SUCCESS:
+      return {
+        ...state,
+        topUsers: payload.data.users,
+        loadingTopUsers: false,
+      }
+    case userTypes.FETCH_TOP_USER_FAIL:
+      return {
+        ...state,
+        loadingTopUsers: false
+      }
     default:
       return state
   }
 }
 
-export const fetchUsers = (page, limit, sortBy) => ({
+export const fetchUsers = (page, limit, sortBy, keyword) => ({
   type: userTypes.FETCH_USERS,
-  payload: { page, limit, sortBy }
+  payload: { page, limit, sortBy, keyword }
 })
 
 export const fetchUsersSuccess = (data) => ({
@@ -262,4 +283,19 @@ export const deleteUserFail = (id, message) => ({
 export const removeDelErr = (id) => ({
   type: userTypes.REMOVE_DEL_ERR,
   payload: { id }
+})
+
+export const fetchTopUser = () => ({
+  type: userTypes.FETCH_TOP_USER,
+  payload: {}
+})
+
+export const fetchTopUserSuccess = (data) => ({
+  type: userTypes.FETCH_TOP_USER_SUCCESS,
+  payload: { data }
+})
+
+export const fetchTopUserFail = () => ({
+  type: userTypes.FETCH_TOP_USER_FAIL,
+  payload: {}
 })

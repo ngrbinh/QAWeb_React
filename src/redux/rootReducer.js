@@ -10,6 +10,8 @@ import grade from './ducks/grade'
 import subject from './ducks/subject'
 import meta from './ducks/meta'
 import notification from './ducks/notification'
+import badge from './ducks/badge'
+import questionSearch from './ducks/questionSearch'
 import { persistReducer } from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session'
 
@@ -29,7 +31,9 @@ const rootReducer = combineReducers({
   subject,
   globalLoading,
   meta,
-  notification
+  notification,
+  badge,
+  questionSearch
 })
 
 export default rootReducer;

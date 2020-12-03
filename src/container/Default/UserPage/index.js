@@ -10,13 +10,14 @@ class UserPage extends Component {
   state = {
     sortBy: "-follow",
     curPage: 1,
-    limit: 9
+    limit: 9,
+    keyword: ""
   }
   componentDidMount() {
     const { fetchUsers, resetUsers } = this.props
-    const { curPage, limit, sortBy } = this.state
+    const { curPage, limit, sortBy, keyword } = this.state
     resetUsers()
-    fetchUsers(curPage, limit, sortBy)
+    fetchUsers(curPage, limit, sortBy, keyword)
   }
   handleSelectChange = (e) => {
     const newSortBy = e.target.value
@@ -25,9 +26,9 @@ class UserPage extends Component {
       sortBy: newSortBy
     }))
     const { fetchUsers, resetUsers } = this.props
-    const { page, limit } = this.state
+    const { page, limit, keyword } = this.state
     resetUsers()
-    fetchUsers(page, limit, newSortBy)
+    fetchUsers(page, limit, newSortBy, keyword)
   }
   handleLoadPage = (i) => () => {
     this.setState(state => ({
@@ -35,13 +36,37 @@ class UserPage extends Component {
       curPage: i
     }))
   }
+  handleKeywordChange = e => {
+    const keyword = e.target.value
+    this.setState(state => ({
+      ...state,
+      keyword
+    }))
+  }
+  handleSearchButton = e => {
+    e.preventDefault()
+    const { fetchUsers, resetUsers } = this.props
+    const { curPage, limit, sortBy, keyword } = this.state
+    resetUsers()
+    fetchUsers(curPage, limit, sortBy, keyword)
+  }
+  handleSearchKeyPress = e => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      const { fetchUsers, resetUsers } = this.props
+      const { curPage, limit, sortBy, keyword } = this.state
+      resetUsers()
+      fetchUsers(curPage, limit, sortBy, keyword)
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     for (let x in this.state) {
+      if (x === 'keyword') break
       if (this.state[x] !== prevState[x]) {
         const { fetchUsers, resetUsers } = this.props
-        const { curPage, limit, sortBy } = this.state
+        const { curPage, limit, sortBy, keyword } = this.state
         resetUsers()
-        fetchUsers(curPage, limit, sortBy)
+        fetchUsers(curPage, limit, sortBy, keyword)
         break
       }
     }
@@ -71,13 +96,13 @@ class UserPage extends Component {
                 <span>
                   <span>
                     <meta itemProp="position" content="1" />
-                    <a href="#" title="Home">
+                    <a href="#" title="Home" style={{ color: "#7c7f85" }}>
                       <span itemProp="name"><i className="icon-home">
                         <FontAwesomeIcon icon={faHome} />
-                      </i>Home</span>
+                      </i>Trang chủ</span>
                     </a>
                   </span>
-                  <span className="crumbs-span">/</span><span className="current">Users</span>
+                  <span className="crumbs-span">/</span><span className="current">Người dùng</span>
                 </span>
               </span>
             </div>
@@ -99,13 +124,14 @@ class UserPage extends Component {
                 </form>
                 <form method="get" action="#" className="search-input-form main-search-form">
                   <input className="search-input live-search live-search-icon"
-                    autoComplete="off" type="search" name="search" placeholder="Tìm kiếm" />
+                    type="search" name="search" placeholder="Tìm kiếm"
+                    onChange={this.handleKeywordChange}
+                    onKeyPress={this.handleSearchKeyPress} />
                   <div className="loader_2 search_loader"></div>
                   <div className="search-results results-empty"></div>
-                  <button className="button-search">
+                  <button className="button-search" onClick={this.handleSearchButton}>
                     <i className="icon-search"><FontAwesomeIcon icon={faSearch} /></i>
                   </button>
-                  <input type="hidden" name="search_type" className="search_type" value="users" />
                 </form>
               </div>
               <div className="clearfix"></div>

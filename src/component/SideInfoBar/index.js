@@ -1,24 +1,17 @@
-import { faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import { faComment, faLeaf, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeModal, toggleModal } from '../../redux/ducks/modal'
 import { fetchMeta } from '../../redux/ducks/meta'
-import { addQuestion } from '../../redux/ducks/post'
+import { fetchTopUser } from '../../redux/ducks/user'
 import AskPanel from '../Modal/AskPanel'
 import LoginPanel from '../Modal/LoginPanel'
+import { Link, useLocation } from 'react-router-dom'
+import defaultAvatar from '../../assets/image/user_avatar_default.png'
+import RelateQuestions from './RelateQuestions'
+
 class SideInfoBar extends Component {
-  state = {
-    tabIndex: 1
-  }
-  handleSwitchTab = (index) => () => {
-    this.setState((state) => {
-      return {
-        ...state,
-        tabIndex: index
-      }
-    })
-  }
   showModal = (panel) => {
     const { changeModal, toggleModal } = this.props
     changeModal(panel)
@@ -33,10 +26,16 @@ class SideInfoBar extends Component {
   }
   componentDidMount() {
     this.props.fetchMeta()
+    this.props.fetchTopUser()
   }
   render() {
-    //window.onscroll = function () { stickyEffect() }
-    const tabIndex = this.state.tabIndex
+    const path = this.props.location.pathname
+    var regex = /\/question\/\d+/
+    var questionId = null
+    if (regex.test(path)) {
+      questionId = this.props.match.params.id
+    }
+    const { topUsers } = this.props
     const { viewCount, userCount, answerCount, questionCount } = this.props.meta
     return (
       <aside id='sideInfoBar' className='sidebar sidebar-width float_l fixed-sidebar .side-info-bar'>
@@ -78,168 +77,54 @@ class SideInfoBar extends Component {
                 </ul>
               </div>
             </section>
-            <div className='widget tabs-wrap widget-tabs'>
-              <div className="widget-title widget-title-tabs">
-                <ul className="tabs tabstabs-widget-2">
-                  <li className={tabIndex == 1 ? "tab current" : "tab"}><a href="#" onClick={this.handleSwitchTab(1)}>Phổ biến</a></li>
-                  <li className={tabIndex == 2 ? "tab current" : "tab"}><a href="#" onClick={this.handleSwitchTab(2)}>Gợi ý</a></li>
-                </ul>
-                <div className="clearfix"></div>
-              </div>
-              <div className='widget-wrap'>
-                <div className='widget-posts tab-inner-wrap tab-inner-wraptabs-widget-2 active-tab'>
-                  <div className='user-notifications user-profile-area'>
-                    <div>
-                      <ul>
-                        <li className="widget-posts-text widget-no-img">
-                          <span className="span-icon">
-                            <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
-                            </a>
-                          </span>
-                          <div>
-                            <h3>
-                              <a href="https://2code.info/demo/themes/Discy/Main/question/how-to-approach-applying-for-a-job-at-a-company-owned-by-a-friend/" title="How to approach applying for a job at a company owned by a friend?" rel="bookmark">How to approach applying for a job at a company </a>
-                            </h3>
-                            <ul className="widget-post-meta">
-                              <li>
-                                <a className="post-meta-comment" href="https://2code.info/demo/themes/Discy/Main/question/how-to-approach-applying-for-a-job-at-a-company-owned-by-a-friend/#comments">
-                                  <i className="icon-comment"></i>7 Answers
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li className="widget-posts-text widget-no-img">
-                          <span className="span-icon">
-                            <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
-                            </a>
-                          </span>
-                          <div>
-                            <h3>
-                              <a href="https://2code.info/demo/themes/Discy/Main/question/how-to-approach-applying-for-a-job-at-a-company-owned-by-a-friend/" title="How to approach applying for a job at a company owned by a friend?" rel="bookmark">How to approach applying for a job at a company </a>
-                            </h3>
-                            <ul className="widget-post-meta">
-                              <li>
-                                <a className="post-meta-comment" href="https://2code.info/demo/themes/Discy/Main/question/how-to-approach-applying-for-a-job-at-a-company-owned-by-a-friend/#comments">
-                                  <i className="icon-comment"></i>7 Answers
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li className="widget-posts-text widget-no-img">
-                          <span className="span-icon">
-                            <a href="https://2code.info/demo/themes/Discy/Main/profile/marko/">
-                              <img className="avatar avatar-20 photo" alt="Marko Smith" title="Marko Smith" width="20" height="20" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2018/04/team-4-20x20.jpg" />
-                            </a>
-                          </span>
-                          <div>
-                            <h3>
-                              <a href="https://2code.info/demo/themes/Discy/Main/question/how-to-approach-applying-for-a-job-at-a-company-owned-by-a-friend/" title="How to approach applying for a job at a company owned by a friend?" rel="bookmark">How to approach applying for a job at a company </a>
-                            </h3>
-                            <ul className="widget-post-meta">
-                              <li>
-                                <a className="post-meta-comment" href="https://2code.info/demo/themes/Discy/Main/question/how-to-approach-applying-for-a-job-at-a-company-owned-by-a-friend/#comments">
-                                  <i className="icon-comment"></i>7 Answers
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <section className='widget users-widget' style={{ marginBottom: '0px' }}>
-              <h2 className="widget-title">
+            {
+              questionId
+                ? <RelateQuestions questionId={questionId} />
+                : null
+            }
+            <section className='widget users-widget top-user' style={{ marginBottom: '0px' }}>
+              <h2 className="widget-title center-child-cross" style={{ marginBottom: 25, fontWeight: 700 }}>
                 <i className="icon-folder">
                   <FontAwesomeIcon icon={faUserFriends} />
                 </i>Thành viên hàng đầu
               </h2>
               <div className='widget-wrap'>
                 <div className='user-section user-section-small row user-not-normal'>
-                  <div className='col col12'>
-                    <div className="post-section user-area user-area-small">
-                      <div className="post-inner">
-                        <div className="author-image">
-                          <a href="">
-                            <span className="author-image-span">
-                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
-                            </span>
-                          </a>
-                        </div>
-                        <div className="user-content">
-                          <div className="user-inner">
-                            <h4><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/">Aaron Aiken</a></h4>
-                            <div className="user-data">
-                              <ul>
-                                <li className="user-questions"><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/questions/">4 Questions</a></li>
-                                <li className="user-points"><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/points/">211 Points</a></li>
-                              </ul>
+                  {
+                    topUsers.map(item => {
+                      return (
+                        <div key={item.id} className='col col12'>
+                          <div className="post-section user-area user-area-small">
+                            <div className="post-inner">
+                              <div className="author-image">
+                                <Link to={`/user/${item.id}`}>
+                                  <span className="author-image-span">
+                                    <img className="avatar photo avatar-42" alt={item.displayName}
+                                      src={item.avatarUrl ? item.avatarUrl : defaultAvatar} />
+                                  </span>
+                                </Link>
+                              </div>
+                              <div className="user-content">
+                                <div className="user-inner">
+                                  <h4><Link to={`/user/${item.id}`}>{item.displayName}</Link></h4>
+                                  <div className="user-data">
+                                    <ul>
+                                      <li className="user-questions"><a>{`${item.followCount} theo dõi`}</a></li>
+                                      <li className="user-points"><a>{`${item.point} điểm`}</a></li>
+                                    </ul>
+                                  </div>
+                                  <span className="badge-span" style={{ backgroundColor: `#${item.badges[0].typeColor}` }}>
+                                    {item.badges[0].typeName}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="clearfix"></div>
                             </div>
-                            <span className="badge-span" style={{ backgroundColor: "#6b3de4" }}>Professional</span>
                           </div>
                         </div>
-                        <div className="clearfix"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='col col12'>
-                    <div className="post-section user-area user-area-small">
-                      <div className="post-inner">
-                        <div className="author-image">
-                          <a href="">
-                            <span className="author-image-span">
-                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
-                            </span>
-                          </a>
-                        </div>
-                        <div className="user-content">
-                          <div className="user-inner">
-                            <h4><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/">Aaron Aiken</a></h4>
-                            <div className="user-data">
-                              <ul>
-                                <li className="user-questions"><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/questions/">4 Questions</a></li>
-                                <li className="user-points"><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/points/">211 Points</a></li>
-                              </ul>
-                            </div>
-                            <span className="badge-span" style={{ backgroundColor: "#6b3de4" }}>Professional</span>
-                          </div>
-                        </div>
-                        <div className="clearfix"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='col col12'>
-                    <div className="post-section user-area user-area-small">
-                      <div className="post-inner">
-                        <div className="author-image">
-                          <a href="">
-                            <span className="author-image-span">
-                              <img className="avatar avatar-42 photo" alt="Aaron Aiken" title="Aaron Aiken" width="42" height="42" src="https://2code.info/demo/themes/Discy/Main/wp-content/uploads/2020/10/team-1-42x42.jpg" />
-                            </span>
-                          </a>
-                        </div>
-                        <div className="user-content">
-                          <div className="user-inner">
-                            <h4><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/">Aaron Aiken</a></h4>
-                            <div className="user-data">
-                              <ul>
-                                <li className="user-questions"><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/questions/">4 Questions</a></li>
-                                <li className="user-points"><a href="https://2code.info/demo/themes/Discy/Main/profile/aaron/points/">211 Points</a></li>
-                              </ul>
-                            </div>
-                            <span className="badge-span" style={{ backgroundColor: "#6b3de4" }}>Professional</span>
-                          </div>
-                        </div>
-                        <div className="clearfix"></div>
-                      </div>
-                    </div>
-                  </div>
+                      )
+                    })
+                  }
                 </div>
               </div>
             </section>
@@ -250,39 +135,17 @@ class SideInfoBar extends Component {
   }
 }
 
-
-// function stickyEffect() {
-//   var navbar = document.getElementById('sideInfoBar')
-//   var content = document.getElementById('infoBarContent')
-//   var empty = document.getElementById("empty")
-//   var sticky = navbar.offsetTop + content.offsetHeight + 85
-//   console.log(content.offsetHeight)
-//   var windowHeight = window.pageYOffset + window.innerHeight 
-//   console.log(sticky)
-//   console.log(windowHeight)
-//   if ( windowHeight> sticky) {
-//     var emptyHeight = windowHeight - sticky;
-//     content.classList.add('test1')
-//     navbar.setAttribute("style","min-height: "+windowHeight-navbar.offsetTop+"px;")
-//     // if (windowHeight <= 2000) {
-//     //   empty.setAttribute("style","height:"+emptyHeight+"px;")
-//     // }
-//   } else {
-//     navbar.setAttribute("style","min-height: 1px;")
-//     content.classList.remove('test1')
-//     //empty.setAttribute("style","height:0px;")
-//   }
-// }
-
 const mapStateToProps = (state) => ({
   token: state.account.token,
-  meta: state.meta
+  meta: state.meta,
+  topUsers: state.user.topUsers,
 })
 
 const mapDispatchToProps = {
   changeModal,
   toggleModal,
-  fetchMeta
+  fetchMeta,
+  fetchTopUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideInfoBar)

@@ -2,9 +2,10 @@ import axiosService from "../common/axiosService"
 
 const url = 'post'
 
-export const getQuestions = (page, limit, sortBy) => {
+export const getQuestions = (page, limit, sortBy, subjectId, gradeId, keyword) => {
   //console.log("api")
-  return axiosService.get(`${url}/question/all?page=${page}&limit=${limit}&sort_by=${sortBy}`)
+  return axiosService.get(`${url}/question/all?page=${page}&limit=${limit}&sort_by=${sortBy}`
+    + `&subject_id=${subjectId}&grade_id=${gradeId}&body=${keyword}`)
 }
 
 export const getAnswers = (page, limit, sortBy) => {
@@ -43,4 +44,8 @@ export const deletePostById = (id) => {
 
 export const addView = (postId) => {
   return axiosService.get(`${url}/view/${postId}`)
+}
+
+export const getRecommendQuestions = (ids) => {
+  return axiosService.post(`${url}/question/ids`, ids)
 }
