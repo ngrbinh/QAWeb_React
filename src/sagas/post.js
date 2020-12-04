@@ -19,6 +19,8 @@ import {
 import { logout } from '../redux/ducks/account'
 import { toggleModal } from '../redux/ducks/modal'
 import { getRecommendIds } from '../apis/recommend'
+import store from '../redux/configureStore'
+
 export function* postSaga() {
   yield takeLatest(postTypes.FETCH_QUESTIONS, watchFetchQuestions)
   yield takeLatest(postTypes.FETCH_ANSWERS, watchFetchAnswers)
@@ -61,15 +63,25 @@ function* watchFetchAnswers(action) {
 }
 
 function* watchFetchQuestionDetails(action) {
+  const { id, history, editting } = action.payload
   try {
-    const { id } = action.payload
     yield call(addView, id)
     const resp = yield call(getQuestionDetails, id)
     const { status, data } = resp
     yield put(fetchQuestionDetailsSuccess(data))
+    if (history && editting) {
+      const state = store.getState()
+      const id = state.profile.id
+      if (!id) history.push("/")
+      if (id !== data.user.id) history.push("/")
+    }
   } catch (error) {
+    console.log(error)
     const { message } = error.response.data
     yield put(fetchQuestionDetailsFail(message))
+    if (history) {
+      history.push("/")
+    }
   }
 }
 
@@ -110,11 +122,11 @@ function* watchAddAnswer(action) {
 
 function* watchEditPost(action) {
   try {
-    const { id, data, history } = action.payload
+    const { id, idToPush, data, history } = action.payload
     const resp = yield call(updatePost, id, data)
     const { status } = resp
     yield put(editPostSuccess())
-    history.push(`/question/${id}`)
+    history.push(`/question/${idToPush}`)
   } catch (error) {
     const { message } = error.response.data
     yield put(editPostFail(message))

@@ -7,7 +7,7 @@ import defaultAvatar from '../../assets/image/user_avatar_default.png'
 import { vote } from '../../redux/ducks/user'
 import { connect } from 'react-redux'
 import { Modal, Button } from 'antd'
-import { deletePost } from '../../redux/ducks/post'
+import { deletePost, setEdittingAnswer } from '../../redux/ducks/post'
 
 function Answer(props) {
   const [deleteModal, setDeleteModal] = useState(false)
@@ -15,8 +15,9 @@ function Answer(props) {
   const [deleteClicked, setDeleteClicked] = useState(false)
   const isInitialMount = useRef(true)
   let history = useHistory()
-  const { showQuestionLink, vote, loadingVote, modifiable, deletePost, deletingIds, deleteMessage } = props
-  const { id, user, creationDate, body, voteCount, parentPostId, imgUrl } = props.answer
+  const { showQuestionLink, vote, loadingVote, modifiable, deletePost, deletingIds, deleteMessage,
+    setEdittingAnswer, answer } = props
+  const { id, user, creationDate, body, voteCount, parentPostId, imgUrl } = answer
   const formatDate = new Date(creationDate)
   const dateString = formatDate.getDate() + '/' + (formatDate.getMonth() + 1) + '/' + formatDate.getFullYear()
   const parse = require('html-react-parser')
@@ -110,7 +111,7 @@ function Answer(props) {
           </div>
           <div className='text'>
             <div>
-              {parse(body)}
+              {body ? parse(body) : ""}
             </div>
             {
               imgUrl == null ?
@@ -147,7 +148,7 @@ function Answer(props) {
               modifiable
                 ? <ul className="comment-reply comment-reply-main">
                   <li>
-                    <Link to="/">
+                    <Link to={`/answer/edit`} onClick={() => setEdittingAnswer(answer)}>
                       <i><FontAwesomeIcon icon={faPencilAlt} /></i>Chỉnh sửa
                     </Link>
                   </li>
@@ -187,7 +188,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   vote,
-  deletePost
+  deletePost,
+  setEdittingAnswer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answer)

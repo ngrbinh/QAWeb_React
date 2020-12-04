@@ -206,9 +206,9 @@ export const resetUsers = () => ({
   payload: {}
 })
 
-export const fetchUserDetails = (id) => ({
+export const fetchUserDetails = (id, history) => ({
   type: userTypes.FETCH_USER_DETAILS,
-  payload: { id }
+  payload: { id, history }
 })
 
 export const fetchUserDetailsSuccess = (data) => ({

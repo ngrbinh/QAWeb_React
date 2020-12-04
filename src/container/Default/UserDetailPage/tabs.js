@@ -119,7 +119,7 @@ export function About(props) {
                 }
                 {
                   followingUsers.length > 3
-                    ? <span><span>+ {followedByUsers.length - 3}</span> Người khác</span>
+                    ? <span><span>+ {followingUsers.length - 4}</span> Người khác</span>
                     : null
                 }
                 {
@@ -183,24 +183,34 @@ export function Answers(props) {
 
 export function Followers(props) {
   const { id, users } = props
-  return (
-    <div className='section-page-div user-section user-section-columns row user-not-normal'>
-      {
-        users.map(item => <UserTagDetail user={item} key={item.id} />)
-      }
-    </div>
-  )
+  return users.length !== 0 ?
+    (
+      <div className='section-page-div user-section user-section-columns row user-not-normal'>
+        {
+          users.map(item => <UserTagDetail user={item} key={item.id} />)
+        }
+      </div>
+    )
+    : (<div className="alert-message warning">
+      <i className="icon-flag"><FontAwesomeIcon icon={faFlag} /></i>
+      <p>Chưa có người theo dõi nào</p>
+    </div>)
 }
 
 export function Following(props) {
   const { id, users } = props
   console.log(id)
 
-  return (
-    <div className='section-page-div user-section user-section-columns row user-not-normal'>
-      {
-        users.map(item => <UserTagDetail user={item} key={item.id} />)
-      }
-    </div>
-  )
+  return users.length !== 0 ?
+    (
+      <div className='section-page-div user-section user-section-columns row user-not-normal'>
+        {
+          users.map(item => <UserTagDetail user={item} key={item.id} />)
+        }
+      </div>
+    )
+    : (<div className="alert-message warning">
+      <i className="icon-flag"><FontAwesomeIcon icon={faFlag} /></i>
+      <p>Chưa theo dõi ai khác</p>
+    </div>)
 }

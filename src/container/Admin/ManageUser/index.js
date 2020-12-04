@@ -11,11 +11,11 @@ class ManageUser extends Component {
   }
   componentDidMount() {
     const { fetchUsers } = this.props
-    fetchUsers(1, 10, '-date')
+    fetchUsers(1, 10, '-date', "")
   }
   onPageNumberChange = (page) => {
     const { fetchUsers } = this.props
-    fetchUsers(page, 10, '-date')
+    fetchUsers(page, 10, '-date', "")
     this.setState({ curPage: page })
   }
   deleteUser = (id) => {

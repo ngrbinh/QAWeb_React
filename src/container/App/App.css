@@ -2608,3 +2608,9 @@ textarea {
 .nav_menu>div>ul ul li:last-child {
   margin-bottom: 0;
 }
+
+.avatar-70 {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}

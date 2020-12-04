@@ -34,14 +34,16 @@ function* watchFetchUsers(action) {
 
 function* watchFetchUserDetails(action) {
   yield put(showLoading())
+  const { id, history } = action.payload
   try {
-    const { id } = action.payload
     const resp = yield call(getUserDetails, id)
     const { status, data } = resp
-
     yield put(fetchUserDetailsSuccess(data))
   } catch (error) {
-    yield put(fetchUserDetailsFail)
+    yield put(fetchUserDetailsFail())
+    if (history) {
+      history.push("/")
+    }
   }
   yield put(hideLoading())
 }

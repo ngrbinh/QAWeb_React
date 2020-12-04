@@ -9,6 +9,7 @@ import Admin from "../container/Admin"
 import ManageUser from "../container/Admin/ManageUser"
 import ManageQuestion from "../container/Admin/ManageQuestion"
 import ManageAnswer from "../container/Admin/ManageAnswer"
+import EditAnswerPage from "../container/Default/EditAnswerPage"
 
 export const API_URL = "https://queswer.herokuapp.com/"
 //export const API_URL = "localhost:8080/"
@@ -120,7 +121,13 @@ export const DEFAULT_ROUTES = [
     attachProps: {
 
     },
-    privateRoute: true
+  },
+  {
+    name: "EditAnswer",
+    path: "/answer/edit",
+    exact: false,
+    component: EditAnswerPage,
+    attachProps: {}
   }
 ]
 

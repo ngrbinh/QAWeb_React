@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { follow, unFollow } from '../../redux/ducks/user'
+import defaultAvatar from '../../assets/image/user_avatar_default.png'
 
 function UserTagDetail(props) {
   const { user, profile, loadingFollow } = props
@@ -25,7 +26,7 @@ function UserTagDetail(props) {
             <Link to={`/user/${id}`}>
               <span className="author-image-span">
                 <img className="avatar avatar-70 photo" alt={displayName} width="70" height="70"
-                  src={avatarUrl} />
+                  src={avatarUrl ? avatarUrl : defaultAvatar} />
               </span>
             </Link>
           </div>
@@ -57,7 +58,7 @@ function UserTagDetail(props) {
               </li>
               <li className="user-columns-points">
                 <a href="#">
-                  <i className="icon-bucket"><FontAwesomeIcon icon={faCheck} /></i>{voteCount + ' '} điểm
+                  <i className="icon-bucket"><FontAwesomeIcon icon={faCheck} /></i>{voteCount + ' '} bình chọn
                 </a>
               </li>
             </ul>

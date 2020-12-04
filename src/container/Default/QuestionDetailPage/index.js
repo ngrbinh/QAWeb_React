@@ -96,7 +96,8 @@ class QuestionDetailPage extends Component {
   }
   componentDidMount() {
     const id = this.props.match.params.id
-    this.props.fetchQuestionDetails(id)
+    const history = this.props.history
+    this.props.fetchQuestionDetails(id, history)
   }
   componentDidUpdate(prevProps) {
     (function () {
@@ -292,14 +293,14 @@ const mapStateToProps = (state) => ({
   loading: state.post.loadingQuestionDetails,
   loadingAddAns: state.post.loadingAddAnswer,
   addAnsError: state.post.addAnswerError,
-  profileId: state.profile.id
+  profileId: state.profile.id,
 })
 
 const mapDispatchToProps = {
   fetchQuestionDetails,
   addAnswer,
   addAnswerImage,
-  addAnswerImageFail
+  addAnswerImageFail,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetailPage)

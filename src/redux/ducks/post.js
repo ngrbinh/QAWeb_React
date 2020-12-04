@@ -44,7 +44,9 @@ export const postTypes = {
   FETCH_POPULAR_QUESTIONS_FAIL: "post/FETCH_POPULAR_QUESTIONS_FAIL",
   FETCH_RECOMMEND_QUESTIONS: "post/FETCH_RECOMMEND_QUESTIONS",
   FETCH_RECOMMEND_QUESTIONS_SUCCESS: "post/FETCH_RECOMMEND_QUESTIONS_SUCCESS",
-  FETCH_RECOMMEND_QUESTIONS_FAIL: "post/FETCH_RECOMMEND_QUESTIONS_FAIL"
+  FETCH_RECOMMEND_QUESTIONS_FAIL: "post/FETCH_RECOMMEND_QUESTIONS_FAIL",
+  SET_EDITTING_ANSWER: "post/SET_EDITTING_ANSWER",
+  RESET_EDITTING_ANSWER: "post/RESET_EDITTING_ANSWER",
 }
 
 const initState = {
@@ -73,7 +75,8 @@ const initState = {
   deleteError: [],
   deleteMessage: "",
   popularQuestions: [],
-  recommendQuestions: []
+  recommendQuestions: [],
+  edittingAnswer: {},
 }
 
 export default function reducer(state = initState, action) {
@@ -303,12 +306,23 @@ export default function reducer(state = initState, action) {
         ...state,
         recommendQuestions: payload.data
       }
+    case postTypes.SET_EDITTING_ANSWER:
+      return {
+        ...state,
+        edittingAnswer: payload.answer
+      }
+    case postTypes.RESET_EDITTING_ANSWER: {
+      return {
+        ...state,
+        edittingAnswer: {}
+      }
+    }
     default:
       return state
   }
 }
 
-export const fetchQuestions = (page, limit, sortBy, subjectId, gradeId, keyword ) => ({
+export const fetchQuestions = (page, limit, sortBy, subjectId, gradeId, keyword) => ({
   type: postTypes.FETCH_QUESTIONS,
   payload: { page, limit, sortBy, subjectId, gradeId, keyword }
 })
@@ -327,9 +341,9 @@ export const resetQuestions = () => ({
   type: postTypes.RESET_QUESTIONS
 })
 
-export const fetchQuestionDetails = (id) => ({
+export const fetchQuestionDetails = (id, history, editting) => ({
   type: postTypes.FETCH_QUESTION_DETAILS,
-  payload: { id }
+  payload: { id, history, editting }
 })
 
 export const fetchQuestionDetailsSuccess = (data) => ({
@@ -389,9 +403,9 @@ export const addAnswerImageFail = () => ({
   type: postTypes.ADD_ANSWER_IMAGE_FAIL,
   payload: {}
 })
-export const editPost = (id, data, history) => ({
+export const editPost = (id, idToPush, data, history) => ({
   type: postTypes.EDIT_POST,
-  payload: { id, data, history }
+  payload: { id, idToPush, data, history }
 })
 
 export const editPostSuccess = () => ({
@@ -519,5 +533,15 @@ export const fetchRecommendQuestionsSuccess = (data) => ({
 
 export const fetchRecommendQuestionsFail = () => ({
   type: postTypes.FETCH_RECOMMEND_QUESTIONS_FAIL,
+  payload: {}
+})
+
+export const setEdittingAnswer = (answer) => ({
+  type: postTypes.SET_EDITTING_ANSWER,
+  payload: { answer }
+})
+
+export const reSetEdittingAnswer = () => ({
+  type: postTypes.SET_EDITTING_ANSWER,
   payload: {}
 })

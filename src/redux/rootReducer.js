@@ -19,12 +19,15 @@ const sessionConfig = {
   key: 'profile',
   storage: sessionStorage,
 }
-
+const postConfig = {
+  key: 'post',
+  storage: sessionStorage
+}
 const rootReducer = combineReducers({
   account,
   modal,
   profile: persistReducer(sessionConfig, profile),
-  post,
+  post: persistReducer(postConfig, post),
   user,
   address,
   grade,

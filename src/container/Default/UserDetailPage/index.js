@@ -14,10 +14,11 @@ class UserDetailPage extends Component {
     const { fetchUserDetails, fetchProfile, isProfile, fetchAnswersByUser, fetchQuestionsByUser,
       profile } = this.props
     const id = this.props.match.params.id
+    const history = this.props.history
     if (isProfile) {
       fetchProfile()
     } else {
-      fetchUserDetails(id)
+      fetchUserDetails(id, history)
     }
     fetchAnswersByUser(isProfile ? profile.id : id)
     fetchQuestionsByUser(isProfile ? profile.id : id)

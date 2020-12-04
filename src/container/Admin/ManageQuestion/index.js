@@ -13,12 +13,12 @@ class ManageQuestion extends Component {
   componentDidMount() {
     const { fetchQuestions } = this.props
     resetQuestions()
-    fetchQuestions(1, 10, '-date')
+    fetchQuestions(1, 10, '-date', "", "", "")
   }
   onPageNumberChange = (page) => {
     const { fetchQuestions, resetQuestions } = this.props
     resetQuestions()
-    fetchQuestions(page, 10, '-date')
+    fetchQuestions(page, 10, '-date', "", "", "")
     this.setState({ curPage: page })
   }
   deleteQuestion = (id) => {

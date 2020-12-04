@@ -69,11 +69,11 @@ class EditQuestionPage extends Component {
             firebaseStorage.ref('images').child(file.name).getDownloadURL()
               .then(fireBaseUrl => {
                 imgUrl = fireBaseUrl
-                editPost(id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
+                editPost(id, id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
               })
           })
       } else {
-        editPost(id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
+        editPost(id, id, { body, imgUrl, subjectTypeId: parseInt(subjectTypeId), gradeTypeId }, history)
       }
     }
   }
@@ -104,7 +104,8 @@ class EditQuestionPage extends Component {
       question: {
         ...state.question,
         imgUrl: '',
-        localImgUrl: ''
+        localImgUrl: '',
+        file: null
       },
       localError: ''
     }))
@@ -133,8 +134,9 @@ class EditQuestionPage extends Component {
     }
   }
   componentDidMount() {
+    const history = this.props.history
     const id = this.props.match.params.id
-    this.props.fetchQuestionDetails(id)
+    this.props.fetchQuestionDetails(id, history, true)
     this.props.fetchGrades()
     this.props.fetchSubjects()
   }
@@ -275,7 +277,7 @@ const mapStateToProps = (state) => ({
   grades: state.grade.grades,
   subjects: state.subject.subjects,
   loadingEditQues: state.post.loadingEdit,
-  apiError: state.post.editError
+  apiError: state.post.editError,
 })
 
 const mapDispatchToProps = {

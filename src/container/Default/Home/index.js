@@ -31,19 +31,19 @@ class Home extends Component {
       sortBy: newSortBy,
       page: 1
     }))
-    const { fetchQuestions, resetQuestions } = this.props
+    const { fetchQuestions, resetQuestions, subjectId, gradeId, keyword } = this.props
     resetQuestions()
     const { limit } = this.state
-    fetchQuestions(1, limit, newSortBy);
+    fetchQuestions(1, limit, newSortBy, subjectId, gradeId, keyword);
   }
   loadMore = () => {
     this.setState(state => ({
       ...state,
       page: state.page + 1
     }))
-    const { fetchQuestions } = this.props
+    const { fetchQuestions, gradeId, subjectId, keyword } = this.props
     const { page, limit, sortBy } = this.state
-    fetchQuestions(page + 1, limit, sortBy);
+    fetchQuestions(page + 1, limit, sortBy, subjectId, gradeId, keyword);
   }
   componentDidMount() {
     const { fetchQuestions, resetQuestions, gradeId, subjectId, keyword } = this.props
