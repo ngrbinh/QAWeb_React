@@ -7,3 +7,7 @@ const axiosService = axios.create({
 export const getRecommendIds = (id) => {
   return axiosService.get(`/recommend-system/id-post=${id}`)
 }
+
+export const addNewQuestionToRs = (id, body) => {
+  return axiosService.post(`/recommend-system-new-id/`, { idx: id, content: body })
+}

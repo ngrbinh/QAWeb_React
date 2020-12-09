@@ -11,7 +11,7 @@ class ManageQuestion extends Component {
     curId: null
   }
   componentDidMount() {
-    const { fetchQuestions } = this.props
+    const { fetchQuestions, resetQuestions } = this.props
     resetQuestions()
     fetchQuestions(1, 10, '-date', "", "", "")
   }

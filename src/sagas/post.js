@@ -14,11 +14,11 @@ import {
   fetchQuestionDetailsFail, fetchQuestionDetailsSuccess,
   fetchQuestionsByUserFail,
   fetchQuestionsByUserSuccess,
-  fetchQuestionsFail, fetchQuestionsSuccess, fetchRecommendQuestionsFail, fetchRecommendQuestionsSuccess, postTypes
+  fetchQuestionsFail, fetchQuestionsSuccess, fetchRecommendQuestions, fetchRecommendQuestionsFail, fetchRecommendQuestionsSuccess, postTypes
 } from '../redux/ducks/post'
 import { logout } from '../redux/ducks/account'
 import { toggleModal } from '../redux/ducks/modal'
-import { getRecommendIds } from '../apis/recommend'
+import { addNewQuestionToRs, getRecommendIds } from '../apis/recommend'
 import store from '../redux/configureStore'
 
 export function* postSaga() {
@@ -91,6 +91,7 @@ function* watchAddQuestion(action) {
     const resp = yield call(createQuestion, data)
     const { data: respData, status } = resp
     yield put(addQuestionSuccess())
+    yield call(addNewQuestionToRs, respData.id, respData.body)
     history.push(`/question/${respData.id}`)
     yield put(toggleModal())
   } catch (error) {
@@ -209,6 +210,8 @@ function* watchFetchRecommendQuestions(action) {
     yield put(fetchRecommendQuestionsSuccess(data2))
   } catch (error) {
     console.log(error)
-    yield put(fetchRecommendQuestionsFail())
+    if (error.response) {
+      console.log(error.response)
+    }
   }
 }

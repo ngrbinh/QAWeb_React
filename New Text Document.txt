@@ -1,1 +1,2 @@
 https://queswer.surge.sh
+http://queswer.surge.sh

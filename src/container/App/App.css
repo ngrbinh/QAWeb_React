@@ -2614,3 +2614,7 @@ textarea {
   height: 64px;
   object-fit: cover;
 }
+
+.current-page-header-bar {
+  background-color: #1a1c21
+}

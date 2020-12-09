@@ -93,11 +93,12 @@ export default function reducer(state = initState, action) {
   }
 }
 
-export const login = (email, password) => ({
+export const login = (email, password, history) => ({
   type: accountTypes.LOGIN,
   payload: {
     email,
-    password
+    password,
+    history
   }
 })
 

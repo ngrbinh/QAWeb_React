@@ -1,6 +1,6 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { createNewAccount, getUserDetails, getUsers, getAuthToken, getProflie, updateProfile, updatePassword, createFollow, deleteFollow, deleteUserById, vote } from "../apis/user";
-import { deleteUserFail, deleteUserSuccess, fetchTopUserFail, fetchTopUserSuccess, fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
+import { deleteUserFail, deleteUserSuccess, fetchTopUser, fetchTopUserFail, fetchTopUserSuccess, fetchUserDetailsFail, fetchUserDetailsSuccess, fetchUsersFail, fetchUsersSuccess, followFail, followSuccess, unFollowFail, unFollowSuccess, userTypes, voteFail, voteSuccess } from '../redux/ducks/user'
 import { hideLoading, showLoading } from '../redux/ducks/globalLoading'
 import { accountTypes, changePasswordFail, changePasswordSuccess, login, loginFail, loginSuccess, logout, signupFail, signupSuccess } from "../redux/ducks/account";
 import { setModal, toggleModal } from "../redux/ducks/modal"
@@ -64,12 +64,13 @@ function* watchSignUp(action) {
 
 function* watchLogin(action) {
   try {
-    const data = action.payload
+    const { history, ...data } = action.payload
     const resp = yield call(getAuthToken, data)
     const token = resp.headers.authorization
     yield put(loginSuccess(token))
     yield put(setModal(false))
     yield put(fetchProfile())
+    history.go(0)
   } catch (error) {
     // if (error.response) {
     //   if (error.response.data) {
@@ -187,6 +188,6 @@ function* watchFetchTopUsers(action) {
     yield put(fetchTopUserSuccess(data))
   } catch (error) {
     console.log(error)
-    yield put(fetchTopUserFail())
+    yield put(fetchTopUser())
   }
 }

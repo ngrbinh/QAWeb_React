@@ -7,7 +7,7 @@ import SignupPanel from '../Modal/SignupPanel'
 import { connect } from 'react-redux'
 import { logout } from '../../redux/ducks/account'
 import { fetchNotifications, checkAll } from '../../redux/ducks/notification'
-import { Link } from 'react-router-dom'
+import { Link, NavLink, useHistory } from 'react-router-dom'
 import defaultAvatar from '../../assets/image/user_avatar_default.png'
 import { useEffect } from 'react'
 import Notification from '../Notification'
@@ -19,6 +19,7 @@ function HeaderBar(props) {
   const [searchKeyword, setSearchKeyword] = useState(props.keyword)
   const [showModal, setShowModal] = useState(false)
   const { actions, logout, fetchNotifications, checkAll, setKeyword } = props
+  const history = useHistory()
   useEffect(() => {
     if (props.token) {
       fetchNotifications(1, 5, "-date")
@@ -59,6 +60,10 @@ function HeaderBar(props) {
       setKeyword(searchKeyword)
     }
   }
+  const onOkClick = () => {
+    setShowModal(false)
+    history.go(0)
+  }
   const { profile, loadingNotifications, notifications } = props
   const loginClass = 'right-header float_r' + (profile.displayName ? ' wrap-login' : ' wrap-not-login')
   const unCheckCount = notifications.filter(item => !item.checked).length
@@ -68,7 +73,7 @@ function HeaderBar(props) {
         title="Đăng xuất"
         visible={showModal}
         footer={[
-          <Button key="ok" onClick={() => setShowModal(false)} type='primary'>Ok</Button>,
+          <Button key="ok" onClick={onOkClick} type='primary'>Ok</Button>,
         ]}
       >
         Đăng xuất thành công
@@ -177,8 +182,8 @@ function HeaderBar(props) {
               <nav className="nav float_l" >
                 <h3 className="screen-reader-text">Queswer Navigation</h3>
                 <ul id="menu-header" className='menu'>
-                  <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-64 current_page_item'>
-                    <a className='' href=''>Trang chủ</a>
+                  <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-64'>
+                    <NavLink exact to="/" activeClassName="current-page-header-bar">Trang chủ</NavLink>
                   </li>
                   <li className='menu-item menu-item-type-post_type menu-item-object-page'>
                     <a href=''>Giới thiệu</a>

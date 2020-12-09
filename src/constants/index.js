@@ -12,6 +12,7 @@ import ManageAnswer from "../container/Admin/ManageAnswer"
 import EditAnswerPage from "../container/Default/EditAnswerPage"
 
 export const API_URL = "https://queswer.herokuapp.com/"
+//export const API_URL = "https://queswer.azurewebsites.net/"
 //export const API_URL = "localhost:8080/"
 export const ADMIN_ROUTES = [
   {

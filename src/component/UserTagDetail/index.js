@@ -17,7 +17,6 @@ function UserTagDetail(props) {
   const handleUnfollowClick = () => {
     props.unFollow(id)
   }
-  console.log(loadingFollow)
   return (
     <div className="col col6">
       <div className="post-section user-area user-area-columns">

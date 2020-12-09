@@ -9,6 +9,7 @@ function UserTag(props) {
   const { displayName, avatarUrl, id } = user
   const badges = user.badges && user.badges.length !== 0 ? user.badges : [{ typeName: "", typeColor: "" }]
   const followingIds = profile.followingUsers.map(item => item.id)
+  const showFollow = profile.displayName ? true : false
   const handleFollowClick = (e) => {
     e.preventDefault()
     props.follow(id)
@@ -19,7 +20,7 @@ function UserTag(props) {
   }
   return (
     <div className="col col4 user-tag">
-      <div className="post-section user-area user-area-small_grid">
+      <div className="post-section user-area user-area-small_grid" style={{ height: 'auto' }}>
         <div className="post-inner">
           <div className="author-image author-image-84">
             <Link to={`/user/${user.id}`}>
@@ -33,7 +34,7 @@ function UserTag(props) {
             <div className="user-inner">
               <h4><Link to={`/user/${id}`}>{displayName}</Link></h4>
               <span className="badge-span" style={{ backgroundColor: `#${badges[0].typeColor}` }}>{badges[0].typeName}</span>
-              <div className="user_follow_4 follow-btn" style={displayName ? null : { display: 'none' }}>
+              <div className="user_follow_4 follow-btn" style={showFollow ? null : { display: 'none' }}>
                 <div className="small_loader loader_2" style={{ display: loadingFollow.includes(id) ? "inline-block" : "none" }}>
                 </div>
                 {
@@ -58,7 +59,7 @@ function UserTag(props) {
 }
 
 const mapStateToProps = (state) => ({
-  profile: state.profile,
+  //profile: state.profile,
   loadingFollow: state.user.loadingFollow,
 })
 

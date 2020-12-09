@@ -45,8 +45,6 @@ class AdminRoute extends Component {
   render() {
     const { component: MyComponent, token, changeModal, toggleModal, roleName, profile,
       ...remainProps } = this.props;
-    console.log(roleName)
-    console.log(profile)
     const { showUpButton } = this.state
     const actionGetter = ({ toggleModal, changeModal }) => ({ toggleModal, changeModal })
     const actions = actionGetter(this.props)

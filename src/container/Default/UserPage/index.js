@@ -73,6 +73,7 @@ class UserPage extends Component {
     this.processPointDivHeight()
   }
   processPointDivHeight = () => {
+    console.log("processDiv")
     var divs = document.querySelectorAll('.col4 .post-section')
     var i, j, max
     for (i = 0; i < divs.length; i += 3) {
@@ -80,12 +81,14 @@ class UserPage extends Component {
       max = 0
       for (j = i; j <= j_end; j++) {
         if (divs[j].offsetHeight > max) max = divs[j].offsetHeight
-        else divs[j].style.height = max + 'px'
+      }
+      for (j = i; j <= j_end; j++) {
+        divs[j].style.height = max + 'px'
       }
     }
   }
   render() {
-    const { users, loadingUsers, totalPage } = this.props
+    const { users, loadingUsers, totalPage, profile } = this.props
     const { sortBy, curPage } = this.state
     return (
       <React.Fragment>
@@ -149,7 +152,7 @@ class UserPage extends Component {
                 <div className="post-content-text"></div>
                 <div className="user-section user-section-small_grid row user-not-normal">
                   {
-                    users.map(item => <UserTag user={item} key={item.id} />)
+                    users.map(item => <UserTag user={item} key={item.id} profile={profile} />)
                   }
                 </div>
                 <div className="main-pagination center-child">
@@ -193,7 +196,8 @@ class UserPage extends Component {
 const mapStateToProps = (state) => ({
   users: state.user.users,
   loadingUsers: state.user.loadingUsers,
-  totalPage: state.user.totalPage
+  totalPage: state.user.totalPage,
+  profile: state.profile
 })
 
 const mapDispatchToProps = {

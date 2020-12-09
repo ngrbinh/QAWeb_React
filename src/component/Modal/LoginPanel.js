@@ -41,12 +41,12 @@ class LoginPanel extends Component {
       }))
     } else {
       const { email, password } = this.state
-      const { login } = this.props
-      login(email,password)
+      const { login, history } = this.props
+      login(email, password, history)
     }
   }
   checkForError = () => {
-    const { email, password} = this.state
+    const { email, password } = this.state
     if (!email || !password) {
       return "Bạn chưa nhập đủ các thông tin cần thiết"
     }
@@ -97,14 +97,14 @@ class LoginPanel extends Component {
             <div className="form-inputs clearfix">
               <p className="login-text">
                 <label htmlFor="username_694">Email<span className="required">*</span></label>
-                <input id="username_694" type="text" name="email" value={email} onChange={this.handleInputChange}/>
+                <input id="username_694" type="text" name="email" value={email} onChange={this.handleInputChange} />
                 <i className="icon-user">
                   <FontAwesomeIcon icon={faUser} />
                 </i>
               </p>
               <p className="login-password">
                 <label htmlFor="password_694">Mật khẩu<span className="required">*</span></label>
-                <input id="password_694" type="password" name="password" value={password} onChange={this.handleInputChange}/>
+                <input id="password_694" type="password" name="password" value={password} onChange={this.handleInputChange} />
                 <i className="icon-lock-open">
                   <FontAwesomeIcon icon={faLock} />
                 </i>
@@ -113,7 +113,7 @@ class LoginPanel extends Component {
             <div className="rememberme normal_label">
               <label>
                 <span className="wpqa_checkbox">
-                  <input type="checkbox" name="rememberMe" checked={rememberMe} onChange={this.handleInputChange}/>
+                  <input type="checkbox" name="rememberMe" checked={rememberMe} onChange={this.handleInputChange} />
                 </span>
                 <span className="wpqa_checkbox_span">Nhớ mật khẩu</span>
               </label>
